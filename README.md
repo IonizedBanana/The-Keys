@@ -26,3 +26,5 @@ Admins have the highest level of verification.
 [Design Document](https://github.com/IonizedBanana/The-Keys/blob/main/documents/Design_Doc.pdf)
 
 [UML Diagram](https://github.com/IonizedBanana/The-Keys/blob/main/documents/The-Keys_UML_Diagram.pdf)
+
+[Requirements](https://github.com/IonizedBanana/The-Keys/blob/main/documents/requirements.pdf)
