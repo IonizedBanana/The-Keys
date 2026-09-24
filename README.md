@@ -5,7 +5,7 @@ The **Hurricane Relief App**  is an all-in-one app to provide, request, and advi
 All users require a username and password. In order to provide for all users, we have broken our users into 5 categories.
 
 ### Victims
-**Victims** are users which are affected in their home, safety, survivability, or life due to a hurricane.
+**Victims** are users which are affected by their safety, property, survivability, or threats to life due to a hurricane.
 Victims can use our app to **request** help for multiple categories, providing their address, severity of impact, and contact information.
 
 ### Volunteers
