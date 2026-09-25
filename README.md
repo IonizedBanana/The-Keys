@@ -23,8 +23,8 @@ Admins have the highest level of verification.
 **Shelter Workers** are users which manage shelter status. These users can update the resource status, transfer them to other shelters, and receive queries of shelter status and information.
 
 ## Documents
-[Design Document](https://github.com/IonizedBanana/The-Keys/blob/main/documents/Design_Doc.pdf)
+[Design Document](https://github.com/IonizedBanana/The-Keys/blob/main/documents/requirements.pdf)
 
 [UML Diagram](https://github.com/IonizedBanana/The-Keys/blob/main/documents/The-Keys_UML_Diagram.pdf)
 
-[Requirements](https://github.com/IonizedBanana/The-Keys/blob/main/documents/requirements.pdf)
+[Requirements](https://github.com/IonizedBanana/The-Keys/blob/main/documents/requirements_spreadsheet.pdf)
