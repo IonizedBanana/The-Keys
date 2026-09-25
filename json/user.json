@@ -1,0 +1,95 @@
+[
+{
+  "id": "c97d2b8d-1299-4979-98f5-873560141d47",
+  "firstName": "Bob",
+  "lastName": "Pubert",
+  "username": "bobpubert59",
+  "emailAddress": "bobpubert78@aol.com",
+  "password": "ilovemywifebarbara",
+  "address": {
+    "state": "florida",
+    "city": "jacksonville",
+    "address": "401 Old ln"
+  },
+  "age": 67,
+  "sex": "m",
+  "description": "frail old man with a half functioning brain",
+  "numberOfPeople": 2
+},
+{
+  "id": "a486b707-485d-4cc6-a4d7-9a21ef1be1d1",
+  "firstName": "Barbara",
+  "lastName": "Pubert",
+  "username": "barbpubert68",
+  "emailAddress": "barbpubert89@aol.com",
+  "password": "ilovemyhusbandbob",
+  "address": {
+    "state": "florida",
+    "city": "jacksonville",
+    "address": "401 Old ln"
+  },
+  "age" : 58,
+  "sex" : "f",
+  "description": "frail old woman who loves to bake",
+  "numberOfPeople": 2
+},
+{
+  "id": "ce96e91a-c835-483c-af36-05f325597ff3",
+  "firstName": "Finn",
+  "lastName": "Finkleton",
+  "username": "finntheman98",
+  "emailAddress": "finntheman98@yahoo.com",
+  "password": "iwrestlebears",
+  "address": {
+    "state": "florida",
+    "city": "jacksonville",
+    "address": "02 Gravel Rd"
+  },
+  "credentials": [{ }],
+  "fieldsOfExpertise": [{ }],
+  "identityVerified": true,
+  "available": true
+},
+{
+  "id": "b437144d-e6fc-424d-835c-6472dea54d2a",
+  "firstName": "Billy",
+  "lastName": "Billy",
+  "username": "igot2names",
+  "emailAddress": "oneformymaandoneformygirl@2name.come",
+  "password": "harbgorble",
+  "address": {
+    "state": "florida",
+    "city": "jacksonville",
+    "address": "99 Gator St"
+  },
+  "phoneNumber": "(904) 398-4667"
+},
+{
+  "id": "9483d569-fe92-40a4-8a30-0ac569815ffc",
+  "firstName": "Billy",
+  "lastName": "Billy",
+  "username": "igot2names",
+  "emailAddress": "oneformymaandoneformygirl@2name.come",
+  "password": "harbgorble",
+  "address": {
+    "state": "florida",
+    "city": "jacksonville",
+    "address": "99 Gator St"
+  },
+  "phoneNumber": "(904) 398-4667"
+},
+{
+  "id": "9483d569-fe92-40a4-8a30-0ac569815ffc",
+  "firstName": "Chris",
+  "lastName": "Kristofferson",
+  "username": "ckristofferson",
+  "emailAddress": "ckristofferson@gmail.com",
+  "password": "heyitskris",
+  "address": {
+    "state": "florida",
+    "city": "jacksonville",
+    "address": "555 Ocean Spray Rd"
+  },
+  "shelter": { }
+}
+]

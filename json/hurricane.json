@@ -1,0 +1,14 @@
+[
+  {
+    "id": "7ace4d97-3a02-468d-9999-8754e6e33ca4",
+    "name": "kathrine",
+    "category": 4,
+    "currentLocation": {
+      "city": "jacksonville",
+      "state": "florida"
+    },
+    "predictedPath": [{ }],
+    "impactArea": [{ }],
+    "status": "IN_PROGRESS"
+  }
+]

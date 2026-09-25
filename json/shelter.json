@@ -1,0 +1,15 @@
+[
+  {
+  "id": "98214791-74c1-4726-af61-2e31cfe767b4",
+  "name": "Red Cross Jacksonville",
+  "address": { 
+    "city": "jacksonville",
+    "state": "florida",
+    "address": "1441 Main St"
+  },
+  "totalCapacity": 643,
+  "usedCapactiy": 340,
+  "expectedArrivals": 52,
+  "resources": { }
+  }
+]

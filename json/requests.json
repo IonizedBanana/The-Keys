@@ -1,0 +1,14 @@
+[
+  {
+    "id": "ab56db83-1018-44d5-a6ae-3b826aa7a2ce",
+    "requestee": "c97d2b8d-1299-4979-98f5-873560141d47",
+    "severity": 3,
+    "location": {
+      "city": "jacksonville",
+      "state": "florida"
+    },
+    "status": "WAITING",
+    "responderType": "MEDICAL",
+    "description": "i tripped on a board and slammed my hand on a nail"
+  }
+]
