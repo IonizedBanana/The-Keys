@@ -11,5 +11,18 @@
   "usedCapactiy": 340,
   "expectedArrivals": 52,
   "resources": { }
+  },
+  {
+  "id": "08245460-aefe-465e-9e67-7145e309c1b1",
+  "name": "Jacksonville Aid",
+  "address": { 
+    "city": "jacksonville",
+    "state": "florida",
+    "address": "1300 West Cross Rd"
+  },
+  "totalCapacity": 405,
+  "usedCapactiy": 180,
+  "expectedArrivals": 12,
+  "resources": { }
   }
 ]

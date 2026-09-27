@@ -55,7 +55,7 @@
   "firstName": "Billy",
   "lastName": "Billy",
   "username": "igot2names",
-  "emailAddress": "oneformymaandoneformygirl@2name.come",
+  "emailAddress": "oneformymaandoneformygirl@2name.com",
   "password": "harbgorble",
   "address": {
     "state": "florida",
@@ -66,17 +66,17 @@
 },
 {
   "id": "9483d569-fe92-40a4-8a30-0ac569815ffc",
-  "firstName": "Billy",
-  "lastName": "Billy",
-  "username": "igot2names",
-  "emailAddress": "oneformymaandoneformygirl@2name.come",
-  "password": "harbgorble",
+  "firstName": "Geraldine",
+  "lastName": "Ford",
+  "username": "gford",
+  "emailAddress": "gford@ford.com",
+  "password": "ilovefords",
   "address": {
     "state": "florida",
     "city": "jacksonville",
-    "address": "99 Gator St"
+    "address": "1 Ford Ct"
   },
-  "phoneNumber": "(904) 398-4667"
+  "phoneNumber": "(904) 638-8844"
 },
 {
   "id": "9483d569-fe92-40a4-8a30-0ac569815ffc",
