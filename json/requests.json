@@ -2,7 +2,7 @@
   {
     "id": "ab56db83-1018-44d5-a6ae-3b826aa7a2ce",
     "requestee": "c97d2b8d-1299-4979-98f5-873560141d47",
-    "severity": 3,
+    "severity": 2,
     "location": {
       "city": "jacksonville",
       "state": "florida"
@@ -14,7 +14,7 @@
   {
     "id": "d542ab40-edc4-413b-8165-e9b55428b3ba",
     "requestee": "a486b707-485d-4cc6-a4d7-9a21ef1be1d1",
-    "severity": 1,
+    "severity": 5,
     "location": {
       "city": "jacksonville",
       "state": "florida"
