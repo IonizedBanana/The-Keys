@@ -11,7 +11,7 @@
     "city": "jacksonville",
     "address": "401 Old ln"
   },
-  "age": 67,
+  "age": 68,
   "sex": "m",
   "description": "frail old man with a half functioning brain",
   "numberOfPeople": 2
@@ -62,7 +62,7 @@
     "city": "jacksonville",
     "address": "99 Gator St"
   },
-  "phoneNumber": "(904) 398-4667"
+  "phoneNumber": "(904) 398-4668"
 },
 {
   "id": "9483d569-fe92-40a4-8a30-0ac569815ffc",
