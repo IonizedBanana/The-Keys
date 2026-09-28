@@ -27,6 +27,8 @@ Admins have the highest level of verification.
 
 [UML Diagram](https://github.com/IonizedBanana/The-Keys/blob/main/documents/uml-class-diagram.pdf)
 
-[UML Sequence Diagram](https://github.com/IonizedBanana/The-Keys/blob/main/documents/uml-sequence-diagram1.pdf)
+[UML Sequence Diagram 1](https://github.com/IonizedBanana/The-Keys/blob/main/documents/uml-sequence-diagram1.pdf)
+
+[UML Sequence Diagram 2](https://github.com/IonizedBanana/The-Keys/blob/main/documents/uml-sequence-diagram2.pdf)
 
 [Requirements Spreadsheet](https://github.com/IonizedBanana/The-Keys/blob/main/documents/requirements_spreadsheet.pdf)
