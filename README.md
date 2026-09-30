@@ -47,3 +47,5 @@ Admins run the app. They manage shelters, push alerts to users, and create and m
 - [UML Class Diagram](documents/uml-class-diagram.pdf)
 - [UML Sequence Diagram 1](documents/uml-sequence-diagram1.pdf)
 - [UML Sequence Diagram 2](documents/uml-sequence-diagram2.pdf)
+
+> Icons were provided by Lucide Icons at [lucide.dev](https://lucide.dev/).
