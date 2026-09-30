@@ -1,34 +1,49 @@
-# The Keys Hurricane Relief App
-The **Hurricane Relief App**  is an all-in-one app to provide, request, and advise help for volunteers, victims and shelter owners in hurricane-affected areas.
+# <img src="documents/icons/life-buoy.svg" width="30" alt=""> The Keys Hurricane Relief App
 
-## How does it work?
-All users require a username and password. In order to provide for all users, we have broken our users into 5 categories.
+![Java 11](https://img.shields.io/badge/Java-11-ED8B00?logo=openjdk&logoColor=white)
+![JavaFX 13](https://img.shields.io/badge/JavaFX-13-007396)
+![Maven](https://img.shields.io/badge/Maven-build-C71A36?logo=apachemaven&logoColor=white)
 
-### Victims
-**Victims** are users which are affected by their safety, property, survivability, or threats to life due to a hurricane.
-Victims can use our app to **request** help for multiple categories, providing their address, severity of impact, and contact information.
+The Hurricane Relief App is an all-in-one app for requesting, providing, and coordinating help in hurricane-affected areas. It connects victims, volunteers, and shelters so help gets to the people who need it.
 
-### Volunteers
-**Volunteers** are users which can provide help to **victims**. **Volunteers** can see victims general location, impact level, and type of request. Once they accept a help request, they will be provided with victim specifics to assist them. Volunteers are verified and background-checked, while victims are not.
-> Volunteers can also have credentials, such as CPR or First-Aid training. These such credentials can be verified and added to their profile, which will assist Dispatchers in assigning Volunteers.
+## How it works
 
-### Admins
-**Admins** are the managers of our app. Admins can manage shelters, push alerts to users, and create and manage hurricanes.
-Admins have the highest level of verification.
+Every user signs in with a username and password. To cover everyone involved in relief efforts, users are split into five roles.
 
-### Dispatchers
-**Dispatchers** are users which can *dispatch*, or assign volunteers and first-responders to victims help requests. These users are responsible for organizing, verifying, and obtaining information from victims.
+### <img src="documents/icons/user-round.svg" width="20" alt=""> Victims
 
-### Shelter Workers
-**Shelter Workers** are users which manage shelter status. These users can update the resource status, transfer them to other shelters, and receive queries of shelter status and information.
+Victims are people whose safety, property, or lives are threatened by a hurricane. They can use the app to **request** help in several categories by giving their address, how badly they've been affected, and their contact information.
 
-## Documents
-[Design Document](https://github.com/IonizedBanana/The-Keys/blob/main/documents/requirements.pdf)
+### <img src="documents/icons/hand-helping.svg" width="20" alt=""> Volunteers
 
-[UML Class Diagram](https://github.com/IonizedBanana/The-Keys/blob/main/documents/uml-class-diagram.pdf)
+Volunteers provide help to victims. Before accepting a request, a volunteer can see the victim's general location, impact level, and what kind of help they need. Once they accept, they get the victim's full details so they can assist them.
 
-[UML Sequence Diagram 1](https://github.com/IonizedBanana/The-Keys/blob/main/documents/uml-sequence-diagram1.pdf)
+Volunteers are verified and background checked. Victims are not.
 
-[UML Sequence Diagram 2](https://github.com/IonizedBanana/The-Keys/blob/main/documents/uml-sequence-diagram2.pdf)
+> Volunteers can also add credentials like CPR or First Aid training to their profile. Once verified, these help Dispatchers decide who to send where.
 
-[Requirements Spreadsheet](https://github.com/IonizedBanana/The-Keys/blob/main/documents/requirements_spreadsheet.pdf)
+### <img src="documents/icons/radio-tower.svg" width="20" alt=""> Dispatchers
+
+Dispatchers assign volunteers and first responders to victims' help requests. They're also responsible for organizing requests, verifying them, and following up with victims for more information.
+
+### <img src="documents/icons/house.svg" width="20" alt=""> Shelter Workers
+
+Shelter Workers keep shelter status up to date. They can update resource levels, transfer resources to other shelters, and answer questions about their shelter.
+
+### <img src="documents/icons/shield-check.svg" width="20" alt=""> Admins
+
+Admins run the app. They manage shelters, push alerts to users, and create and manage hurricanes. Admins have the highest level of verification.
+
+## <img src="documents/icons/folder-tree.svg" width="22" alt=""> Repository layout
+
+- `hurricane_system/` - the JavaFX application (Maven project)
+- `json/` - data files for users, requests, shelters, and hurricanes
+- `documents/` - design documents and diagrams
+
+## <img src="documents/icons/file-text.svg" width="22" alt=""> Documents
+
+- [Design Document](documents/requirements.pdf)
+- [Requirements Spreadsheet](documents/requirements_spreadsheet.pdf)
+- [UML Class Diagram](documents/uml-class-diagram.pdf)
+- [UML Sequence Diagram 1](documents/uml-sequence-diagram1.pdf)
+- [UML Sequence Diagram 2](documents/uml-sequence-diagram2.pdf)
