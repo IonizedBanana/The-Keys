@@ -13,7 +13,7 @@ public abstract class User {
         //TODO
     }
 
-    public User(String firstName,  String lastName, String username, String emailAddress, String password, Address address) {
+    public User(String firstName, String lastName, String username, String emailAddress, String password, Address address) {
         //overloaded constructor
     }
 
