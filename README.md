@@ -51,6 +51,6 @@ Admins run the app. They manage shelters, push alerts to users, and create and m
 - [UML Sequence Diagram 2](documents/uml-sequence-diagram2.pdf)
 
 ## <img src="documents/icons/square-kanban.svg" width="22" alt=""> Project Board
-TODO
+https://github.com/users/IonizedBanana/projects/2
 
 > Icons were provided by Lucide Icons at [lucide.dev](https://lucide.dev/).
