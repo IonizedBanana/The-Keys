@@ -40,12 +40,17 @@ Admins run the app. They manage shelters, push alerts to users, and create and m
 - `json/` - data files for users, requests, shelters, and hurricanes
 - `documents/` - design documents and diagrams
 
-## <img src="documents/icons/file-text.svg" width="22" alt=""> Documents
+## <img src="documents/icons/file-text.svg" width="22" alt=""> Requirements
 
 - [Design Document](documents/requirements.pdf)
 - [Requirements Spreadsheet](documents/requirements_spreadsheet.pdf)
+
+## <img src="documents/icons/chart-column-stacked.svg" width="22" alt=""> Code Design
 - [UML Class Diagram](documents/uml-class-diagram.pdf)
 - [UML Sequence Diagram 1](documents/uml-sequence-diagram1.pdf)
 - [UML Sequence Diagram 2](documents/uml-sequence-diagram2.pdf)
+
+## <img src="documents/icons/square-kanban.svg" width="22" alt=""> Project Board
+https://github.com/users/IonizedBanana/projects/2
 
 > Icons were provided by Lucide Icons at [lucide.dev](https://lucide.dev/).
