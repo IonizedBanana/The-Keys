@@ -1,6 +1,6 @@
 package com.hurricane;
 
-public class Victim {
+public class Victim extends User{
     public int age;
     private char sex;
     private String description;
@@ -43,7 +43,7 @@ public class Victim {
     }
 
     public void setPartySize(int partySize) {
-        
+
     }
 
     public void addInfo() {
