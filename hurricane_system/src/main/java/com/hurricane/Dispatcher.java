@@ -1,6 +1,6 @@
 package com.hurricane;
 
-public class Dispatcher {
+public class Dispatcher extends User{
     private String phoneNumber;
 
     public Dispatcher(String firstName,  String lastName, String username, String emailAddress, String password, Address address, String phoneNumber) {

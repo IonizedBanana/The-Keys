@@ -2,7 +2,7 @@ package com.hurricane;
 
 import java.util.ArrayList;
 
-public class Admin {
+public class Admin extends User{
     private String phoneNumber;
     
     public Admin(String firstName,  String lastName, String username, String emailAddress, String password, Address address, String phoneNumber) {
