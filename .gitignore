@@ -23,7 +23,13 @@
 hs_err_pid*
 replay_pid*
 
-# ignore any local shell files
+# ignore any local shell/config files
 *.sh
 *.nix
+/hurricane_system
+
+# ignore build files
 target/
+
+# ignore testing data
+json/testing/
