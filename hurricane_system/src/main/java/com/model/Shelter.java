@@ -13,7 +13,41 @@ public class Shelter {
 
   public Shelter(UUID id, String name, String address, int totalCapacity, int usedCapacity, int expectedArrivals,
       String resources) {
-    // TODO implement
+    this.id = id;
+    this.name = name;
+    this.address = address;
+    this.totalCapacity = totalCapacity;
+    this.usedCapacity = usedCapacity;
+    this.expectedArrivals = expectedArrivals;
+    this.resources = resources;
+  }
+
+  public UUID getId() {
+	return id;
+}
+
+  public String getName() {
+	return name;
+  }
+
+  public String getAddress() {
+	return address;
+  }
+
+  public int getTotalCapacity() {
+	return totalCapacity;
+  }
+
+  public int getUsedCapacity() {
+	return usedCapacity;
+  }
+
+  public int getExpectedArrivals() {
+	return expectedArrivals;
+  }
+
+  public String getResources() {
+	return resources;
   }
 
   public void addResource(String resource) { // TODO change to Resource
@@ -25,14 +59,22 @@ public class Shelter {
   }
   
   public int availableSpace() {
-    return 0; // TODO implement
+    return (totalCapacity - (usedCapacity + expectedArrivals));
   }
 
   public boolean isOutOfSupplies() {
-    return true; // TODO implement
+    return (resources.length() < 1); // TODO change to utilize ArrayList.sizeOf()
+  }
+
+  public void notify(int partySize) {
+    expectedArrivals += partySize;
   }
 
   public void registerArrival(int partySize) {
-    // TODO implement
+    usedCapacity += partySize;
+  }
+
+  public String toString() {
+    return (this.id + " " + this.name + " " + this.address + " " + this.totalCapacity + " " + this.usedCapacity + " " + this.expectedArrivals + " " + this.resources);
   }
 }
