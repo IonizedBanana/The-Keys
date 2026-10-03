@@ -17,6 +17,58 @@ public abstract class User {
         //overloaded constructor
     }
 
+    //getters and setters
+
+    public String getFirstName() {
+        //TODO
+    }
+
+    public void setFirstName() {
+        //TODO
+    }
+
+    public String getLastName() {
+        //TODO
+    }
+
+    public void setLastName() {
+        //TODO
+    }
+
+    public String getUsername() {
+        //TODO
+    }
+
+    public void setUsername() {
+        //TODO
+    }
+
+    public String getEmailAddress() {
+        //TODO
+    }
+
+    public void setEmailAddress() {
+        //TODO
+    }
+
+    public String getPassword() {
+        //TODO
+    }
+
+    public void setPassword() {
+        //TODO
+    }
+
+    public Address getAddress() {
+        //TODO
+    }
+
+    public void setAddress() {
+        //TODO
+    }
+
+    //other methods
+
     public boolean isMatch(String userName, String password) {
         //returns if the current user matches the username and password given
     }
