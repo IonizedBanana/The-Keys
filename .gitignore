@@ -26,3 +26,4 @@ replay_pid*
 # ignore any local shell files
 *.sh
 *.nix
+target/
