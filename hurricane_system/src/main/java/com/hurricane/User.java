@@ -1,7 +1,5 @@
 import java.util.UUID;
 
-import javafx.scene.control.Alert;
-
 import java.util.ArrayList;
 
 public abstract class User {
@@ -97,7 +95,12 @@ public abstract class User {
     }
 
     public void receiveAlert(Alert alert) {
+        /*
         if(alert.getAffectedLocations.contains(this.address)) {
+            recievedAlerts.add(alert);
+        }
+        */
+        if(alert.isRelevantTo(this)) {
             recievedAlerts.add(alert);
         }
     }

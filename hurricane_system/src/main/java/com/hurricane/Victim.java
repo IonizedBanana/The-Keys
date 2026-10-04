@@ -1,12 +1,12 @@
 package com.hurricane;
 
-public class Victim extends User{
+public class Victim extends User {
     public int age;
     private char sex;
     private String description;
     private int partySize;
 
-    public Victim(String firstName,  String lastName, String username, String emailAddress, String password, Address address) {
+    public Victim(String firstName, String lastName, String username, String emailAddress, String password, Address address) {
 
     }
 
@@ -15,7 +15,7 @@ public class Victim extends User{
     }
 
     public int getAge() {
-
+        return this.age;
     }
 
     public void setAge(int age) {
@@ -23,7 +23,7 @@ public class Victim extends User{
     }
 
     public char getSex() {
-
+        return this.sex;
     }
 
     public void setSex(char sex) {
@@ -31,7 +31,7 @@ public class Victim extends User{
     }
 
     public String getDescription() {
-
+        return this.description;
     }
     
     public void setDescription() {
@@ -39,7 +39,7 @@ public class Victim extends User{
     }
 
     public int getPartySize() {
-
+        return this.partySize;
     }
 
     public void setPartySize(int partySize) {
@@ -55,7 +55,7 @@ public class Victim extends User{
     }
 
     public void notifyShelter(Shelter shelter, int partySize) {
-
+        
     }
 
     public void createRequest() {

@@ -46,6 +46,6 @@ public class Alert {
     }
 
     public boolean isRelevantTo(User user) {
-
+        return true;
     }
 }
