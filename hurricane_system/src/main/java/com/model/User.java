@@ -105,25 +105,12 @@ public abstract class User {
     }
 
     public void receiveAlert(Alert alert) {
-        /*
-        if(alert.getAffectedLocations.contains(this.address)) {
-            recievedAlerts.add(alert);
-        }
-        */
         if(alert.isRelevantTo(this)) {
             recievedAlerts.add(alert);
         }
     }
-
+    
     public void donate(Resource donation, Shelter shelter) {
         shelter.addResource(donation);
     }
-    
-    /*
-    Was told to remove this method
-
-    public void viewResourceReport(Shelter shelter) {
-        //see what resources a shelter has
-    }
-    */
 }

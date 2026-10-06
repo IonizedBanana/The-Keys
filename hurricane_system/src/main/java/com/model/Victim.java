@@ -73,17 +73,18 @@ public class Victim extends User {
 
     public String getInfo() {
         //A string of the attributes of victim (ONLY age, sex, description)
+        return this.getAge() + "\n" + this.getSex() + "\n" + this.getDescription();
     }
 
     public void notifyShelter(Shelter shelter, int partySize) {
-        
+        shelter.notify(partySize);
     }
 
     public void createRequest() {
-
+        //TODO
     }
 
     public void editRequest() {
-
+        //TODO
     }
 }
