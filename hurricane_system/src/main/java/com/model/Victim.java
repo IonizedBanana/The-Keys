@@ -1,6 +1,10 @@
 package com.model;
 import java.util.ArrayList;
 
+/**
+ * Victim
+ * @author Jason
+ */
 public class Victim extends User {
     public int age;
     private char sex;
@@ -80,8 +84,9 @@ public class Victim extends User {
         shelter.notify(partySize);
     }
 
-    public void createRequest() {
-        //TODO
+    // Added parameters to create a request
+    public void createRequest(byte severity, Location location, String description) {
+        Request newRequest = Request(this, severity, location, description);
     }
 
     public void editRequest() {

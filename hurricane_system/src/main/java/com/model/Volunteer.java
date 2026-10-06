@@ -1,5 +1,10 @@
 package com.model;
 import java.util.ArrayList;
+
+/** 
+ * Volunteer
+ * @author Jason
+ */
 public class Volunteer extends User{
     private ArrayList<Credential> credentials;
     private ArrayList<ResponseType> fieldsOfExpertise;

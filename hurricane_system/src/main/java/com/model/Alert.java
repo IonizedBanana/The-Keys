@@ -3,6 +3,10 @@ package com.model;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Alert
+ * @author Jason
+ */
 public class Alert {
     private ArrayList<Location> affectedLocations;
     private String description;

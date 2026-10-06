@@ -1,6 +1,10 @@
 package com.model;
 import java.util.Date;
 
+/**
+ * Credential
+ * @author Jason
+ */
 public class Credential {
     private String type;
     private String issuer;

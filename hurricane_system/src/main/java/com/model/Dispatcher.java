@@ -1,5 +1,9 @@
 package com.model;
 
+/**
+ * Dispatcher
+ * @author Jason
+ */
 public class Dispatcher extends User{
     private String phoneNumber;
 
