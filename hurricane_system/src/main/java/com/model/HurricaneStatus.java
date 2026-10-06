@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-package com.model;
->>>>>>> 5c329a6 (Updated packages to be com.model)
-
 package com.model;
 
 /**
@@ -28,5 +23,4 @@ public enum HurricaneStatus {
 
     /** Passed. Kept on record so its impact area is still available. */
     OVER
-
 }
