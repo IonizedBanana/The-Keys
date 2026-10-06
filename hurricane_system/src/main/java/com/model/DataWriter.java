@@ -3,6 +3,7 @@ package com.model;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.json.simple.JSONArray;
@@ -72,17 +73,16 @@ public class DataWriter extends DataConstants {
     }
   }
 
-  public static boolean saveHurricanes(/* HashMap<Hurricane> hurricanes */) { // TODO uncomment param
+  public static boolean saveHurricanes(HashMap<String, Hurricane> hurricanes) { 
     // File hurricaneFile = new File(HURRICANE_FILE_PATH);
     File hurricaneFile = new File("../json/testing/hurricane.json");
-    JSONArray userJSONArray = new JSONArray();
-    for (char h : new String("hurricane").toCharArray()) {
-      userJSONArray.add(getUserJSON(/* h */)); // TODO change this loop to be for Hurricane H : hurricanes, and change
-                                               // method call when Hurricanes are implemented
+    JSONArray hurricaneJSONArray = new JSONArray();
+    for (Map.Entry<String, Hurricane> set : hurricanes.entrySet()) {
+      hurricaneJSONArray.add(getHurricaneJSON(set.getValue())); 
     }
     try {
       FileWriter writer = new FileWriter(hurricaneFile);
-      writer.write(userJSONArray.toJSONString());
+      writer.write(hurricaneJSONArray.toJSONString());
       writer.flush();
       writer.close();
       return true;
@@ -117,9 +117,30 @@ public class DataWriter extends DataConstants {
     return requestJSON;
   }
 
-  public static JSONObject getHurricaneJSON(/* Hurricane hurricane */) {
+  public static JSONObject getHurricaneJSON(Hurricane hurricane) {
     JSONObject hurricaneJSON = new JSONObject();
-    // TODO change parameter and implement once User classes are created
+    hurricaneJSON.put(HURRICANE_UUID, hurricane.getId().toString());
+    hurricaneJSON.put(HURRICANE_NAME, hurricane.getName());
+    hurricaneJSON.put(HURRICANE_CATEGORY, hurricane.getCategory());
+    hurricaneJSON.put(HURRICANE_CURRENT_LOCATION, getLocationJSON(hurricane.getCurrentLocation()));
+    hurricaneJSON.put(HURRICANE_PREDICTED_PATH, getLocationArray(hurricane.getPredictedPath()));
+    hurricaneJSON.put(HURRICANE_IMPACT_AREA, getLocationArray(hurricane.getImpactArea()));
+    hurricaneJSON.put(HURRICANE_STATUS, hurricane.getStatus().toString());
     return hurricaneJSON;
+  }
+
+  private static JSONObject getLocationJSON(Location location) {
+    JSONObject locationJSON = new JSONObject();
+    locationJSON.put(LOCATION_STATE, location.getState());
+    locationJSON.put(LOCATION_CITY, location.getCity());
+    return locationJSON;
+  }
+
+  private static JSONArray getLocationArray(ArrayList<Location> locations) {
+    JSONArray locationsJSON = new JSONArray();
+    for (Location l : locations) {
+      locationsJSON.add(getLocationJSON(l));
+    }
+    return locationsJSON;
   }
 }
