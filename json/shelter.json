@@ -8,7 +8,7 @@
     "address": "1441 Main St"
   },
   "totalCapacity": 643,
-  "usedCapactiy": 340,
+  "usedCapacity": 340,
   "expectedArrivals": 52,
   "resources": { }
   },
@@ -21,7 +21,7 @@
     "address": "1300 West Cross Rd"
   },
   "totalCapacity": 405,
-  "usedCapactiy": 180,
+  "usedCapacity": 180,
   "expectedArrivals": 12,
   "resources": { }
   }
