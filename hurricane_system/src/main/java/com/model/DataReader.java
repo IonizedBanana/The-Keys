@@ -2,7 +2,8 @@ package com.model;
 
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.json.simple.JSONArray;
@@ -10,8 +11,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 public class DataReader extends DataConstants {
-  public static ArrayList<Shelter> getShelters() {
-    ArrayList<Shelter> shelters = new ArrayList<Shelter>();
+  public static HashMap<String, Shelter> getShelters() {
+    HashMap<String, Shelter> shelters = new HashMap<String, Shelter>();
     File shelterFile = new File(SHELTER_FILE_PATH);
     System.out.println(SHELTER_FILE_PATH);
     try {
@@ -30,7 +31,7 @@ public class DataReader extends DataConstants {
         // Resource resources = (String)shelterObject.get(SHELTER_RESOURCES); // TODO uncomment and use the actual resources value when resources are made
         String resources = new String("resources");
         Shelter shelter = new Shelter(id, name, address, totalCapacity, usedCapacity, expectedArrivals, resources);
-        shelters.add(shelter);
+        shelters.put(shelter.getName(), shelter);
       }
       reader.close();
       return shelters;
@@ -39,7 +40,7 @@ public class DataReader extends DataConstants {
       return null;
     }
   }
-  public static void getUsers() { // TODO change return to ArrayList<User>
+  public static void getUsers() { // TODO change return to HashMap<User>
     File userFile = new File(USER_FILE_PATH);
     try {
       FileReader reader = new FileReader(userFile);
@@ -54,7 +55,7 @@ public class DataReader extends DataConstants {
     }
   }
   
-  public static void getRequests() { // TODO change return to ArrayList<Request>
+  public static void getRequests() { // TODO change return to HashMap<Request>
     File requestFile = new File(USER_FILE_PATH);
     try {
       FileReader reader = new FileReader(requestFile);
@@ -69,7 +70,7 @@ public class DataReader extends DataConstants {
     }
   }
 
-  public static void getHurricanes() { // TODO change return to ArrayList<Hurricane>
+  public static void getHurricanes() { // TODO change return to HashMap<Hurricane>
     File hurricaneFile = new File(HURRICANE_FILE_PATH);
     try {
       FileReader reader = new FileReader(hurricaneFile);
@@ -85,9 +86,9 @@ public class DataReader extends DataConstants {
   }
 
   public static void main(String[] args) {
-    ArrayList<Shelter> shelters = getShelters(); 
-    for (Shelter s : shelters) {
-      System.out.println(s);
+    HashMap<String, Shelter> shelters = getShelters(); 
+    for (Map.Entry<String, Shelter> set : shelters.entrySet()) {
+      System.out.println(set.getValue());
     }
     DataWriter.saveShelters(shelters);
   }

@@ -2,18 +2,20 @@ package com.model;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class DataWriter extends DataConstants {
-  public static boolean saveShelters(ArrayList<Shelter> shelters) {
+  public static boolean saveShelters(HashMap<String, Shelter> shelters) {
     // File shelterFile = new File(SHELTER_FILE_PATH); TODO change this once saving
     // is tested fully
     File shelterFile = new File("../json/testing/shelter.json");
     JSONArray shelterJSONArray = new JSONArray();
-    for (Shelter s : shelters) {
-      shelterJSONArray.add(getShelterJSON(s));
+    for (Map.Entry<String, Shelter> set : shelters.entrySet()) {
+      shelterJSONArray.add(getShelterJSON(set.getValue()));
     }
     try {
       FileWriter writer = new FileWriter(shelterFile);
@@ -28,7 +30,7 @@ public class DataWriter extends DataConstants {
     }
   }
 
-  public static boolean saveUsers(/* ArrayList<Users> users */) { // TODO uncomment param
+  public static boolean saveUsers(/* HashMap<Users> users */) { // TODO uncomment param
     // File userFile = new File(USER_FILE_PATH);
     File userFile = new File("../json/testing/user.json");
     JSONArray userJSONArray = new JSONArray();
@@ -49,7 +51,7 @@ public class DataWriter extends DataConstants {
     }
   }
 
-  public static boolean saveRequests(/* ArrayList<Request> requests */) { // TODO uncomment param
+  public static boolean saveRequests(/* HashMap<Request> requests */) { // TODO uncomment param
     // File userFile = new File(REQUEST_FILE_PATH);
     File requestFile = new File("../json/testing/request.json");
     JSONArray userJSONArray = new JSONArray();
@@ -70,7 +72,7 @@ public class DataWriter extends DataConstants {
     }
   }
 
-  public static boolean saveHurricanes(/* ArrayList<Hurricane> hurricanes */) { // TODO uncomment param
+  public static boolean saveHurricanes(/* HashMap<Hurricane> hurricanes */) { // TODO uncomment param
     // File hurricaneFile = new File(HURRICANE_FILE_PATH);
     File hurricaneFile = new File("../json/testing/hurricane.json");
     JSONArray userJSONArray = new JSONArray();
