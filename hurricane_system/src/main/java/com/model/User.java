@@ -1,3 +1,5 @@
+package com.model;
+
 import java.util.UUID;
 
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ public abstract class User {
     protected String password;
     protected Address address;
     protected ArrayList<Alert> recievedAlerts;
-    protected Type userType;
+    protected UserType type;
 
     public User(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address) {
         this.id = id;
@@ -84,6 +86,14 @@ public abstract class User {
         this.address = address;
     }
 
+    public UserType getType() {
+        return this.type;
+    }
+
+    public void setType(UserType type) {
+        this.type = type;
+    }
+
     //other methods
 
     public boolean isMatch(String username, String password) {
@@ -108,8 +118,12 @@ public abstract class User {
     public void donate(Resource donation, Shelter shelter) {
         shelter.addResource(donation);
     }
+    
+    /*
+    Was told to remove this method
 
     public void viewResourceReport(Shelter shelter) {
         //see what resources a shelter has
     }
+    */
 }

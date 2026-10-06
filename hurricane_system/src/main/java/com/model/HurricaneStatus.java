@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+package com.model;
+>>>>>>> 5c329a6 (Updated packages to be com.model)
 
 package com.model;
 

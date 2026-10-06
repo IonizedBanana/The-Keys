@@ -1,4 +1,4 @@
-package com.hurricane;
+package com.model;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,6 +46,6 @@ public class Alert {
     }
 
     public boolean isRelevantTo(User user) {
-        return true;
+        //return (this.affectedLocations.contains(user.address));
     }
 }
