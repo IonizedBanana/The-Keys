@@ -1,8 +1,8 @@
 package com.model;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -37,7 +37,7 @@ public class Hurricane {
     private Location currentLocation;
 
     /** Locations the storm is forecast to reach, in the order it will reach them. */
-    private Queue<Location> predictedPath;
+    private ArrayList<Location> predictedPath;
 
     /** Locations the storm has already hit. */
     private ArrayList<Location> impactArea;
@@ -64,13 +64,13 @@ public class Hurricane {
      * @param status          the storm's lifecycle status
      */
     public Hurricane(UUID id, String name, byte category, Location currentLocation,
-                     Queue<Location> predictedPath, ArrayList<Location> impactArea,
+                     ArrayList<Location> predictedPath, ArrayList<Location> impactArea,
                      HurricaneStatus status) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.currentLocation = currentLocation;
-        this.predictedPath = (predictedPath == null) ? new LinkedList<Location>() : predictedPath;
+        this.predictedPath = (predictedPath == null) ? new ArrayList<Location>() : predictedPath;
         this.impactArea = (impactArea == null) ? new ArrayList<Location>() : impactArea;
         this.status = status;
     }
@@ -88,7 +88,7 @@ public class Hurricane {
      */
     public Hurricane(String name, byte category, Location currentLocation) {
         this(UUID.randomUUID(), name, category, currentLocation,
-             new LinkedList<Location>(), new ArrayList<Location>(), HurricaneStatus.INCOMING);
+             new ArrayList<Location>(), new ArrayList<Location>(), HurricaneStatus.INCOMING);
     }
 
     /**
@@ -135,7 +135,7 @@ public class Hurricane {
      *
      * @return locations the storm is forecast to reach, in order; empty if unknown
      */
-    public Queue<Location> getPredictedPath() {
+    public ArrayList<Location> getPredictedPath() {
         return predictedPath;
     }
 
@@ -196,8 +196,8 @@ public class Hurricane {
      *
      * @param path the new forecast locations in order; null is treated as empty
      */
-    public void updatePredictedPath(Queue<Location> path) {
-        this.predictedPath = (path == null) ? new LinkedList<Location>() : path;
+    public void updatePredictedPath(ArrayList<Location> path) {
+        this.predictedPath = (path == null) ? new ArrayList<Location>() : path;
     }
 
     /**
