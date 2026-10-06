@@ -1,5 +1,6 @@
 package com.model;
 
+
 /**
  * UserType
  * @author Jason
