@@ -78,15 +78,6 @@ public class Location { // TODO Address should extend this (UML: Address(String 
         return Objects.equals(state, other.state) && Objects.equals(city, other.city);
     }
 
-    /**
-     * Returns a hash consistent with {@link #equals(Object)}.
-     *
-     * @return the hash code
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(state, city);
-    }
 
     /**
      * Returns the location as "City, State".
