@@ -1,7 +1,7 @@
 package com.model;
 
 public class ShelterWorker {
-// private Shelter shelter;
+private Shelter shelter;
 
     // public ShelterWorker(String firstName, String lastName, String username, String password, String emailAddress, Address address, Shelter shelter) {
     //     super(firstName, lastName, username, password, emailAddress, address);
