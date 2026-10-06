@@ -21,6 +21,7 @@ public class Admin extends User {
 
     public String getPhoneNumber() {
         //TODO
+        return this.phoneNumber;
     }
 
     public void setPhoneNumbers() {

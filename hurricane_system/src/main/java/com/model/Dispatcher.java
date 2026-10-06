@@ -19,9 +19,10 @@ public class Dispatcher extends User{
 
     public String getPhoneNumber() {
         //TODO
+        return this.phoneNumber;
     }
 
-    public void setPhoneNumbers() {
+    public void setPhoneNumber() {
         //TODO
     }
 
@@ -35,7 +36,7 @@ public class Dispatcher extends User{
         //TODO
     }
 
-    public finishRequest() {
+    public void finishRequest() {
         //TODO
     }
 

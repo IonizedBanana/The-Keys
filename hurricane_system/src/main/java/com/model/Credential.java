@@ -15,7 +15,7 @@ public class Credential {
     }
 
     public String getType() {
-
+        return this.type;
     }
 
     public void setType(String type) {
@@ -23,7 +23,7 @@ public class Credential {
     }
 
     public String getIssuer() {
-
+        return this.issuer;
     }
 
     public void setIssuer(String issuer) {
@@ -31,7 +31,7 @@ public class Credential {
     }
 
     public Date getExpirationDate() {
-
+        return this.expirationDate;
     }
 
     public void setExpirationDate(Date expirationDate) {
