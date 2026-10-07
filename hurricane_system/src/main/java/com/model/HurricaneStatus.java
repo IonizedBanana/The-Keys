@@ -1,9 +1,5 @@
 package com.model;
 
-<<<<<<< HEAD
-public enum HurricaneStatus {
-    INCOMING, IN_PROGRESS, OVER;
-=======
 /**
  * Where a hurricane is in its lifecycle.
  *
@@ -27,5 +23,4 @@ public enum HurricaneStatus {
 
     /** Passed. Kept on record so its impact area is still available. */
     OVER
->>>>>>> main
 }
