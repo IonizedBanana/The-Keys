@@ -18,7 +18,7 @@ import java.util.Locale;
  *
  * @author SynthwaveFox
  */
-public class Location { // Address holds a Location rather than extending it; see equals()
+public class Location {
 
     /** The state, never null. Stored as given, apart from trimming. */
     private final String state;
@@ -78,10 +78,9 @@ public class Location { // Address holds a Location rather than extending it; se
      * machine's locale.</p>
      *
      * <p>Compares by exact class rather than {@code instanceof}, so a
-     * subclass is never equal to a plain Location. If Address is written as a
-     * subclass, a user's Address would therefore never match a hurricane's
-     * impact area, and alert filtering would silently find nobody. Give
-     * Address a Location field and compare that instead.</p>
+     * subclass is never equal to a plain Location. {@link Address} is such a
+     * subclass, which means an Address never matches a hurricane's impact
+     * area directly -- use {@link Address#getLocation()} to compare.</p>
      *
      * <p>Note: {@code hashCode()} is deliberately not overridden, so Locations
      * must not be used in a HashSet or as HashMap keys -- lookups there would
