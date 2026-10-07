@@ -1,7 +1,5 @@
 package com.model;
 
-public enum HurricaneStatus {
-    INCOMING, IN_PROGRESS, OVER;
 /**
  * Where a hurricane is in its lifecycle.
  *
@@ -15,4 +13,14 @@ public enum HurricaneStatus {
  *
  * @author SynthwaveFox
  */
+public enum HurricaneStatus {
+
+    /** Forming or approaching, but has not reached land yet. */
+    INCOMING,
+
+    /** Currently affecting an area. */
+    IN_PROGRESS,
+
+    /** Passed. Kept on record so its impact area is still available. */
+    OVER
 }
