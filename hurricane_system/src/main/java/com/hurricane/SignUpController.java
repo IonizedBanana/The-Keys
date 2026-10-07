@@ -1,6 +1,7 @@
 package com.hurricane;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import com.model.HurricaneApplication;
 
@@ -46,15 +47,21 @@ public class SignUpController {
         String email = emailField.getText();
         String password = passwordField.getText();
 
-        if (firstName.isBlank() || lastName.isBlank() || username.isBlank()
-                || email.isBlank() || password.isBlank()) {
-            errorLabel.setText("Fill in every field.");
+        TextField[] fields = {firstNameField, lastNameField, usernameField, emailField,
+                passwordField, confirmPasswordField};
+        FormError.clear(errorLabel, fields);
+
+        TextField[] emptyFields = Arrays.stream(fields)
+                .filter(field -> field.getText().isBlank())
+                .toArray(TextField[]::new);
+        if (emptyFields.length > 0) {
+            FormError.show(errorLabel, "Fill in every field.", emptyFields);
             return;
         }
 
         if (!password.equals(confirmPasswordField.getText())) {
-            errorLabel.setText("Passwords do not match.");
             confirmPasswordField.clear();
+            FormError.show(errorLabel, "Passwords do not match.", confirmPasswordField, passwordField);
             return;
         }
 
@@ -62,12 +69,13 @@ public class SignUpController {
             App.setRoot("home");
         } else {
             // TODO give a specific reason (e.g. username taken) once createAccount can report one
-            errorLabel.setText("Could not create account. That username may already be taken.");
+            FormError.show(errorLabel, "Could not create account. That username may already be taken.",
+                    usernameField);
         }
     }
 
     @FXML
     private void switchToLogin() throws IOException {
-        App.setRoot("login");
+        App.setRoot("login", App.Transition.SLIDE_RIGHT);
     }
 }

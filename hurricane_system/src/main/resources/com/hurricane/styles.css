@@ -1,0 +1,190 @@
+/*
+ * App-wide styles. Colors are looked-up colors defined once on .root, so the
+ * palette can be changed in one place.
+ */
+
+/* ---------- Palette ---------- */
+
+.root {
+    -accent: #4c95f9;
+    -accent-hover: #6aa8ff;
+    -accent-pressed: #3b7fe0;
+    -accent-text: #ffffff;
+    -accent-glow: rgba(76, 149, 249, 0.35);
+
+    -bg-top: #0b1220;
+    -bg-bottom: #121d33;
+    -surface: #16213a;
+    -surface-alt: #1d2a46;
+    -field: #0f182b;
+    -border: #2a3a58;
+    -text: #e6edf7;
+    -muted: #8b9bb4;
+    -danger: #ff6b6b;
+    -danger-bg: rgba(255, 107, 107, 0.12);
+    -danger-border: rgba(255, 107, 107, 0.40);
+    -danger-glow: rgba(255, 107, 107, 0.35);
+    -shadow: rgba(0, 0, 0, 0.45);
+
+    -fx-font-family: "Inter", "Segoe UI", "Helvetica Neue", "Cantarell", sans-serif;
+    -fx-font-size: 14px;
+    -fx-focus-color: -accent;
+    -fx-faint-focus-color: transparent;
+}
+
+.shell {
+    -fx-background-color: linear-gradient(to bottom right, -bg-top, -bg-bottom);
+}
+
+/* ---------- Cards and text ---------- */
+
+.card {
+    -fx-background-color: -surface;
+    -fx-background-radius: 18;
+    -fx-border-color: -border;
+    -fx-border-radius: 18;
+    -fx-padding: 32 36 28 36;
+    -fx-effect: dropshadow(gaussian, -shadow, 36, 0, 0, 10);
+}
+
+.label {
+    -fx-text-fill: -text;
+}
+
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.subtitle {
+    -fx-text-fill: -muted;
+}
+
+.error-banner {
+    -fx-background-color: -danger-bg;
+    -fx-background-radius: 10;
+    -fx-border-color: -danger-border;
+    -fx-border-radius: 10;
+    -fx-padding: 9 12;
+    -fx-text-fill: -danger;
+    -fx-font-size: 13px;
+}
+
+.error-banner .icon {
+    -fx-stroke: -danger;
+}
+
+/* ---------- Icons (Lucide paths drawn with SVGPath) ---------- */
+
+.icon {
+    -fx-fill: transparent;
+    -fx-stroke: -accent;
+    -fx-stroke-width: 2;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-line-join: round;
+}
+
+.field-icon {
+    -fx-stroke: -muted;
+}
+
+.brand-badge {
+    -fx-background-color: -accent-glow;
+    -fx-background-radius: 20;
+    -fx-min-width: 72;
+    -fx-min-height: 72;
+    -fx-max-width: 72;
+    -fx-max-height: 72;
+}
+
+/* ---------- Text fields ---------- */
+
+.text-field {
+    -fx-background-color: -field;
+    -fx-background-radius: 10;
+    -fx-border-color: -border;
+    -fx-border-radius: 10;
+    -fx-border-width: 1.5;
+    -fx-padding: 10 12 10 40;
+    -fx-text-fill: -text;
+    -fx-text-inner-color: -text;
+    -fx-prompt-text-fill: -muted;
+    -fx-highlight-fill: -accent;
+    -fx-highlight-text-fill: -accent-text;
+}
+
+.text-field:hover {
+    -fx-border-color: derive(-border, -15%);
+}
+
+.text-field:focused {
+    -fx-border-color: -accent;
+    -fx-effect: dropshadow(gaussian, -accent-glow, 8, 0.4, 0, 0);
+}
+
+/* Set by FormError on a field and its icon; clears when the user edits the field */
+.text-field:error {
+    -fx-border-color: -danger;
+}
+
+.text-field:error:focused {
+    -fx-effect: dropshadow(gaussian, -danger-glow, 8, 0.4, 0, 0);
+}
+
+.field-icon:error {
+    -fx-stroke: -danger;
+}
+
+/* ---------- Buttons ---------- */
+
+.button {
+    -fx-background-color: -surface-alt;
+    -fx-background-radius: 10;
+    -fx-border-color: -border;
+    -fx-border-radius: 10;
+    -fx-text-fill: -text;
+    -fx-font-weight: bold;
+    -fx-padding: 10 18;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: derive(-surface-alt, -4%);
+}
+
+.button:default {
+    -fx-background-color: -accent;
+    -fx-border-color: transparent;
+    -fx-text-fill: -accent-text;
+    -fx-effect: dropshadow(gaussian, -accent-glow, 14, 0, 0, 4);
+}
+
+.button:default:hover {
+    -fx-background-color: -accent-hover;
+}
+
+.button:default:pressed {
+    -fx-background-color: -accent-pressed;
+    -fx-effect: null;
+}
+
+.button .icon {
+    -fx-stroke: -text;
+}
+
+/* ---------- Links ---------- */
+
+.hyperlink {
+    -fx-text-fill: -accent;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.hyperlink:hover {
+    -fx-text-fill: -accent-hover;
+    -fx-underline: true;
+}
+
+.hyperlink:visited {
+    -fx-text-fill: -accent;
+}

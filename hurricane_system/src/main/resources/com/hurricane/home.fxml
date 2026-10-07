@@ -1,17 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 
 <!-- TODO placeholder home screen; replace with the real screens for each user type -->
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hurricane.HomeController">
+<!-- Icons are Lucide (ISC license) paths, matching documents/icons -->
+<StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hurricane.HomeController">
    <children>
-      <Label text="You are logged in." style="-fx-font-size: 18px;" />
-      <Button text="Log Out" onAction="#logout" />
+      <VBox styleClass="card" alignment="CENTER" spacing="12.0" maxWidth="380.0" maxHeight="-Infinity">
+         <children>
+            <!-- house -->
+            <StackPane styleClass="brand-badge">
+               <Group>
+                  <SVGPath styleClass="icon" scaleX="1.6" scaleY="1.6" content="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8 M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+               </Group>
+            </StackPane>
+            <Label styleClass="title" text="You're logged in" />
+            <Label styleClass="subtitle" text="Your dashboard will appear here." />
+            <!-- log-out -->
+            <Button text="Log Out" graphicTextGap="8.0" maxWidth="Infinity" onAction="#logout">
+               <VBox.margin><Insets top="8.0" /></VBox.margin>
+               <graphic>
+                  <Group>
+                     <SVGPath styleClass="icon" scaleX="0.7" scaleY="0.7" content="M16 17l5-5-5-5 M21 12H9 M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                  </Group>
+               </graphic>
+            </Button>
+         </children>
+      </VBox>
    </children>
    <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+      <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
    </padding>
-</VBox>
+</StackPane>

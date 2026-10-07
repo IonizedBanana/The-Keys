@@ -28,21 +28,28 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        if (username.isBlank() || password.isBlank()) {
-            errorLabel.setText("Enter your username and password.");
+        FormError.clear(errorLabel, usernameField, passwordField);
+
+        if (username.isBlank()) {
+            FormError.show(errorLabel, "Enter your username.", usernameField);
+            return;
+        }
+        if (password.isBlank()) {
+            FormError.show(errorLabel, "Enter your password.", passwordField);
             return;
         }
 
         if (HurricaneApplication.getInstance().login(username, password)) {
             App.setRoot("home");
         } else {
-            errorLabel.setText("Incorrect username or password.");
+            // Mark both fields so the message doesn't reveal which one was wrong
             passwordField.clear();
+            FormError.show(errorLabel, "Incorrect username or password.", passwordField, usernameField);
         }
     }
 
     @FXML
     private void switchToSignUp() throws IOException {
-        App.setRoot("signup");
+        App.setRoot("signup", App.Transition.SLIDE_LEFT);
     }
 }
