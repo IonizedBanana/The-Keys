@@ -1,7 +1,6 @@
 package com.model;
 
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * A place, identified by state and city.
@@ -67,18 +66,6 @@ public class Location { // Address holds a Location rather than extending it; se
     }
 
     /**
-     * Reports whether this location names an actual place.
-     *
-     * <p>Useful when loading: a record missing its city or state produces a
-     * Location rather than an error, and this is how a caller notices.</p>
-     *
-     * @return true if both state and city are non-empty
-     */
-    public boolean isComplete() {
-        return !state.isEmpty() && !city.isEmpty();
-    }
-
-    /**
      * Compares by state and city, ignoring case.
      *
      * <p>Case is ignored because the data files are not consistent: the same
@@ -95,6 +82,11 @@ public class Location { // Address holds a Location rather than extending it; se
      * subclass, a user's Address would therefore never match a hurricane's
      * impact area, and alert filtering would silently find nobody. Give
      * Address a Location field and compare that instead.</p>
+     *
+     * <p>Note: {@code hashCode()} is deliberately not overridden, so Locations
+     * must not be used in a HashSet or as HashMap keys -- lookups there would
+     * fail to find entries the collection contains. The collections that hold
+     * Locations today are ArrayLists, which compare with this method.</p>
      *
      * @param o the object to compare with
      * @return true if {@code o} is a Location naming the same place
@@ -113,21 +105,6 @@ public class Location { // Address holds a Location rather than extending it; se
     }
 
     /**
-     * Returns a hash consistent with {@link #equals(Object)}.
-     *
-     * <p>Required: two Locations that are equal must return the same hash, or
-     * a HashSet or HashMap keyed by Location will fail to find entries it
-     * contains. Because equals() ignores case, this hashes the lowercased
-     * values.</p>
-     *
-     * @return the hash code
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(normalized(state), normalized(city));
-    }
-
-    /**
      * Returns the location as "City, State".
      *
      * <p>Returns the values as stored, so the output reflects however the
@@ -141,7 +118,7 @@ public class Location { // Address holds a Location rather than extending it; se
     }
 
     /**
-     * Reduces a value to the form used for comparison and hashing.
+     * Reduces a value to the form used for comparison.
      *
      * @param value the value to reduce, never null
      * @return the value lowercased in a locale-independent way
