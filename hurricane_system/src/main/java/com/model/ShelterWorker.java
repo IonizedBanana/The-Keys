@@ -1,14 +1,15 @@
 package com.model;
 
-public class ShelterWorker {
+public class ShelterWorker extends User {
 private Shelter shelter;
 
     public ShelterWorker(String firstName, String lastName, String username, String password, String emailAddress, Address address, Shelter shelter) {
         super(firstName, lastName, username, password, emailAddress, address);
         this.shelter = shelter;
+        this.setType(UserType.SHELTER_WORKER);
     }
     public ShelterWorker(User user) {
-        super(user.getFirstName(), user.getLastName(), user.getUsername(), user.getPassword(), user.getEmailAddress(), user.getAddress());
+        super(user.firstName, user.lastName, user.username, user.password, user.emailAddress, user.address);
         this.shelter = null;
     }
     public void updateResources(Resource resource, int quantity) {
