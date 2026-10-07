@@ -44,6 +44,14 @@ public abstract class User {
 
     //getters and setters
 
+    public ArrayList<Alert> getRecievedAlerts() {
+      return recievedAlerts;
+    }
+
+    public UUID getId() {
+      return this.id;
+    }
+
     public String getFirstName() {
         return this.firstName;
     }

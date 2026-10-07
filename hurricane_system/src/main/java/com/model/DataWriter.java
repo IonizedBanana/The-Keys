@@ -5,11 +5,13 @@ import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.UUID;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class DataWriter extends DataConstants {
+  @SuppressWarnings("unchecked")
   public static boolean saveShelters(HashMap<String, Shelter> shelters) {
     // File shelterFile = new File(SHELTER_FILE_PATH); TODO change this once saving
     // is tested fully
@@ -31,13 +33,13 @@ public class DataWriter extends DataConstants {
     }
   }
 
-  public static boolean saveUsers(/* HashMap<Users> users */) { // TODO uncomment param
+  @SuppressWarnings("unchecked")
+  public static boolean saveUsers(HashMap<String, User> users) { // TODO uncomment param
     // File userFile = new File(USER_FILE_PATH);
     File userFile = new File("../json/testing/user.json");
     JSONArray userJSONArray = new JSONArray();
-    for (char u : new String("users").toCharArray()) {
-      userJSONArray.add(getUserJSON(/* u */)); // TODO change this loop to be for User u : users, and change method call
-                                               // when Users are implemented
+    for (Map.Entry<String, User> set : users.entrySet() ){
+      userJSONArray.add(getUserJSON(set.getValue())); 
     }
     try {
       FileWriter writer = new FileWriter(userFile);
@@ -52,13 +54,13 @@ public class DataWriter extends DataConstants {
     }
   }
 
-  public static boolean saveRequests(/* HashMap<Request> requests */) { // TODO uncomment param
+  @SuppressWarnings("unchecked")
+  public static boolean saveRequests(HashMap<UUID, Request> requests) {
     // File userFile = new File(REQUEST_FILE_PATH);
     File requestFile = new File("../json/testing/request.json");
     JSONArray userJSONArray = new JSONArray();
-    for (char r : new String("requests").toCharArray()) {
-      userJSONArray.add(getUserJSON(/* r */)); // TODO change this loop to be for Request r : requests and change method
-                                               // call when Requests are implemented
+    for (Map.Entry<UUID, Request> set : requests.entrySet()){
+      userJSONArray.add(getRequestJSON(set.getValue())); 
     }
     try {
       FileWriter writer = new FileWriter(requestFile);
@@ -73,6 +75,7 @@ public class DataWriter extends DataConstants {
     }
   }
 
+  @SuppressWarnings("unchecked")
   public static boolean saveHurricanes(HashMap<String, Hurricane> hurricanes) { 
     // File hurricaneFile = new File(HURRICANE_FILE_PATH);
     File hurricaneFile = new File("../json/testing/hurricane.json");
@@ -93,7 +96,8 @@ public class DataWriter extends DataConstants {
     }
   }
 
-  public static JSONObject getShelterJSON(Shelter shelter) {
+  @SuppressWarnings("unchecked")
+  private static JSONObject getShelterJSON(Shelter shelter) {
     JSONObject shelterJSON = new JSONObject();
     shelterJSON.put(SHELTER_UUID, shelter.getId().toString());
     shelterJSON.put(SHELTER_NAME, shelter.getName());
@@ -105,19 +109,36 @@ public class DataWriter extends DataConstants {
     return shelterJSON;
   }
 
-  public static JSONObject getUserJSON(/* User user */) {
+  @SuppressWarnings("unchecked")
+  private static JSONObject getUserJSON(User user) {
     JSONObject userJSON = new JSONObject();
-    // TODO change parameter and implement once User classes are created
+    userJSON.put(USER_FIRST_NAME, user.getFirstName());
+    userJSON.put(USER_LAST_NAME, user.getLastName());
+    userJSON.put(USER_USERNAME, user.getUsername());
+    userJSON.put(USER_EMAIL_ADDRESS, user.getEmailAddress());
+    userJSON.put(USER_PASSWORD, user.getPassword());
+    // userJSON.put(USER_ADDRESS, getAddressJSON(user.getAddress()));
+    userJSON.put(USER_UUID, user.getId());
+    userJSON.put(USER_TYPE, user.getType().toString());
+    userJSON.put(USER_RECIEVED_ALERTS, (JSONArray)user.getRecievedAlerts());
     return userJSON;
   }
 
-  public static JSONObject getRequestJSON(/* Request request */) {
+  @SuppressWarnings("unchecked")
+  private static JSONObject getRequestJSON(Request request) {
     JSONObject requestJSON = new JSONObject();
-    // TODO change parameter and implement once User classes are created
+    requestJSON.put(REQUEST_UUID, request.getId().toString());
+    requestJSON.put(REQUEST_REQUESTEE, getUserJSON(request.getRequestee()));
+    requestJSON.put(REQUEST_SEVERITY, request.getSeverity());
+    requestJSON.put(REQUEST_LOCATION, getLocationJSON(request.getLocation()));
+    requestJSON.put(REQUEST_STATUS, request.getStatus().toString());
+    requestJSON.put(REQUEST_RESPONSE_TYPE, request.getResponderType().toString());
+    requestJSON.put(REQUEST_DESCRIPTION, request.getDescription());
     return requestJSON;
   }
 
-  public static JSONObject getHurricaneJSON(Hurricane hurricane) {
+  @SuppressWarnings("unchecked")
+  private static JSONObject getHurricaneJSON(Hurricane hurricane) {
     JSONObject hurricaneJSON = new JSONObject();
     hurricaneJSON.put(HURRICANE_UUID, hurricane.getId().toString());
     hurricaneJSON.put(HURRICANE_NAME, hurricane.getName());
@@ -129,6 +150,7 @@ public class DataWriter extends DataConstants {
     return hurricaneJSON;
   }
 
+  @SuppressWarnings("unchecked")
   private static JSONObject getLocationJSON(Location location) {
     JSONObject locationJSON = new JSONObject();
     locationJSON.put(LOCATION_STATE, location.getState());
@@ -136,6 +158,7 @@ public class DataWriter extends DataConstants {
     return locationJSON;
   }
 
+  @SuppressWarnings("unchecked")
   private static JSONArray getLocationArray(ArrayList<Location> locations) {
     JSONArray locationsJSON = new JSONArray();
     for (Location l : locations) {

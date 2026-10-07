@@ -36,6 +36,9 @@ public class Request {
     public UUID getId() {
       return this.id;
     }
+    public User getRequestee() {
+      return this.requestee;
+    }
     public String getDescription() {
         return description;
     }

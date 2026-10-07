@@ -34,6 +34,7 @@ public class DataConstants {
   public static final String USER_EMAIL_ADDRESS = "emailAddress";
   public static final String USER_PASSWORD = "password";
   public static final String USER_ADDRESS = "address";
+  public static final String USER_RECIEVED_ALERTS = "recievedAlerts";
   public static final String VOLUNTEER_CREDENTIALS = "credentials";
   public static final String VOLUNTEER_FIELDS_OF_EXPERTISE = "fieldsOfExpertise";
   public static final String VOLUNTEER_IDENTITY_VERIFIED = "identityVerified";
