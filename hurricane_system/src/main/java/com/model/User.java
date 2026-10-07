@@ -4,6 +4,12 @@ import java.util.UUID;
 
 import java.util.ArrayList;
 
+
+/**
+ * User
+ * @author Jason
+ */
+
 public abstract class User {
     private UUID id;
     protected String firstName;

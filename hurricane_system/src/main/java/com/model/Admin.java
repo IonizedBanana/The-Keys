@@ -2,7 +2,11 @@ package com.model;
 
 import java.util.ArrayList;
 
-public class Admin extends User{
+/**
+ * Admin
+ * @author Jason
+ */
+public class Admin extends User {
     private String phoneNumber;
     
     public Admin(String firstName,  String lastName, String username, String emailAddress, String password, Address address, String phoneNumber) {
@@ -17,6 +21,7 @@ public class Admin extends User{
 
     public String getPhoneNumber() {
         //TODO
+        return this.phoneNumber;
     }
 
     public void setPhoneNumbers() {

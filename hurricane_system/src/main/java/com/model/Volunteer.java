@@ -1,5 +1,10 @@
 package com.model;
 import java.util.ArrayList;
+
+/** 
+ * Volunteer
+ * @author Jason
+ */
 public class Volunteer extends User{
     private ArrayList<Credential> credentials;
     private ArrayList<ResponseType> fieldsOfExpertise;
@@ -17,7 +22,7 @@ public class Volunteer extends User{
     //getters and setters
 
     public ArrayList<Credential> getCredentials() {
-        
+        return this.credentials;
     }
 
     public void setCredentials(ArrayList<Credential> credentials) {
@@ -25,7 +30,7 @@ public class Volunteer extends User{
     }
 
     public ArrayList<ResponseType> getFieldsOfExpertise() {
-        
+        return this.fieldsOfExpertise;
     }
 
     public void setCredentials(ArrayList<ResponseType> fieldsOfExpertise) {
@@ -33,7 +38,7 @@ public class Volunteer extends User{
     }
 
     public boolean getIdentityVerified() {
-
+        return this.identityVerified;
     }
 
     public void setIdentityVerified(boolean identityVerified) {
@@ -41,7 +46,7 @@ public class Volunteer extends User{
     }
 
     public boolean getIsAvailible() {
-
+        return this.availible;
     }
 
     public void setAvailible(boolean available) {
@@ -66,7 +71,7 @@ public class Volunteer extends User{
         //updates a request
     }
 
-    public finishRequest(Request request) {
+    public void finishRequest(Request request) {
         //marks a request as done
     }
 }

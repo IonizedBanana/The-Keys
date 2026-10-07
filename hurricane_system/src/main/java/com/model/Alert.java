@@ -3,6 +3,10 @@ package com.model;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Alert
+ * @author Jason
+ */
 public class Alert {
     private ArrayList<Location> affectedLocations;
     private String description;
@@ -22,7 +26,8 @@ public class Alert {
     }
 
     public String getDescription() {
-
+        //TODO
+        return "";
     }
 
     public void setDescription(String description) {
@@ -30,7 +35,8 @@ public class Alert {
     }
 
     public String getIssuedBy() {
-
+        //TODO
+        return "";
     }
 
     public void setIssuedBy(String issuedBy) {
@@ -38,7 +44,7 @@ public class Alert {
     }
 
     public Date getTimestamp() {
-
+        return null;
     }
 
     public void setTimestamp(Date timestamp) {
@@ -46,6 +52,8 @@ public class Alert {
     }
 
     public boolean isRelevantTo(User user) {
+        //TODO
         //return (this.affectedLocations.contains(user.address));
+        return true;
     }
 }
