@@ -63,4 +63,10 @@ public class DataConstants {
   public static final String HURRICANE_PREDICTED_PATH = "predictedPath";
   public static final String HURRICANE_IMPACT_AREA = "impactArea";
   public static final String HURRICANE_STATUS = "status";
+
+  // Alert consts
+  public static final String ALERT_AFFECTED_LOCATIONS = "affectedLocations";
+  public static final String ALERT_DESCRIPTION = "description";
+  public static final String ALERT_ISSUED_BY = "issuedBy";
+  public static final String ALERT_TIMESTAMP = "timestamp";
 }

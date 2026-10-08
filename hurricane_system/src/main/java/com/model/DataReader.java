@@ -3,6 +3,7 @@ package com.model;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
@@ -46,15 +47,57 @@ public class DataReader extends DataConstants {
     File userFile = new File(USER_FILE_PATH);
     try {
       FileReader reader = new FileReader(userFile);
-      JSONArray shelterJSONArray = (JSONArray)new JSONParser().parse(reader);
+      JSONArray userJSONArray = (JSONArray)new JSONParser().parse(reader);
       
-      for (int i = 0; i < shelterJSONArray.size(); i++) {
-        // TODO implement once User classes are implemented
+      for (int i = 0; i < userJSONArray.size(); i++) {
+        JSONObject userObject = (JSONObject)userJSONArray.get(i);
+        UUID id = UUID.fromString((String)userObject.get(USER_UUID));
+        String firstName = (String)userObject.get(USER_FIRST_NAME);
+        String lastName = (String)userObject.get(USER_LAST_NAME);
+        String username = (String)userObject.get(USER_USERNAME);
+        String emailAddress = (String)userObject.get(USER_EMAIL_ADDRESS);
+        String password = (String)userObject.get(USER_PASSWORD);
+        Address address = getAddress((JSONObject)userObject.get(USER_ADDRESS));
+        UserType type = getUserType((String)userObject.get(USER_TYPE));
+        ArrayList<Alert> recievedAlerts = getRecievedAlerts((JSONArray)userObject.get(USER_RECIEVED_ALERTS));
       }
       reader.close();
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
+  }
+
+  private static UserType getUserType(String type) {
+    if (type.equals("VICTIM")){
+      return UserType.VICTIM;
+    } else if(type.equals("VOLUNTEER")){
+      return UserType.VOLUNTEER;
+    } else if(type.equals("ADMIN")){
+      return UserType.ADMIN;
+    } else if(type.equals("DISPATCHER")){
+      return UserType.DISPATCHER;
+    } else if(type.equals("SHELTER_WORKER")){
+      return UserType.SHELTER_WORKER;
+    }
+    return null;
+  }
+  
+  private static ArrayList<Alert> getRecievedAlerts(JSONArray arr) {
+    ArrayList<Alert> alerts = new ArrayList<Alert>();
+    for (int i = 0; i < arr.size(); i++) {
+      JSONObject o = (JSONObject)arr.get(i);
+      Alert alert = getAlert(o);
+      alerts.add(alert);
+    }
+    return alerts;
+  }
+
+  private static Alert getAlert(JSONObject alert) {
+    ArrayList<Location> affectedLocations = getLoactionList((JSONArray)alert.get(ALERT_AFFECTED_LOCATIONS));
+    String description = (String)alert.get(ALERT_DESCRIPTION);
+    String issuedBy = (String)alert.get(ALERT_ISSUED_BY);
+    Date timestamp = (Date)alert.get(ALERT_TIMESTAMP);
+    return new Alert(affectedLocations, description, issuedBy, timestamp);
   }
   
   public static HashMap<UUID, Request> getRequests() {
