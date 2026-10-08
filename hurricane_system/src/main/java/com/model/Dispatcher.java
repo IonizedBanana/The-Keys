@@ -1,0 +1,46 @@
+package com.model;
+
+/**
+ * Dispatcher
+ * @author Jason
+ */
+public class Dispatcher extends User{
+    private String phoneNumber;
+
+    public Dispatcher(String firstName,  String lastName, String username, String emailAddress, String password, Address address, String phoneNumber) {
+        //TODO
+    }
+
+    public Dispatcher(User user, String phoneNumber) {
+        //TODO
+    }
+
+    //getters and setters
+
+    public String getPhoneNumber() {
+        //TODO
+        return this.phoneNumber;
+    }
+
+    public void setPhoneNumber() {
+        //TODO
+    }
+
+    //other methods
+
+    public void respondToRequest(Request request) {
+        //TODO
+    }
+
+    public void requestMoreInfo() {
+        //TODO
+    }
+
+    public void finishRequest() {
+        //TODO
+    }
+
+    public void updateRequest() {
+        //TODO
+    }
+}

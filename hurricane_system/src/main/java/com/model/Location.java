@@ -1,46 +1,56 @@
 package com.model;
 
-import java.util.Objects;
+import java.util.Locale;
 
 /**
  * A place, identified by state and city.
  *
- * <p>PROTOTYPE: a minimal version so {@link Hurricane} compiles and can be
- * tested. It follows the UML (state and city, plus the two-argument
- * constructor) and adds only what Hurricane needs to work correctly.</p>
+ * <p>Locations are the unit the system reasons about geographically: a
+ * hurricane sits in one, moves through a list of them, and records the ones
+ * it has hit; requests are reported from one; alerts are targeted at them.</p>
  *
- * <p>Two locations are equal when their state and city match. Hurricane
- * relies on this for {@code contains()} and {@code remove()} on its impact
- * area and predicted path.</p>
- *
- * TODO finish and review the full implementation
+ * <p>A Location is a value, not a thing with its own identity. Two Locations
+ * naming the same place are equal and interchangeable, which is what lets
+ * {@link Hurricane#willReach(Location)} and
+ * {@link Hurricane#addImpactArea(Location)} work with a Location loaded from
+ * JSON and one built in code. The fields are final for that reason -- a
+ * Location never changes into a different place.</p>
  *
  * @author SynthwaveFox
  */
-public class Location { // TODO Address should extend this (UML: Address(String state, String city, String address))
+public class Location {
 
-    /** The state, such as "SC". */
-    private String state; // TODO decide on full name vs. abbreviation and enforce it
+    /** The state, never null. Stored as given, apart from trimming. */
+    private final String state;
 
-    /** The city, such as "Columbia". */
-    private String city;
+    /** The city, never null. Stored as given, apart from trimming. */
+    private final String city;
 
     /**
      * Creates a location.
      *
-     * @param state the state
-     * @param city  the city
+     * <p>Surrounding whitespace is trimmed and null is stored as an empty
+     * string, so no caller has to null-check a state or city. Nothing is
+     * rejected: the JSON data files are hand-written and partially filled
+     * in, and a half-known location is more useful than a crash during
+     * loading.</p>
+     *
+     * <p>Capitalisation is left alone, because the team has not settled on
+     * full state names versus abbreviations. {@link #equals(Object)} ignores
+     * case so that decision can be made later without breaking anything.</p>
+     *
+     * @param state the state, such as "Florida"; null is treated as empty
+     * @param city  the city, such as "Jacksonville"; null is treated as empty
      */
     public Location(String state, String city) {
-        // TODO validate input (null/blank) once the expected format is decided
-        this.state = state;
-        this.city = city;
+        this.state = (state == null) ? "" : state.trim();
+        this.city = (city == null) ? "" : city.trim();
     }
 
     /**
      * Returns the state.
      *
-     * @return the state
+     * @return the state, never null, possibly empty
      */
     public String getState() {
         return state;
@@ -49,25 +59,39 @@ public class Location { // TODO Address should extend this (UML: Address(String 
     /**
      * Returns the city.
      *
-     * @return the city
+     * @return the city, never null, possibly empty
      */
     public String getCity() {
         return city;
     }
 
     /**
-     * Compares by state and city, so separately created locations for the
-     * same place are equal.
+     * Compares by state and city, ignoring case.
      *
-     * <p>TODO decide if comparison should ignore case and surrounding whitespace.
-     * Data entered by users may not match exactly.</p>
+     * <p>Case is ignored because the data files are not consistent: the same
+     * place appears as "jacksonville"/"florida" in one record and
+     * "Houston"/"Texas" in another. Comparing exactly would make two spellings
+     * of one city into two different places, and a hurricane would fail to
+     * recognise a location it had already hit.</p>
+     *
+     * <p>Uses {@link Locale#ROOT} so the result does not depend on the
+     * machine's locale.</p>
+     *
+     * <p>Compares by exact class rather than {@code instanceof}, so a
+     * subclass is never equal to a plain Location. {@link Address} is such a
+     * subclass, which means an Address never matches a hurricane's impact
+     * area directly -- use {@link Address#getLocation()} to compare.</p>
+     *
+     * <p>Note: {@code hashCode()} is deliberately not overridden, so Locations
+     * must not be used in a HashSet or as HashMap keys -- lookups there would
+     * fail to find entries the collection contains. The collections that hold
+     * Locations today are ArrayLists, which compare with this method.</p>
      *
      * @param o the object to compare with
-     * @return true if {@code o} is a Location with the same state and city
+     * @return true if {@code o} is a Location naming the same place
      */
     @Override
     public boolean equals(Object o) {
-        // TODO when Address extends this, make sure an Address and a plain Location compare the way we want
         if (this == o) {
             return true;
         }
@@ -75,17 +99,30 @@ public class Location { // TODO Address should extend this (UML: Address(String 
             return false;
         }
         Location other = (Location) o;
-        return Objects.equals(state, other.state) && Objects.equals(city, other.city);
+        return normalized(state).equals(normalized(other.state))
+            && normalized(city).equals(normalized(other.city));
     }
-
 
     /**
      * Returns the location as "City, State".
+     *
+     * <p>Returns the values as stored, so the output reflects however the
+     * data was capitalised.</p>
      *
      * @return the formatted location
      */
     @Override
     public String toString() {
         return city + ", " + state;
+    }
+
+    /**
+     * Reduces a value to the form used for comparison.
+     *
+     * @param value the value to reduce, never null
+     * @return the value lowercased in a locale-independent way
+     */
+    private static String normalized(String value) {
+        return value.toLowerCase(Locale.ROOT);
     }
 }
