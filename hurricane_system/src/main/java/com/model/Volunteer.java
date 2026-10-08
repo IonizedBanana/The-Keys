@@ -5,7 +5,7 @@ import java.util.ArrayList;
  * Volunteer
  * @author Jason
  */
-public class Volunteer extends User{
+public class Volunteer extends User {
     private ArrayList<Credential> credentials;
     private ArrayList<ResponseType> fieldsOfExpertise;
     private boolean identityVerified;
@@ -26,15 +26,15 @@ public class Volunteer extends User{
     }
 
     public void setCredentials(ArrayList<Credential> credentials) {
-
+        this.credentials = credentials;
     }
 
     public ArrayList<ResponseType> getFieldsOfExpertise() {
         return this.fieldsOfExpertise;
     }
 
-    public void setCredentials(ArrayList<ResponseType> fieldsOfExpertise) {
-        
+    public void setFieldsOfExpertise(ArrayList<ResponseType> fieldsOfExpertise) {
+        this.fieldsOfExpertise = fieldsOfExpertise;
     }
 
     public boolean getIdentityVerified() {
@@ -42,7 +42,7 @@ public class Volunteer extends User{
     }
 
     public void setIdentityVerified(boolean identityVerified) {
-
+        this.identityVerified = identityVerified;
     }
 
     public boolean getIsAvailible() {
@@ -51,6 +51,7 @@ public class Volunteer extends User{
 
     public void setAvailible(boolean available) {
         //set availibility (for consistancy with UML, has name setAvailibility)
+        this.availible = available;
     }
 
     //other methods
