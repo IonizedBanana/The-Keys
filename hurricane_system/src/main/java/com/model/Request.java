@@ -1,6 +1,11 @@
 package com.model;
 import java.util.UUID;
 
+/**
+ * 
+ * Request
+ * @author LoganH627
+ */
 public class Request {
     private UUID id;
     private User requestee;

@@ -1,5 +1,9 @@
 package com.model;
-
+/**
+ * 
+ * ResourceType
+ * @author LoganH627
+ */
 public enum ResourceType {
     WATER("Water"),
     FOOD("Food"),

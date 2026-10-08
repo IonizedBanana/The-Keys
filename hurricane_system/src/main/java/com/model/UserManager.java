@@ -1,5 +1,10 @@
 package com.model;
 import java.util.Scanner;
+/**
+ * 
+ * UserManager
+ * @author LoganH627
+ */
 public class UserManager {
     private static Scanner scanner = new Scanner(System.in);
     public static User editUser(User user) {

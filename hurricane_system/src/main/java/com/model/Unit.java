@@ -1,5 +1,9 @@
 package com.model;
-
+/**
+ * 
+ * Unit
+ * @author LoganH627
+ */
 public enum Unit {
      GALLONS("Gallons"),
      POUNDS("Pounds"),

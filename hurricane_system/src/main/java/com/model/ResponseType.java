@@ -1,5 +1,9 @@
 package com.model;
 
+/**
+ * Enum representing different types of responses.
+ * @author LoganH627
+ */
 public enum ResponseType {
      MEDICAL("Medical"),
      RESOURCE("Resource"),

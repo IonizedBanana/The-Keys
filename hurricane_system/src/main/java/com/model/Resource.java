@@ -1,5 +1,9 @@
 package com.model;
-
+/**
+ * 
+ * Resource
+ * @author LoganH627
+ */
 public class Resource {
     private ResourceType type;
     private String description;
