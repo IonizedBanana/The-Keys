@@ -12,7 +12,7 @@ public class Volunteer extends User {
     private boolean availible;
 
     public Volunteer(String firstName,  String lastName, String username, String emailAddress, String password, Address address) {
-        //TODO
+        super(firstName, lastName, username, emailAddress, password, address);
     }
 
     public Volunteer(User user) {
