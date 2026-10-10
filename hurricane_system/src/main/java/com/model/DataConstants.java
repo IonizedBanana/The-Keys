@@ -69,4 +69,11 @@ public class DataConstants {
   public static final String ALERT_DESCRIPTION = "description";
   public static final String ALERT_ISSUED_BY = "issuedBy";
   public static final String ALERT_TIMESTAMP = "timestamp";
+
+  // Credential consts
+  public static final String CREDENTIAL_TYPE = "type";
+  public static final String CREDENTIAL_ISSUER = "issuer";
+  public static final String CREDENTIAL_EXPIRATION_DATE = "expirationDate";
+  public static final String CREDENTIAL_VERIFIED = "verified";
+
 }

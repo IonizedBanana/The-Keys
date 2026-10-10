@@ -9,8 +9,9 @@ public class Credential {
     private String type;
     private String issuer;
     private Date expirationDate;
+    private boolean verified;
 
-    public Credential(String type, String issuer, Date expirationDate) {
+    public Credential(String type, String issuer, Date expirationDate, boolean verified) {
 
     }
 
@@ -37,4 +38,12 @@ public class Credential {
     public void setExpirationDate(Date expirationDate) {
         
     }
+
+	  public boolean isVerified() {
+        return verified;
+	  }
+
+	  public void setVerified(boolean verified) {
+        this.verified = verified;
+	  }
 }

@@ -1,18 +1,19 @@
 package com.model;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Shelter {
   private UUID id;
   private String name;
-  private String address; // TODO change to Address
+  private Address address; 
   private int totalCapacity;
   private int usedCapacity;
   private int expectedArrivals;
-  private String resources; // TODO change to ArrayList<Resource>
+  private ArrayList<Resource> resources; 
 
-  public Shelter(UUID id, String name, String address, int totalCapacity, int usedCapacity, int expectedArrivals,
-      String resources) {
+  public Shelter(UUID id, String name, Address address, int totalCapacity, int usedCapacity, int expectedArrivals,
+      ArrayList<Resource> resources) {
     this.id = id;
     this.name = name;
     this.address = address;
@@ -30,7 +31,7 @@ public class Shelter {
 	return name;
   }
 
-  public String getAddress() {
+  public Address getAddress() {
 	return address;
   }
 
@@ -46,16 +47,20 @@ public class Shelter {
 	return expectedArrivals;
   }
 
-  public String getResources() {
+  public ArrayList<Resource> getResources() {
 	return resources;
   }
 
-  public void addResource(String resource) { // TODO change to Resource
-    // TODO implement
+  public void addResource(Resource resource) { 
+    resources.add(resource);
   }
 
-  public void updateResource(String resource, int quantity) { // TODO change to Resource
-    // TODO implement
+  public void updateResource(Resource resource, int quantity) { 
+    for (Resource r : resources) {
+      if (r.equals(resource)) {
+        r.updateQuantity(quantity);
+      }
+    }
   }
   
   public int availableSpace() {

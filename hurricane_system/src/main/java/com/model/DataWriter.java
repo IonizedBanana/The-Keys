@@ -34,7 +34,7 @@ public class DataWriter extends DataConstants {
   }
 
   @SuppressWarnings("unchecked")
-  public static boolean saveUsers(HashMap<String, User> users) { // TODO uncomment param
+  public static boolean saveUsers(HashMap<String, User> users) { 
     // File userFile = new File(USER_FILE_PATH);
     File userFile = new File("../json/testing/user.json");
     JSONArray userJSONArray = new JSONArray();
@@ -101,12 +101,40 @@ public class DataWriter extends DataConstants {
     JSONObject shelterJSON = new JSONObject();
     shelterJSON.put(SHELTER_UUID, shelter.getId().toString());
     shelterJSON.put(SHELTER_NAME, shelter.getName());
-    shelterJSON.put(SHELTER_ADDRESS, shelter.getAddress()); // TODO add .toString() once Address is implemented
+    shelterJSON.put(SHELTER_ADDRESS, getAddressJSON(shelter.getAddress())); 
     shelterJSON.put(SHELTER_TOTAL_CAPACITY, shelter.getTotalCapacity());
     shelterJSON.put(SHELTER_USED_CAPACITY, shelter.getUsedCapacity());
     shelterJSON.put(SHELTER_EXPECTED_ARRIVALS, shelter.getExpectedArrivals());
-    shelterJSON.put(SHELTER_RESOURCES, shelter.getResources());
+    shelterJSON.put(SHELTER_RESOURCES, getResourceListJSON(shelter.getResources()));
     return shelterJSON;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static JSONObject getResourceJSON(Resource resource) {
+    JSONObject resourceObject = new JSONObject();
+    resourceObject.put(RESOURCE_TYPE, resource.getType().toString());
+    resourceObject.put(RESOURCE_QUANTITY, resource.getQuantity());
+    resourceObject.put(RESOURCE_DESCRIPTION, resource.getDescription());
+    resourceObject.put(RESOURCE_UNIT, resource.getUnit().toString());
+    return resourceObject;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static JSONArray getResourceListJSON(ArrayList<Resource> resources) {
+    JSONArray resourceJSONArray = new JSONArray();
+    for (Resource r : resources) {
+      resourceJSONArray.add(getResourceJSON(r));
+    }
+    return resourceJSONArray;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static JSONObject getAddressJSON(Address address) {
+    JSONObject addressObject = new JSONObject();
+    addressObject.put(LOCATION_STATE, address.getState());
+    addressObject.put(LOCATION_CITY, address.getCity());
+    addressObject.put(ADDRESS_ADDRESS, address.getAddress());
+    return addressObject;
   }
 
   @SuppressWarnings("unchecked")
@@ -117,10 +145,15 @@ public class DataWriter extends DataConstants {
     userJSON.put(USER_USERNAME, user.getUsername());
     userJSON.put(USER_EMAIL_ADDRESS, user.getEmailAddress());
     userJSON.put(USER_PASSWORD, user.getPassword());
-    // userJSON.put(USER_ADDRESS, getAddressJSON(user.getAddress()));
+    userJSON.put(USER_ADDRESS, getAddressJSON(user.getAddress()));
     userJSON.put(USER_UUID, user.getId());
     userJSON.put(USER_TYPE, user.getType().toString());
     userJSON.put(USER_RECIEVED_ALERTS, (JSONArray)user.getRecievedAlerts());
+    switch (user.getType()) {
+      case VICTIM: {
+        user = (Volunteer)user;
+      }
+    }
     return userJSON;
   }
 

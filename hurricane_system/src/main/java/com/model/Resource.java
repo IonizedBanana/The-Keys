@@ -6,12 +6,8 @@ public class Resource {
     private int quantity;
     private Unit unit;
 
-    public Resource(ResourceType type, int quantity, Unit unit) {
+    public Resource(ResourceType type, String description, int quantity, Unit unit) {
         this.type = type;
-        this.quantity = quantity;
-        this.unit = unit;
-    }
-    public Resource(String description, int quantity, Unit unit) {
         this.description = description;
         this.quantity = quantity;
         this.unit = unit;
@@ -35,4 +31,7 @@ public class Resource {
     public Unit getUnit() {
         return unit;
     }
+    public String toString() {
+    return (quantity + " " +this.unit.ASCII + " of " + this.type.ASCII);
+  }
 }
