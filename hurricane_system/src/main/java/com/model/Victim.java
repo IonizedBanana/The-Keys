@@ -12,6 +12,7 @@ public class Victim extends User {
     private int partySize;
     private ArrayList<Request> createdRequests;
 
+    //Victims don't provide all information immediately. They can add more info later.
     public Victim(String firstName, String lastName, String username, String emailAddress, String password, Address address) {
         super(firstName, lastName, username, emailAddress, password, address);
         this.setType(UserType.VICTIM);
@@ -66,15 +67,6 @@ public class Victim extends User {
         }
     }
 
-    /*
-
-    Removed because this method was added to UML with a console based interface in mind. Setters should be used instead.
-
-    public void addInfo() {
-
-    }
-    */
-
     public String getInfo() {
         //A string of the attributes of victim (ONLY age, sex, description)
         return this.getAge() + "\n" + this.getSex() + "\n" + this.getDescription();
@@ -89,7 +81,22 @@ public class Victim extends User {
         Request newRequest = Request(this, severity, location, description);
     }
 
+    /* 
+    Removed in favor of making separate edit methods for each attribute of the request (That the victim can control)
     public void editRequest() {
         //TODO
+    }
+    */
+
+    public void editRequestSeverity(Request request, byte severity) {
+        request.setSeverity(severity);
+    }
+
+    public void editRequestLocation(Request request, Location location) {
+        request.setLocation(location);
+    }
+
+    public void editRequestDescription(Request request, String description) {
+        request.setDescription(description);
     }
 }
