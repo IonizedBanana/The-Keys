@@ -10,10 +10,10 @@ import java.util.Date;
 public class Alert {
     private ArrayList<Location> affectedLocations;
     private String description;
-    private String issuedBy;
+    private User issuedBy;
     private Date timestamp;
 
-    public Alert(ArrayList<Location> affectedLocations, String description, String issuedBy, Date timestamp) {
+    public Alert(ArrayList<Location> affectedLocations, String description, User issuedBy, Date timestamp) {
         setAffectedLocations(affectedLocations);
         setDescription(description);
         setIssuedBy(issuedBy);
@@ -40,11 +40,11 @@ public class Alert {
         this.description = description;
     }
 
-    public String getIssuedBy() {
+    public User getIssuedBy() {
         return this.issuedBy;
     }
 
-    public void setIssuedBy(String issuedBy) {
+    public void setIssuedBy(User issuedBy) {
         this.issuedBy = issuedBy;
     }
 
