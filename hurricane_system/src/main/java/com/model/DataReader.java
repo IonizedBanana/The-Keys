@@ -292,14 +292,16 @@ public class DataReader extends DataConstants {
             (JSONArray) userObject.get(VOLUNTEER_FIELDS_OF_EXPERTISE));
         boolean identityVerified = (Boolean) userObject.get(VOLUNTEER_IDENTITY_VERIFIED);
         boolean available = (Boolean) userObject.get(VOLUNTEER_AVAILABLE);
-        return new Volunteer(firstName, lastName, username, emailAddress, password, address);
+        return new Volunteer(firstName, lastName, username, emailAddress, password, address, credentials,
+            fieldsOfExpertise, identityVerified, available);
       }
       case VICTIM -> {
         byte age = ((Long) userObject.get(VICTIM_AGE)).byteValue();
         char sex = ((String) userObject.get(VICTIM_SEX)).toCharArray()[0];
         String description = (String) userObject.get(VICTIM_DESCRIPTION);
         byte partySize = ((Long) userObject.get(VICTIM_PARTY_SIZE)).byteValue();
-        return new Victim(firstName, lastName, username, emailAddress, password, address);
+        return new Victim(firstName, lastName, username, emailAddress, password, address, age, sex, description,
+            partSize);
       }
       case ADMIN -> {
         String phoneNumber = (String) userObject.get(ADMIN_PHONE_NUMBER);
