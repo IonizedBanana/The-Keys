@@ -10,11 +10,13 @@ public class Admin extends User {
     private String phoneNumber;
     
     public Admin(String firstName,  String lastName, String username, String emailAddress, String password, Address address, String phoneNumber) {
-        //TODO
+        super(firstName, lastName, username, emailAddress, password, address);
+        this.setPhoneNumber(phoneNumber);
     }
 
     public Admin(User user, String phoneNumber) {
-        //TODO
+        super(user.firstName, user.lastName, user.username, user.emailAddress, user.password, user.address);
+        this.setPhoneNumber(phoneNumber);
     }
 
     //getters and setters
@@ -24,14 +26,15 @@ public class Admin extends User {
         return this.phoneNumber;
     }
 
-    public void setPhoneNumbers() {
-        //TODO
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     //other methods
 
     public void addHurricane(Hurricane hurricane) {
         //TODO
+        //Add to HurricaneList?
     }
 
     public void removeHurricane(Hurricane hurricane) {
@@ -39,18 +42,19 @@ public class Admin extends User {
     }
 
     public void updateHurricaneLocation(Hurricane hurricane, Location location) {
-        //TODO
+        hurricane.updateLocation(location);
     }
 
     public void updateHurricanePath(Hurricane hurricane, ArrayList<Location> path) {
-        //TODO
+        hurricane.updatePredictedPath(path);
     }
 
     public void sendAlert(Alert alert) {
         //TODO
+        //Get all users, and run user.recieveAlert(alert);
     }
 
     public void verifyCredential(Credential credential) {
-        //TODO
+        credential.setVerified(true);
     }
 }
