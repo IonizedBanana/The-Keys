@@ -1,5 +1,9 @@
 package com.model;
-
+/**
+ * 
+ * ResponseStatus
+ * @author LoganH627
+ */
 public enum ResponseStatus {
      IN_PROGRESS("In Progress"),
      WAITING("Waiting"),
