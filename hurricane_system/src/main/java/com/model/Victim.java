@@ -1,5 +1,6 @@
 package com.model;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Victim
@@ -21,6 +22,16 @@ public class Victim extends User {
         this.description = "No description";
         this.partySize = 1;
         this.createdRequests = new ArrayList<Request>();
+    }
+
+    public Victim(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, byte age, char sex, String description, byte partySize, ArrayList<Request> createdRequests) {
+        super(id, firstName, lastName, username, emailAddress, password, address);
+        this.setType(UserType.VICTIM);
+        this.age = age;
+        this.sex = sex;
+        this.description = description;
+        this.partySize = partySize;
+        this.createdRequests = createdRequests;
     }
 
     public Victim(User user) {
