@@ -3,8 +3,8 @@ package com.model;
 import java.io.File;
 import java.io.FileReader;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,19 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+/**
+ * DataReader
+ *
+ * @author IonizedBanana (Cayden)
+ */
 public class DataReader extends DataConstants {
+  /**
+   * getShelters method
+   * 
+   * @return a hashmap where the String is the shelter's name
+   * @see {@link DataReader#getShelter}
+   * @see {@link Shelter}
+   */
   public static HashMap<String, Shelter> getShelters() {
     HashMap<String, Shelter> shelters = new HashMap<String, Shelter>();
     // File shelterFile = new File("../json/testing/shelter.json");
@@ -26,14 +38,7 @@ public class DataReader extends DataConstants {
 
       for (int i = 0; i < shelterJSONArray.size(); i++) {
         JSONObject shelterObject = (JSONObject) shelterJSONArray.get(i);
-        UUID id = UUID.fromString((String) shelterObject.get(SHELTER_UUID));
-        String name = (String) shelterObject.get(SHELTER_NAME);
-        Address address = getAddress((JSONObject) shelterObject.get(SHELTER_ADDRESS));
-        int totalCapacity = ((Long) shelterObject.get(SHELTER_TOTAL_CAPACITY)).intValue();
-        int usedCapacity = ((Long) shelterObject.get(SHELTER_USED_CAPACITY)).intValue();
-        int expectedArrivals = ((Long) shelterObject.get(SHELTER_EXPECTED_ARRIVALS)).intValue();
-        ArrayList<Resource> resources = getResourceList((JSONArray) shelterObject.get(SHELTER_RESOURCES));
-        Shelter shelter = new Shelter(id, name, address, totalCapacity, usedCapacity, expectedArrivals, resources);
+        Shelter shelter = getShelter(shelterObject);
         shelters.put(shelter.getName(), shelter);
       }
       reader.close();
@@ -44,6 +49,27 @@ public class DataReader extends DataConstants {
     }
   }
 
+  /**
+   * @param shelterObject the JSONObject of a shelter
+   * @return a shelter object from the provided JSON
+   * @see {@link Shelter}
+   */
+  private static Shelter getShelter(JSONObject shelterObject) {
+    UUID id = UUID.fromString((String) shelterObject.get(SHELTER_UUID));
+    String name = (String) shelterObject.get(SHELTER_NAME);
+    Address address = getAddress((JSONObject) shelterObject.get(SHELTER_ADDRESS));
+    int totalCapacity = ((Long) shelterObject.get(SHELTER_TOTAL_CAPACITY)).intValue();
+    int usedCapacity = ((Long) shelterObject.get(SHELTER_USED_CAPACITY)).intValue();
+    int expectedArrivals = ((Long) shelterObject.get(SHELTER_EXPECTED_ARRIVALS)).intValue();
+    ArrayList<Resource> resources = getResourceList((JSONArray) shelterObject.get(SHELTER_RESOURCES));
+    return new Shelter(id, name, address, totalCapacity, usedCapacity, expectedArrivals, resources);
+  }
+
+  /**
+   * @param addressObject the JSONObject of an Address
+   * @return an Address object from the provided JSON
+   * @see {@link Address}
+   */
   private static Address getAddress(JSONObject addressObject) {
     String state = (String) addressObject.get(LOCATION_STATE);
     String city = (String) addressObject.get(LOCATION_CITY);
@@ -52,6 +78,12 @@ public class DataReader extends DataConstants {
     return address;
   }
 
+  /**
+   * @param arr a JSON array of Resources
+   * @return an ArrayList of Resources
+   * @see {@link DataReader#getResource}
+   * @see {@link Resource}
+   */
   private static ArrayList<Resource> getResourceList(JSONArray arr) {
     ArrayList<Resource> resources = new ArrayList<Resource>();
     for (int i = 0; i < arr.size(); i++) {
@@ -62,6 +94,11 @@ public class DataReader extends DataConstants {
     return resources;
   }
 
+  /**
+   * @param resourceObject the JSONObject for a Resource
+   * @return a Resource from the provided JSON
+   * @see {@link Resource}
+   */
   private static Resource getResource(JSONObject resourceObject) {
     ResourceType type = getResourceType((String) resourceObject.get(RESOURCE_TYPE));
     String description = (String) resourceObject.get(REQUEST_DESCRIPTION);
@@ -71,6 +108,12 @@ public class DataReader extends DataConstants {
     return resource;
   }
 
+  /**
+   * @param unit the string version of a unit
+   * @return the Unit enum variant specified
+   * @implNote if the string doesnt correspond to a Unit variant, it returns null
+   * @see {@link Unit}
+   */
   private static Unit getUnit(String unit) {
     if (unit.equals("GALLONS")) {
       return Unit.GALLONS;
@@ -86,6 +129,13 @@ public class DataReader extends DataConstants {
     return null;
   }
 
+  /**
+   * @param type the string version of a ResourceType
+   * @return the ResourceType specified
+   * @implNote if the string doesnt correspond to a ResourceType variant, it
+   *           returns null
+   * @see {@link ResourceType}
+   */
   private static ResourceType getResourceType(String type) {
     if (type.equals("WATER")) {
       return ResourceType.WATER;
@@ -103,6 +153,16 @@ public class DataReader extends DataConstants {
     return null;
   }
 
+  /**
+   * @return a HashMap of all the users, where the string is the user's username
+   * @implNote uses {@link DataReader#getUser} to get the actual User object
+   * @see {@link User}
+   * @see {@link Volunteer}
+   * @see {@link Victim}
+   * @see {@link Admin}
+   * @see {@link Dispatcher}
+   * @see {@link ShelterWorker}
+   */
   public static HashMap<String, User> getUsers() {
     HashMap<String, User> users = new HashMap<String, User>();
     File userFile = new File(USER_FILE_PATH);
@@ -112,6 +172,8 @@ public class DataReader extends DataConstants {
 
       for (int i = 0; i < userJSONArray.size(); i++) {
         JSONObject userObject = (JSONObject) userJSONArray.get(i);
+        User user = getUser(userObject);
+        users.put(user.getUsername(), user);
       }
       reader.close();
     } catch (Exception e) {
@@ -120,6 +182,13 @@ public class DataReader extends DataConstants {
     return users;
   }
 
+  /**
+   * @param type the string version of a UserType
+   * @return the UserType specified
+   * @implNote if the string doesnt correspond to a UserType variant, it
+   *           returns null
+   * @see {@link UserType}
+   */
   private static UserType getUserType(String type) {
     if (type.equals("VICTIM")) {
       return UserType.VICTIM;
@@ -135,6 +204,12 @@ public class DataReader extends DataConstants {
     return null;
   }
 
+  /**
+   * @param arr a JSONArray of Alerts
+   * @return an ArrayList of Alerts
+   * @see {@link DataReader#getAlert}
+   * @see {@link Alert}
+   */
   private static ArrayList<Alert> getRecievedAlerts(JSONArray arr) {
     ArrayList<Alert> alerts = new ArrayList<Alert>();
     for (int i = 0; i < arr.size(); i++) {
@@ -145,14 +220,29 @@ public class DataReader extends DataConstants {
     return alerts;
   }
 
+  /**
+   * @param alert a JSONObject of an alert
+   * @return the Alert provided in the JSON
+   * @see {@link Alert}
+   */
   private static Alert getAlert(JSONObject alert) {
     ArrayList<Location> affectedLocations = getLoactionList((JSONArray) alert.get(ALERT_AFFECTED_LOCATIONS));
     String description = (String) alert.get(ALERT_DESCRIPTION);
     String issuedBy = (String) alert.get(ALERT_ISSUED_BY);
-    Date timestamp = (Date) alert.get(ALERT_TIMESTAMP);
+    Date timestamp;
+    try {
+      timestamp = DateFormat.getDateInstance().parse((String) alert.get(ALERT_TIMESTAMP));
+    } catch (ParseException e) {
+      System.out.println(e.getMessage());
+      timestamp = null;
+    }
     return new Alert(affectedLocations, description, issuedBy, timestamp);
   }
 
+  /**
+   * @return a hashmap of Requests
+   * @see {@link Request}
+   */
   public static HashMap<UUID, Request> getRequests() {
     HashMap<UUID, Request> requests = new HashMap<UUID, Request>();
     File requestFile = new File(REQUEST_FILE_PATH);
@@ -180,6 +270,11 @@ public class DataReader extends DataConstants {
     return requests;
   }
 
+  /**
+   * @param userObject the JSON object of a User
+   * @return a User object from the provided JSON
+   * @see {@link User}
+   */
   private static User getUser(JSONObject userObject) {
     UUID id = UUID.fromString((String) userObject.get(USER_UUID));
     String firstName = (String) userObject.get(USER_FIRST_NAME);
@@ -193,11 +288,42 @@ public class DataReader extends DataConstants {
     switch (type) {
       case VOLUNTEER -> {
         ArrayList<Credential> credentials = getCredentialList((JSONArray) userObject.get(VOLUNTEER_CREDENTIALS));
+        ArrayList<ResponseType> fieldsOfExpertise = getResponseTypeList(
+            (JSONArray) userObject.get(VOLUNTEER_FIELDS_OF_EXPERTISE));
+        boolean identityVerified = (Boolean) userObject.get(VOLUNTEER_IDENTITY_VERIFIED);
+        boolean available = (Boolean) userObject.get(VOLUNTEER_AVAILABLE);
+        return new Volunteer(firstName, lastName, username, emailAddress, password, address);
+      }
+      case VICTIM -> {
+        byte age = ((Long) userObject.get(VICTIM_AGE)).byteValue();
+        char sex = ((String) userObject.get(VICTIM_SEX)).toCharArray()[0];
+        String description = (String) userObject.get(VICTIM_DESCRIPTION);
+        byte partySize = ((Long) userObject.get(VICTIM_PARTY_SIZE)).byteValue();
+        return new Victim(firstName, lastName, username, emailAddress, password, address);
+      }
+      case ADMIN -> {
+        String phoneNumber = (String) userObject.get(ADMIN_PHONE_NUMBER);
+        return new Admin(firstName, lastName, username, emailAddress, password, address, phoneNumber);
+      }
+      case DISPATCHER -> {
+        String phoneNumber = (String) userObject.get(ADMIN_PHONE_NUMBER);
+        return new Dispatcher(firstName, lastName, username, emailAddress, password, address, phoneNumber);
+      }
+      case SHELTER_WORKER -> {
+        Shelter shelter = getShelter((JSONObject) userObject.get(SHELTER_WORKER_SHELTER));
+        return new ShelterWorker(firstName, lastName, username, password, emailAddress, address, shelter);
       }
     }
+    return null;
 
   }
 
+  /**
+   * @param arr a JSONArray of Credentials
+   * @return an ArrayList of Credentials
+   * @see {@link Credential}
+   * @see {@link DataReader#getCredential}
+   */
   private static ArrayList<Credential> getCredentialList(JSONArray arr) {
     ArrayList<Credential> credentials = new ArrayList<Credential>();
     for (int i = 0; i < arr.size(); i++) {
@@ -205,22 +331,35 @@ public class DataReader extends DataConstants {
       Credential credential = getCredential(credentialObject);
       credentials.add(credential);
     }
+    return credentials;
   }
 
+  /**
+   * @param o the credential JSONObject
+   * @return a Credential object specified in the JSON
+   * @see {@link Credential}
+   */
   private static Credential getCredential(JSONObject o) {
-    String type = (String)o.get(CREDENTIAL_TYPE);
-    String issuer = (String)o.get(CREDENTIAL_ISSUER);
+    String type = (String) o.get(CREDENTIAL_TYPE);
+    String issuer = (String) o.get(CREDENTIAL_ISSUER);
     Date date = null;
     try {
-      date = DateFormat.getDateInstance().parse((String)o.get(CREDENTIAL_EXPIRATION_DATE));
+      date = DateFormat.getDateInstance().parse((String) o.get(CREDENTIAL_EXPIRATION_DATE));
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
-    Date expirationData = date;
-    boolean verified = (Boolean)o.get(CREDENTIAL_VERIFIED);
-    return new Credential(type, issuer, expirationDate)
+    Date expirationDate = date;
+    boolean verified = (Boolean) o.get(CREDENTIAL_VERIFIED);
+    return new Credential(type, issuer, expirationDate, verified);
   }
 
+  /**
+   * @param status the string version of a ResponseStatus
+   * @return the ResponseStatus specified
+   * @implNote if the string doesnt correspond to a ResponseStatus variant, it
+   *           returns null
+   * @see {@link ResponseStatus}
+   */
   private static ResponseStatus getResponseStatus(String status) {
     if (status.equals("IN_PROGRESS")) {
       return ResponseStatus.IN_PROGRESS;
@@ -236,6 +375,13 @@ public class DataReader extends DataConstants {
     return null;
   }
 
+  /**
+   * @param type the string version of a ResponseType
+   * @return the ResponseType specified
+   * @implNote if the string doesnt correspond to a ResponseType variant, it
+   *           returns null
+   * @see {@link ResponseType}
+   */
   private static ResponseType getResponseType(String type) {
     if (type.equals("ASSISTANCE")) {
       return ResponseType.ASSISTANCE;
@@ -249,8 +395,28 @@ public class DataReader extends DataConstants {
     return null;
   }
 
+  /**
+   * @param arr a JSONArray of ResponseTypes
+   * @return an ArrayList of ResponseTypes
+   * @see {@link ResponseType}
+   * @see {@link DataReader#getResponseType}
+   */
+  private static ArrayList<ResponseType> getResponseTypeList(JSONArray arr) {
+    ArrayList<ResponseType> types = new ArrayList<ResponseType>();
+    for (int i = 0; i < arr.size(); i++) {
+      JSONObject responseObject = (JSONObject) arr.get(i);
+      ResponseType response = getResponseType(responseObject.toString());
+      types.add(response);
+    }
+    return types;
+  }
+
+  /**
+   * @return a HashMap of the Hurricanes
+   * @see {@link Hurricane}
+   */
   public static HashMap<String, Hurricane> getHurricanes() {
-    HashMap<String, Hurricane> hurricanes = new HashMap<>();
+    HashMap<String, Hurricane> hurricanes = new HashMap<String, Hurricane>();
     File hurricaneFile = new File(HURRICANE_FILE_PATH);
     try {
       FileReader reader = new FileReader(hurricaneFile);
@@ -276,12 +442,23 @@ public class DataReader extends DataConstants {
     return hurricanes;
   }
 
+  /**
+   * @param object a JSONObject of a Location
+   * @return a Location specified in the JSON
+   * @see {@link Location}
+   */
   private static Location getLocation(JSONObject object) {
     String city = (String) object.get(LOCATION_CITY);
     String state = (String) object.get(LOCATION_STATE);
     return new Location(state, city);
   }
 
+  /**
+   * @param arr a JSONArray of Locations
+   * @return an ArrayList of Locations
+   * @see {@link Location}
+   * @see {@link DataReader#getLocation}
+   */
   private static ArrayList<Location> getLoactionList(JSONArray arr) {
     ArrayList<Location> locations = new ArrayList<Location>();
     for (Object o : arr) {
@@ -292,6 +469,13 @@ public class DataReader extends DataConstants {
     return locations;
   }
 
+  /**
+   * @param status the string version of a HurricaneStatus
+   * @return the HurricaneStatus specified
+   * @implNote if the string doesnt correspond to a HurricaneStatus variant, it
+   *           returns null
+   * @see {@link HurricaneStatus}
+   */
   private static HurricaneStatus getHurricaneStatus(String status) {
     if (status.equals("IN_PROGRESS")) {
       return HurricaneStatus.IN_PROGRESS;

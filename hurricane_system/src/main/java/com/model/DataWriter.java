@@ -34,12 +34,12 @@ public class DataWriter extends DataConstants {
   }
 
   @SuppressWarnings("unchecked")
-  public static boolean saveUsers(HashMap<String, User> users) { 
+  public static boolean saveUsers(HashMap<String, User> users) {
     // File userFile = new File(USER_FILE_PATH);
     File userFile = new File("../json/testing/user.json");
     JSONArray userJSONArray = new JSONArray();
-    for (Map.Entry<String, User> set : users.entrySet() ){
-      userJSONArray.add(getUserJSON(set.getValue())); 
+    for (Map.Entry<String, User> set : users.entrySet()) {
+      userJSONArray.add(getUserJSON(set.getValue()));
     }
     try {
       FileWriter writer = new FileWriter(userFile);
@@ -59,8 +59,8 @@ public class DataWriter extends DataConstants {
     // File userFile = new File(REQUEST_FILE_PATH);
     File requestFile = new File("../json/testing/request.json");
     JSONArray userJSONArray = new JSONArray();
-    for (Map.Entry<UUID, Request> set : requests.entrySet()){
-      userJSONArray.add(getRequestJSON(set.getValue())); 
+    for (Map.Entry<UUID, Request> set : requests.entrySet()) {
+      userJSONArray.add(getRequestJSON(set.getValue()));
     }
     try {
       FileWriter writer = new FileWriter(requestFile);
@@ -76,12 +76,12 @@ public class DataWriter extends DataConstants {
   }
 
   @SuppressWarnings("unchecked")
-  public static boolean saveHurricanes(HashMap<String, Hurricane> hurricanes) { 
+  public static boolean saveHurricanes(HashMap<String, Hurricane> hurricanes) {
     // File hurricaneFile = new File(HURRICANE_FILE_PATH);
     File hurricaneFile = new File("../json/testing/hurricane.json");
     JSONArray hurricaneJSONArray = new JSONArray();
     for (Map.Entry<String, Hurricane> set : hurricanes.entrySet()) {
-      hurricaneJSONArray.add(getHurricaneJSON(set.getValue())); 
+      hurricaneJSONArray.add(getHurricaneJSON(set.getValue()));
     }
     try {
       FileWriter writer = new FileWriter(hurricaneFile);
@@ -101,7 +101,7 @@ public class DataWriter extends DataConstants {
     JSONObject shelterJSON = new JSONObject();
     shelterJSON.put(SHELTER_UUID, shelter.getId().toString());
     shelterJSON.put(SHELTER_NAME, shelter.getName());
-    shelterJSON.put(SHELTER_ADDRESS, getAddressJSON(shelter.getAddress())); 
+    shelterJSON.put(SHELTER_ADDRESS, getAddressJSON(shelter.getAddress()));
     shelterJSON.put(SHELTER_TOTAL_CAPACITY, shelter.getTotalCapacity());
     shelterJSON.put(SHELTER_USED_CAPACITY, shelter.getUsedCapacity());
     shelterJSON.put(SHELTER_EXPECTED_ARRIVALS, shelter.getExpectedArrivals());
@@ -137,8 +137,31 @@ public class DataWriter extends DataConstants {
     return addressObject;
   }
 
-  @SuppressWarnings("unchecked")
   private static JSONObject getUserJSON(User user) {
+    JSONObject userJSON = new JSONObject();
+    UserType type = user.getType();
+    switch (type) {
+      case VOLUNTEER -> {
+        userJSON = getVolunteerJSON((Volunteer) user);
+      }
+      case VICTIM -> {
+        userJSON = getVictimJSON((Victim) user);
+      }
+      case ADMIN -> {
+        userJSON = getAdminJSON((Admin) user);
+      }
+      case DISPATCHER -> {
+        userJSON = getDispatcherJSON((Dispatcher) user);
+      }
+      case SHELTER_WORKER -> {
+        userJSON = getShelterWorkerJSON((ShelterWorker) user);
+      }
+    }
+    return userJSON;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static JSONObject getVolunteerJSON(Volunteer user) {
     JSONObject userJSON = new JSONObject();
     userJSON.put(USER_FIRST_NAME, user.getFirstName());
     userJSON.put(USER_LAST_NAME, user.getLastName());
@@ -148,13 +171,116 @@ public class DataWriter extends DataConstants {
     userJSON.put(USER_ADDRESS, getAddressJSON(user.getAddress()));
     userJSON.put(USER_UUID, user.getId());
     userJSON.put(USER_TYPE, user.getType().toString());
-    userJSON.put(USER_RECIEVED_ALERTS, (JSONArray)user.getRecievedAlerts());
-    switch (user.getType()) {
-      case VICTIM: {
-        user = (Volunteer)user;
-      }
-    }
+    userJSON.put(USER_RECIEVED_ALERTS, getAlertsArray(user.getRecievedAlerts()));
+    userJSON.put(VOLUNTEER_CREDENTIALS, getCredentialsArray(user.getCredentials()));
+    userJSON.put(VOLUNTEER_AVAILABLE, user.getIsAvailible());
+    userJSON.put(VOLUNTEER_IDENTITY_VERIFIED, user.getIdentityVerified());
     return userJSON;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static JSONObject getVictimJSON(Victim user) {
+    JSONObject userJSON = new JSONObject();
+    userJSON.put(USER_FIRST_NAME, user.getFirstName());
+    userJSON.put(USER_LAST_NAME, user.getLastName());
+    userJSON.put(USER_USERNAME, user.getUsername());
+    userJSON.put(USER_EMAIL_ADDRESS, user.getEmailAddress());
+    userJSON.put(USER_PASSWORD, user.getPassword());
+    userJSON.put(USER_ADDRESS, getAddressJSON(user.getAddress()));
+    userJSON.put(USER_UUID, user.getId());
+    userJSON.put(USER_TYPE, user.getType().toString());
+    userJSON.put(USER_RECIEVED_ALERTS, getAlertsArray(user.getRecievedAlerts()));
+    userJSON.put(VICTIM_AGE, user.getAge());
+    userJSON.put(VICTIM_SEX, user.getSex());
+    userJSON.put(VICTIM_DESCRIPTION, user.getDescription());
+    userJSON.put(VICTIM_PARTY_SIZE, user.getPartySize());
+    return userJSON;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static JSONObject getAdminJSON(Admin user) {
+    JSONObject userJSON = new JSONObject();
+    userJSON.put(USER_FIRST_NAME, user.getFirstName());
+    userJSON.put(USER_LAST_NAME, user.getLastName());
+    userJSON.put(USER_USERNAME, user.getUsername());
+    userJSON.put(USER_EMAIL_ADDRESS, user.getEmailAddress());
+    userJSON.put(USER_PASSWORD, user.getPassword());
+    userJSON.put(USER_ADDRESS, getAddressJSON(user.getAddress()));
+    userJSON.put(USER_UUID, user.getId());
+    userJSON.put(USER_TYPE, user.getType().toString());
+    userJSON.put(USER_RECIEVED_ALERTS, getAlertsArray(user.getRecievedAlerts()));
+    userJSON.put(ADMIN_PHONE_NUMBER, user.getPhoneNumber());
+    return userJSON;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static JSONObject getDispatcherJSON(Dispatcher user) {
+    JSONObject userJSON = new JSONObject();
+    userJSON.put(USER_FIRST_NAME, user.getFirstName());
+    userJSON.put(USER_LAST_NAME, user.getLastName());
+    userJSON.put(USER_USERNAME, user.getUsername());
+    userJSON.put(USER_EMAIL_ADDRESS, user.getEmailAddress());
+    userJSON.put(USER_PASSWORD, user.getPassword());
+    userJSON.put(USER_ADDRESS, getAddressJSON(user.getAddress()));
+    userJSON.put(USER_UUID, user.getId());
+    userJSON.put(USER_TYPE, user.getType().toString());
+    userJSON.put(USER_RECIEVED_ALERTS, getAlertsArray(user.getRecievedAlerts()));
+    userJSON.put(ADMIN_PHONE_NUMBER, user.getPhoneNumber());
+    return userJSON;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static JSONObject getShelterWorkerJSON(ShelterWorker user) {
+    JSONObject userJSON = new JSONObject();
+    userJSON.put(USER_FIRST_NAME, user.getFirstName());
+    userJSON.put(USER_LAST_NAME, user.getLastName());
+    userJSON.put(USER_USERNAME, user.getUsername());
+    userJSON.put(USER_EMAIL_ADDRESS, user.getEmailAddress());
+    userJSON.put(USER_PASSWORD, user.getPassword());
+    userJSON.put(USER_ADDRESS, getAddressJSON(user.getAddress()));
+    userJSON.put(USER_UUID, user.getId());
+    userJSON.put(USER_TYPE, user.getType().toString());
+    userJSON.put(USER_RECIEVED_ALERTS, getAlertsArray(user.getRecievedAlerts()));
+    userJSON.put(SHELTER_WORKER_SHELTER, getShelterJSON(user.getShelter()));
+    return userJSON;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static JSONArray getCredentialsArray(ArrayList<Credential> credentials) {
+    JSONArray credentialsJSONArray = new JSONArray();
+    for (Credential c : credentials) {
+      credentialsJSONArray.add(getCredentialJSON(c));
+    }
+    return credentialsJSONArray;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static JSONObject getCredentialJSON(Credential credential) {
+    JSONObject credentialObject = new JSONObject();
+    credentialObject.put(CREDENTIAL_TYPE, credential.getType());
+    credentialObject.put(CREDENTIAL_EXPIRATION_DATE, credential.getExpirationDate().toString());
+    credentialObject.put(CREDENTIAL_ISSUER, credential.getIssuer());
+    credentialObject.put(CREDENTIAL_VERIFIED, credential.isVerified());
+    return credentialObject;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static JSONArray getAlertsArray(ArrayList<Alert> alerts) {
+    JSONArray alertsJSONArray = new JSONArray();
+    for (Alert a : alerts) {
+      alertsJSONArray.add(getAlertJSON(a));
+    }
+    return alertsJSONArray;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static JSONObject getAlertJSON(Alert alert) {
+    JSONObject alertObject = new JSONObject();
+    alertObject.put(ALERT_AFFECTED_LOCATIONS, getLocationArray(alert.getAffectedLocations()));
+    alertObject.put(ALERT_DESCRIPTION, alert.getDescription());
+    alertObject.put(ALERT_ISSUED_BY, alert.getIssuedBy());
+    alertObject.put(ALERT_TIMESTAMP, alert.getTimestamp().toString());
+    return alertObject;
   }
 
   @SuppressWarnings("unchecked")
