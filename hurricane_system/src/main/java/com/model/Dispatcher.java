@@ -56,25 +56,22 @@ public class Dispatcher extends User{
         Alert notification = new Alert(temp, "Dispatcher has assigned you to the following request \n"+request, this, Date.from(Instant.now()));
         volunteer.receiveAlert(notification);
 
-        /* TODO wait until there is a way to get the requestee (getRequestee() does not exist as of writing this)
-        ArrayList<Location> temp = new ArrayList<Location>();
+        temp = new ArrayList<Location>();
         temp.add(request.getRequestee().getAddress().getLocation());
 
         //send notification to volunteer as an alert
-        Alert notification = new Alert(temp, "Dispatcher has assigned"+volunteer.firstName+" "+volunteer.lastName+"to your request", this, Date.from(Instant.now()));
+        notification = new Alert(temp, "Dispatcher has assigned"+volunteer.firstName+" "+volunteer.lastName+"to your request", this, Date.from(Instant.now()));
         request.getRequestee().receiveAlert(notification);
-        */
+        
     }
 
     public void requestMoreInfo(Request request, String whatIsNeeded) {
-        /* TODO wait until there is a way to get the requestee (getRequestee() does not exist as of writing this)
         ArrayList<Location> temp = new ArrayList<Location>();
         temp.add(request.getRequestee().getAddress().getLocation());
 
         //send notification to volunteer as an alert
         Alert notification = new Alert(temp, whatIsNeeded, this, Date.from(Instant.now()));
         request.getRequestee().receiveAlert(notification);
-        */
     }
 
     public void updateRequest(Request request, ResponseStatus status) {
