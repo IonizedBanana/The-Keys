@@ -1,6 +1,7 @@
-package com.model;
+package com.model.users;
 
 import java.util.UUID;
+import com.model.*;
 
 import java.util.ArrayList;
 

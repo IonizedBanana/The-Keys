@@ -1,5 +1,7 @@
 package com.model;
 
+import com.model.users.Admin;
+
 import java.io.File;
 import java.io.FileReader;
 import java.text.DateFormat;
@@ -228,7 +230,7 @@ public class DataReader extends DataConstants {
   private static Alert getAlert(JSONObject alert) {
     ArrayList<Location> affectedLocations = getLoactionList((JSONArray) alert.get(ALERT_AFFECTED_LOCATIONS));
     String description = (String) alert.get(ALERT_DESCRIPTION);
-    String issuedBy = (String) alert.get(ALERT_ISSUED_BY);
+    User issuedBy = getUser((JSONObject) alert.get(ALERT_ISSUED_BY));
     Date timestamp;
     try {
       timestamp = DateFormat.getDateInstance().parse((String) alert.get(ALERT_TIMESTAMP));
@@ -292,7 +294,7 @@ public class DataReader extends DataConstants {
             (JSONArray) userObject.get(VOLUNTEER_FIELDS_OF_EXPERTISE));
         boolean identityVerified = (Boolean) userObject.get(VOLUNTEER_IDENTITY_VERIFIED);
         boolean available = (Boolean) userObject.get(VOLUNTEER_AVAILABLE);
-        return new Volunteer(firstName, lastName, username, emailAddress, password, address, credentials,
+        return new Volunteer(id, firstName, lastName, username, emailAddress, password, address, credentials,
             fieldsOfExpertise, identityVerified, available);
       }
       case VICTIM -> {
@@ -300,8 +302,8 @@ public class DataReader extends DataConstants {
         char sex = ((String) userObject.get(VICTIM_SEX)).toCharArray()[0];
         String description = (String) userObject.get(VICTIM_DESCRIPTION);
         byte partySize = ((Long) userObject.get(VICTIM_PARTY_SIZE)).byteValue();
-        return new Victim(firstName, lastName, username, emailAddress, password, address, age, sex, description,
-            partySize);
+        ArrayList<Request> createdRequests = getRequestList();
+        return new Victim(id, firstName, lastName, username, emailAddress, password, address, age, sex, description, partySize, createdRequests);
       }
       case ADMIN -> {
         String phoneNumber = (String) userObject.get(ADMIN_PHONE_NUMBER);
