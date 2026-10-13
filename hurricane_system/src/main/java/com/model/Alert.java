@@ -1,5 +1,6 @@
 package com.model;
 
+import com.model.users.*;
 import java.util.ArrayList;
 import java.util.Date;
 
