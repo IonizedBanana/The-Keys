@@ -1,5 +1,6 @@
 package com.model;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /** 
  * Volunteer
@@ -13,6 +14,7 @@ public class Volunteer extends User {
 
     public Volunteer(String firstName,  String lastName, String username, String emailAddress, String password, Address address) {
         super(firstName, lastName, username, emailAddress, password, address);
+        this.setType(UserType.VOLUNTEER);
         this.credentials = new ArrayList<Credential>();
         this.fieldsOfExpertise = new ArrayList<ResponseType>();
         this.identityVerified = false;
@@ -22,11 +24,22 @@ public class Volunteer extends User {
     public Volunteer(User user) {
         //Turn another user type into a volunteer.
         super(user.firstName, user.lastName, user.username, user.emailAddress, user.password, user.address);
+        this.setType(UserType.VOLUNTEER);
         this.credentials = new ArrayList<Credential>();
         this.fieldsOfExpertise = new ArrayList<ResponseType>();
         this.identityVerified = false;
         this.availible = false;
 
+    }
+
+    public Volunteer(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Credential> credentials,
+        ArrayList<ResponseType> fieldsOfExpertise, boolean identityVerified, boolean availible) {
+            super(id, firstName, lastName, username, emailAddress, password, address);
+            this.setType(UserType.VOLUNTEER);
+            this.credentials = credentials;
+            this.fieldsOfExpertise = fieldsOfExpertise;
+            this.identityVerified = identityVerified;
+            this.availible = availible;
     }
 
     //getters and setters
