@@ -58,6 +58,6 @@ public class Alert {
     }
 
     public boolean isRelevantTo(User user) {
-        return (this.getAffectedLocations().contains(user.address.getLocation()));
+        return (this.getAffectedLocations().contains(user.getAddress().getLocation()));
     }
 }
