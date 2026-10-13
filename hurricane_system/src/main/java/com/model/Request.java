@@ -16,7 +16,7 @@ public class Request {
     private ResponseType responderType;
     private String description;
 
-    public Request(UUID id,User requestee, byte severity, Location location, ResponseStatus status, ResponseType responderType, String description) {
+    public Request(UUID id, User requestee, byte severity, Location location, ResponseStatus status, ResponseType responderType, String description) {
         this.id = UUID.randomUUID();
         this.requestee = requestee;
         this.severity = severity;
@@ -36,9 +36,6 @@ public class Request {
     public void updateStatus(ResponseStatus status) {
         this.status = status;
     }
-    // public void updateResponderType(ResponseType responderType) { TODO: think about implementing this method is this somthing that the request class will do or another class
-    //     this.responderType = responderType;
-    // }
     public UUID getId() {
       return this.id;
     }
@@ -84,9 +81,30 @@ public class Request {
             this.severity = severity;
         }
     }
-    // public UUID getId() { TODO: Think about implementing this is this somthing that the uuid needs
-    //     return id;
-    // }
+    public void setStatus(ResponseStatus status) {
+        if (status == null) {
+            throw new IllegalArgumentException("Status cannot be null");
+        }
+        else {
+            this.status = status;
+        }
+    }
+    public void setResponderType(ResponseType responderType) {
+        if (responderType == null) {
+            throw new IllegalArgumentException("Responder type cannot be null");
+        }
+        else {
+            this.responderType = responderType;
+        }
+    }
+    public void setRequestee(User requestee) {
+        if (requestee == null) {
+            throw new IllegalArgumentException("Requestee cannot be null");
+        }
+        else {
+            this.requestee = requestee;
+        }
+    }
     public String toString() {
         return "Request ID: " + id + "\n" +
                 "Requestee: " + requestee.getUsername() + "\n" +
