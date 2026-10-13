@@ -33,7 +33,8 @@ public abstract class User {
      * @param password The user's password.
      * @param address The user's address.
      */
-    public User(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address) {
+    public User(UUID id, String firstName,  String lastName, String username, String emailAddress,
+        String password, Address address, ArrayList<Alert> recievedAlerts) {
         this.id = id;
         this.setFirstName(firstName);
         this.setLastName(lastName);
@@ -41,6 +42,7 @@ public abstract class User {
         this.setEmailAddress(emailAddress);
         this.setPassword(password);
         this.setAddress(address);
+        this.setRecievedAlerts(recievedAlerts);
     }
 
     /**
@@ -64,10 +66,6 @@ public abstract class User {
     }
 
     //getters and setters
-
-    public ArrayList<Alert> getRecievedAlerts() {
-      return recievedAlerts;
-    }
 
     public UUID getId() {
       return this.id;
@@ -127,6 +125,14 @@ public abstract class User {
 
     public void setType(UserType type) {
         this.type = type;
+    }
+
+    public ArrayList<Alert> getRecievedAlerts() {
+        return this.recievedAlerts;
+    }
+
+    public void setRecievedAlerts(ArrayList<Alert> recievedAlerts) {
+        this.recievedAlerts = recievedAlerts;
     }
 
     //other methods

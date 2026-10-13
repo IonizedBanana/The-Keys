@@ -26,8 +26,8 @@ public class Victim extends User {
         this.createdRequests = new ArrayList<Request>();
     }
 
-    public Victim(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, byte age, char sex, String description, byte partySize, ArrayList<Request> createdRequests) {
-        super(id, firstName, lastName, username, emailAddress, password, address);
+    public Victim(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Alert> recievedAlerts, byte age, char sex, String description, byte partySize, ArrayList<Request> createdRequests) {
+        super(id, firstName, lastName, username, emailAddress, password, address, recievedAlerts);
         this.setType(UserType.VICTIM);
         this.age = age;
         this.sex = sex;
@@ -92,7 +92,7 @@ public class Victim extends User {
 
     // Added parameters to create a request
     public void createRequest(byte severity, Location location, String description) {
-        Request newRequest = Request(this, severity, location, description);
+        Request newRequest = new Request(this, severity, location, description);
         this.createdRequests.add(newRequest);
     }
 

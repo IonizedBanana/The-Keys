@@ -24,8 +24,8 @@ public class Admin extends User {
         this.setPhoneNumber(phoneNumber);
     }
 
-    public Admin(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, String phoneNumber) {
-        super(id, firstName, lastName, username, emailAddress, password, address);
+    public Admin(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Alert> recievedAlerts, String phoneNumber) {
+        super(id, firstName, lastName, username, emailAddress, password, address, recievedAlerts);
         this.setType(UserType.ADMIN);
         this.setPhoneNumber(phoneNumber);
     }

@@ -25,8 +25,8 @@ public class Dispatcher extends User{
         this.setPhoneNumber(phoneNumber);
     }
 
-    public Dispatcher(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, String phoneNumber) {
-        super(id, firstName, lastName, username, emailAddress, password, address);
+    public Dispatcher(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Alert> recievedAlerts, String phoneNumber) {
+        super(id, firstName, lastName, username, emailAddress, password, address, recievedAlerts);
         this.setPhoneNumber(phoneNumber);
     }
 
