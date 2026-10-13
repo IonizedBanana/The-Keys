@@ -59,6 +59,30 @@ public class Request {
     public Location getLocation() {
         return location;
     }
+    public void setDescription(String description) {
+        if (description == null || description.isEmpty()) {
+            throw new IllegalArgumentException("Description cannot be null or empty");
+        }
+        else {
+            this.description = description;
+        }
+    }
+    public void setLocation(Location location) {
+        if (location == null) {
+            throw new IllegalArgumentException("Location cannot be null");
+        }
+        else {
+            this.location = location;
+        }
+    }
+    public void setSeverity(byte severity) {
+        if(severity < 1 || severity > 5) {
+            throw new IllegalArgumentException("Severity must be between 1 and 5");
+        }
+        else {
+            this.severity = severity;
+        }
+    }
     // public UUID getId() { TODO: Think about implementing this is this somthing that the uuid needs
     //     return id;
     // }
