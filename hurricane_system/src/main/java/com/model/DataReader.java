@@ -301,7 +301,7 @@ public class DataReader extends DataConstants {
         String description = (String) userObject.get(VICTIM_DESCRIPTION);
         byte partySize = ((Long) userObject.get(VICTIM_PARTY_SIZE)).byteValue();
         return new Victim(firstName, lastName, username, emailAddress, password, address, age, sex, description,
-            partSize);
+            partySize);
       }
       case ADMIN -> {
         String phoneNumber = (String) userObject.get(ADMIN_PHONE_NUMBER);
