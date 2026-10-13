@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 /**
  * User
+ * A user without a specific type yet.
  * @author Jason
  */
 
@@ -21,6 +22,16 @@ public abstract class User {
     protected ArrayList<Alert> recievedAlerts;
     protected UserType type;
 
+    /**
+     * Creates a user.
+     * @param id The UUID of the user.
+     * @param firstName The user's first name.
+     * @param lastName The user's last name.
+     * @param username The user's username.
+     * @param emailAddress The user's email.
+     * @param password The user's password.
+     * @param address The user's address.
+     */
     public User(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address) {
         this.id = id;
         this.setFirstName(firstName);
@@ -31,6 +42,15 @@ public abstract class User {
         this.setAddress(address);
     }
 
+    /**
+     * Creates a user, but also generates a random UUID for it.
+     * @param firstName The user's first name.
+     * @param lastName The user's last name.
+     * @param username The user's username.
+     * @param emailAddress The user's email.
+     * @param password The user's password.
+     * @param address The user's address.
+     */
     public User(String firstName, String lastName, String username, String emailAddress, String password, Address address) {
         //overloaded constructor
         this.id = UUID.randomUUID();
@@ -110,6 +130,12 @@ public abstract class User {
 
     //other methods
 
+    /**
+     * Returns whether or not the username and password provided match the user.
+     * @param username The username provided as an input.
+     * @param password The password provided as an input.
+     * @return Whether the username and password provided match the user.
+     */
     public boolean isMatch(String username, String password) {
         if (username.equalsIgnoreCase(this.getUsername()) && password.equals(this.password)) {
             return true;
@@ -118,12 +144,21 @@ public abstract class User {
         }
     }
 
+    /**
+     * Adds an alert to the user's list of recieved alerts
+     * @param alert The alert to be recieved.
+     */
     public void receiveAlert(Alert alert) {
         if(alert.isRelevantTo(this)) {
             recievedAlerts.add(alert);
         }
     }
     
+    /**
+     * Donate resources to a shelter.
+     * @param donation The resource to be donated.
+     * @param shelter The shelter that will recieve the donation.
+     */
     public void donate(Resource donation, Shelter shelter) {
         shelter.addResource(donation);
     }
