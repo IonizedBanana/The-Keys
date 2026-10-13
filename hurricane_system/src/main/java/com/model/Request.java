@@ -25,6 +25,12 @@ public class Request {
         this.responderType = responderType;
         this.description = description;
     }
+    public Request(User user, byte severity, Location location, String description) {
+        this.requestee = user;
+        this.severity = severity;
+        this.location = location;
+        this.description = description;
+    }
     public void editSeverity(byte severity) {
         if(severity < 1 || severity > 5) {
             throw new IllegalArgumentException("Severity must be between 1 and 5");
