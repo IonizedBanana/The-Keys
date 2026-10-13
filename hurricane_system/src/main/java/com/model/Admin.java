@@ -1,6 +1,7 @@
 package com.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Admin
@@ -33,12 +34,20 @@ public class Admin extends User {
     //other methods
 
     public void addHurricane(Hurricane hurricane) {
-        //TODO
-        //Add to HurricaneList?
+        //TODO Wait for HurricaneList to be added
+        /*
+        HashMap<String, Hurricane> list = HurricaneList.getInstance();
+        list.put(hurricane.getName(), hurricane);
+        */
     }
 
     public void removeHurricane(Hurricane hurricane) {
-        //TODO
+        //TODO Wait for HurricaneList to be added
+        /*
+        HashMap<String, Hurricane> list = HurricaneList.getInstance();
+        list.remove(hurricane.getName());
+        */
+
     }
 
     public void updateHurricaneLocation(Hurricane hurricane, Location location) {
@@ -51,7 +60,15 @@ public class Admin extends User {
 
     public void sendAlert(Alert alert) {
         //TODO
-        //Get all users, and run user.recieveAlert(alert);
+        // Wait for UserList to be added.
+        /*
+        HashMap<String, User> list = userList.getInstance();
+        for (String key : list.keySet()) {
+            list.get(key).receiveAlert(alert);
+        }
+        */
+
+        
     }
 
     public void verifyCredential(Credential credential) {
