@@ -1,6 +1,6 @@
 package com.model;
 
-import com.model.users.Admin;
+import com.model.users.*;
 
 import java.io.File;
 import java.io.FileReader;
