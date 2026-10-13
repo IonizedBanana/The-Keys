@@ -38,6 +38,12 @@ public class Request {
     // public void updateResponderType(ResponseType responderType) { TODO: think about implementing this method is this somthing that the request class will do or another class
     //     this.responderType = responderType;
     // }
+    public UUID getId() {
+      return this.id;
+    }
+    public User getRequestee() {
+      return this.requestee;
+    }
     public String getDescription() {
         return description;
     }
