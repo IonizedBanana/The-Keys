@@ -1,5 +1,6 @@
-package com.model;
+package com.model.users;
 import java.util.Scanner;
+import com.model.*;
 /**
  * 
  * UserManager

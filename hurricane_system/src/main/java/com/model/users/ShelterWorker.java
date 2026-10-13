@@ -1,4 +1,6 @@
-package com.model;
+package com.model.users;
+
+import com.model.*;
 /**
  * 
  * ShelterWorker 
@@ -21,10 +23,10 @@ private Shelter shelter;
         // Update the resources available in the shelter
         shelter.updateResource(resource, quantity);
     }
-    public void transferResources(Resource resource, int quantity, Shelter shelter) {
+    public void transferResources(Resource resource, Shelter shelter) {
         // Transfer resources from the current shelter to another shelter
-        this.shelter.updateResource(resource, -quantity);
-        shelter.updateResource(resource, quantity);
+        this.shelter.updateResource(resource, -(resource.getQuantity()));
+        shelter.recieveResource(resource);
     }
     public Shelter getShelter() {
         return this.shelter;
