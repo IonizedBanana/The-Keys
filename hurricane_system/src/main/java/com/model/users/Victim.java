@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * Victim
+ * A victim of hurricanes that can request for help.
  * @author Jason
  */
 public class Victim extends User {
@@ -15,7 +15,15 @@ public class Victim extends User {
     private int partySize;
     private ArrayList<Request> createdRequests;
 
-    //Victims don't provide all information immediately. They can add more info later.
+    /**
+     * Creates a victim with only the required information (victims don't provide all information immediately; They can add more info later).
+     * @param firstName The user's first name.
+     * @param lastName The user's last name.
+     * @param username The user's username.
+     * @param emailAddress The user's email.
+     * @param password The user's password.
+     * @param address The user's address.
+     */
     public Victim(String firstName, String lastName, String username, String emailAddress, String password, Address address) {
         super(firstName, lastName, username, emailAddress, password, address);
         this.setType(UserType.VICTIM);
@@ -26,8 +34,24 @@ public class Victim extends User {
         this.createdRequests = new ArrayList<Request>();
     }
 
-    public Victim(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, byte age, char sex, String description, byte partySize, ArrayList<Request> createdRequests) {
-        super(id, firstName, lastName, username, emailAddress, password, address);
+    /**
+     * Creates a victim (this one is for loading from UserList).
+     * @param id The user's UUID.
+     * @param firstName The user's first name.
+     * @param lastName The user's last name.
+     * @param username The user's username.
+     * @param emailAddress The user's email.
+     * @param password The user's password.
+     * @param address The user's address.
+     * @param recievedAlerts The user's alerts.
+     * @param age The user's age.
+     * @param sex The user's sex.
+     * @param description The user's description.
+     * @param partySize The user's party size.
+     * @param createdRequests The user's requests.
+     */
+    public Victim(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Alert> recievedAlerts, byte age, char sex, String description, byte partySize, ArrayList<Request> createdRequests) {
+        super(id, firstName, lastName, username, emailAddress, password, address, recievedAlerts);
         this.setType(UserType.VICTIM);
         this.age = age;
         this.sex = sex;
@@ -36,6 +60,10 @@ public class Victim extends User {
         this.createdRequests = createdRequests;
     }
 
+    /**
+     * Converts a different type of user to a victim.
+     * @param user The user.
+     */
     public Victim(User user) {
         super(user.firstName, user.lastName, user.username, user.emailAddress, user.password, user.address);
         this.setType(UserType.VICTIM);
@@ -45,72 +73,126 @@ public class Victim extends User {
         this.partySize = 1;
     }
 
+    /**
+     * Gets the user's age.
+     * @return The age.
+     */
     public int getAge() {
         return this.age;
     }
 
+    /**
+     * Sets the user's age.
+     * @param age The age.
+     */
     public void setAge(int age) {
         if(age >= 0) {
             this.age = age;
         }
     }
 
+    /**
+     * Gets the user's sex.
+     * @return
+     */
     public char getSex() {
         return this.sex;
     }
 
+    /**
+     * Sets the user's sex.
+     * @param sex The user's sex.
+     */
     public void setSex(char sex) {
         this.sex = sex;
     }
 
+    /**
+     * Gets the user's description.
+     * @return The description.
+     */
     public String getDescription() {
         return this.description;
     }
     
+    /**
+     * Sets the user's description.
+     * @param description The description.
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * Gets the user's party size.
+     * @return The party size.
+     */
     public int getPartySize() {
         return this.partySize;
     }
 
+    /**
+     * Sets the user's party size.
+     * @param partySize The user's party size (must be at least 1).
+     */
     public void setPartySize(int partySize) {
         if (partySize >= 1) {
             this.partySize = partySize;
         }
     }
 
+    /**
+     * Returns the user's info.
+     * @return The user's info that is unique to victims.
+     */
     public String getInfo() {
         //A string of the attributes of victim (ONLY age, sex, description)
         return this.getAge() + "\n" + this.getSex() + "\n" + this.getDescription();
     }
 
+    /**
+     * Notifies a shelter about the user going to it.
+     * @param shelter The shelter to be notified.
+     * @param partySize The party size.
+     */
     public void notifyShelter(Shelter shelter, int partySize) {
         shelter.notify(partySize);
     }
 
-    // Added parameters to create a request
+    /**
+     * Creates a new request.
+     * @param severity The request's severity.
+     * @param location The request's location.
+     * @param description The request's description.
+     */
     public void createRequest(byte severity, Location location, String description) {
-        Request newRequest = Request(this, severity, location, description);
+        Request newRequest = new Request(this, severity, location, description);
         this.createdRequests.add(newRequest);
     }
 
-    /* 
-    Removed in favor of making separate edit methods for each attribute of the request (That the victim can control)
-    public void editRequest() {
-        //TODO
-    }
-    */
-
+    /**
+     * Edits the request severity.
+     * @param request The request to be edited.
+     * @param severity The new severity.
+     */
     public void editRequestSeverity(Request request, byte severity) {
         request.setSeverity(severity);
     }
 
+    /**
+     * Edits the request location.
+     * @param request The request to be edited.
+     * @param location The new location.
+     */
     public void editRequestLocation(Request request, Location location) {
         request.setLocation(location);
     }
 
+    /**
+     * Edits the request description.
+     * @param request The request to be edited.
+     * @param description The new description.
+     */
     public void editRequestDescription(Request request, String description) {
         request.setDescription(description);
     }

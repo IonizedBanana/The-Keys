@@ -16,13 +16,19 @@ public class Request {
     private ResponseType responderType;
     private String description;
 
-    public Request(UUID id,User requestee, byte severity, Location location, ResponseStatus status, ResponseType responderType, String description) {
+    public Request(UUID id, User requestee, byte severity, Location location, ResponseStatus status, ResponseType responderType, String description) {
         this.id = UUID.randomUUID();
         this.requestee = requestee;
         this.severity = severity;
         this.location = location;
         this.status = status;
         this.responderType = responderType;
+        this.description = description;
+    }
+    public Request(User user, byte severity, Location location, String description) {
+        this.requestee = user;
+        this.severity = severity;
+        this.location = location;
         this.description = description;
     }
     public void editSeverity(byte severity) {
@@ -36,9 +42,6 @@ public class Request {
     public void updateStatus(ResponseStatus status) {
         this.status = status;
     }
-    // public void updateResponderType(ResponseType responderType) { TODO: think about implementing this method is this somthing that the request class will do or another class
-    //     this.responderType = responderType;
-    // }
     public UUID getId() {
       return this.id;
     }
@@ -60,9 +63,54 @@ public class Request {
     public Location getLocation() {
         return location;
     }
-    // public UUID getId() { TODO: Think about implementing this is this somthing that the uuid needs
-    //     return id;
-    // }
+    public void setDescription(String description) {
+        if (description == null || description.isEmpty()) {
+            throw new IllegalArgumentException("Description cannot be null or empty");
+        }
+        else {
+            this.description = description;
+        }
+    }
+    public void setLocation(Location location) {
+        if (location == null) {
+            throw new IllegalArgumentException("Location cannot be null");
+        }
+        else {
+            this.location = location;
+        }
+    }
+    public void setSeverity(byte severity) {
+        if(severity < 1 || severity > 5) {
+            throw new IllegalArgumentException("Severity must be between 1 and 5");
+        }
+        else {
+            this.severity = severity;
+        }
+    }
+    public void setStatus(ResponseStatus status) {
+        if (status == null) {
+            throw new IllegalArgumentException("Status cannot be null");
+        }
+        else {
+            this.status = status;
+        }
+    }
+    public void setResponderType(ResponseType responderType) {
+        if (responderType == null) {
+            throw new IllegalArgumentException("Responder type cannot be null");
+        }
+        else {
+            this.responderType = responderType;
+        }
+    }
+    public void setRequestee(User requestee) {
+        if (requestee == null) {
+            throw new IllegalArgumentException("Requestee cannot be null");
+        }
+        else {
+            this.requestee = requestee;
+        }
+    }
     public String toString() {
         return "Request ID: " + id + "\n" +
                 "Requestee: " + requestee.getUsername() + "\n" +

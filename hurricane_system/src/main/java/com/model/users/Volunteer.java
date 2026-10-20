@@ -34,9 +34,9 @@ public class Volunteer extends User {
 
     }
 
-    public Volunteer(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Credential> credentials,
+    public Volunteer(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Alert> receivedAlerts, ArrayList<Credential> credentials,
         ArrayList<ResponseType> fieldsOfExpertise, boolean identityVerified, boolean availible) {
-            super(id, firstName, lastName, username, emailAddress, password, address);
+            super(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts);
             this.setType(UserType.VOLUNTEER);
             this.credentials = credentials;
             this.fieldsOfExpertise = fieldsOfExpertise;
