@@ -27,6 +27,7 @@ public class Dispatcher extends User {
 
     public Dispatcher(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Alert> recievedAlerts, String phoneNumber) {
         super(id, firstName, lastName, username, emailAddress, password, address, recievedAlerts);
+        this.setType(UserType.DISPATCHER);
         this.setPhoneNumber(phoneNumber);
     }
 
@@ -83,6 +84,9 @@ public class Dispatcher extends User {
 
     public void finishRequest(Request request) {
         //marks a request as done
-        request.updateStatus(ResponseStatus.COMPLETED);
+        request.updateStatus(ResponseStatus.COMPLETE);
+    }
+    public String toString() {
+        return (this.firstName + " " + this.lastName + " " + this.username);
     }
 }

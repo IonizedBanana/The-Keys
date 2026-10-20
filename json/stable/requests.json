@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ab56db83-1018-44d5-a6ae-3b826aa7a2ce",
+    "requestee": "bobpubert59",
+    "severity": 2,
+    "location": {
+      "city": "jacksonville",
+      "state": "florida"
+    },
+    "status": "WAITING",
+    "responderType": "MEDICAL",
+    "description": "i tripped on a board and slammed my hand on a nail"
+  },
+  {
+    "id": "d542ab40-edc4-413b-8165-e9b55428b3ba",
+    "requestee": "barbarapubert68",
+    "severity": 5,
+    "location": {
+      "city": "jacksonville",
+      "state": "florida"
+    },
+    "status": "IN_PROGRESS",
+    "responderType": "RESOURCE",
+    "description": "my cpap machine needs more distilled water"
+  }
+]

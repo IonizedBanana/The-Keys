@@ -3,6 +3,7 @@ package com.model;
 import com.model.users.*;
 import java.io.File;
 import java.io.FileWriter;
+import java.text.DateFormat;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Map;
@@ -170,9 +171,9 @@ public class DataWriter extends DataConstants {
     userJSON.put(USER_EMAIL_ADDRESS, user.getEmailAddress());
     userJSON.put(USER_PASSWORD, user.getPassword());
     userJSON.put(USER_ADDRESS, getAddressJSON(user.getAddress()));
-    userJSON.put(USER_UUID, user.getId());
+    userJSON.put(USER_UUID, user.getId().toString());
     userJSON.put(USER_TYPE, user.getType().toString());
-    userJSON.put(USER_RECIEVED_ALERTS, getAlertsArray(user.getRecievedAlerts()));
+    userJSON.put(USER_RECEIVED_ALERTS, getAlertsArray(user.getReceivedAlerts()));
     userJSON.put(VOLUNTEER_CREDENTIALS, getCredentialsArray(user.getCredentials()));
     userJSON.put(VOLUNTEER_AVAILABLE, user.getIsAvailible());
     userJSON.put(VOLUNTEER_IDENTITY_VERIFIED, user.getIdentityVerified());
@@ -188,13 +189,14 @@ public class DataWriter extends DataConstants {
     userJSON.put(USER_EMAIL_ADDRESS, user.getEmailAddress());
     userJSON.put(USER_PASSWORD, user.getPassword());
     userJSON.put(USER_ADDRESS, getAddressJSON(user.getAddress()));
-    userJSON.put(USER_UUID, user.getId());
+    userJSON.put(USER_UUID, user.getId().toString());
     userJSON.put(USER_TYPE, user.getType().toString());
-    userJSON.put(USER_RECIEVED_ALERTS, getAlertsArray(user.getRecievedAlerts()));
+    userJSON.put(USER_RECEIVED_ALERTS, getAlertsArray(user.getReceivedAlerts()));
     userJSON.put(VICTIM_AGE, user.getAge());
-    userJSON.put(VICTIM_SEX, user.getSex());
+    userJSON.put(VICTIM_SEX, new String(user.getSex() + ""));
     userJSON.put(VICTIM_DESCRIPTION, user.getDescription());
     userJSON.put(VICTIM_PARTY_SIZE, user.getPartySize());
+    userJSON.put(VICTIM_CREATED_REQUESTS, getRequestListJSON(user.getCreatedRequests()));
     return userJSON;
   }
 
@@ -207,9 +209,9 @@ public class DataWriter extends DataConstants {
     userJSON.put(USER_EMAIL_ADDRESS, user.getEmailAddress());
     userJSON.put(USER_PASSWORD, user.getPassword());
     userJSON.put(USER_ADDRESS, getAddressJSON(user.getAddress()));
-    userJSON.put(USER_UUID, user.getId());
+    userJSON.put(USER_UUID, user.getId().toString());
     userJSON.put(USER_TYPE, user.getType().toString());
-    userJSON.put(USER_RECIEVED_ALERTS, getAlertsArray(user.getRecievedAlerts()));
+    userJSON.put(USER_RECEIVED_ALERTS, getAlertsArray(user.getReceivedAlerts()));
     userJSON.put(ADMIN_PHONE_NUMBER, user.getPhoneNumber());
     return userJSON;
   }
@@ -223,9 +225,9 @@ public class DataWriter extends DataConstants {
     userJSON.put(USER_EMAIL_ADDRESS, user.getEmailAddress());
     userJSON.put(USER_PASSWORD, user.getPassword());
     userJSON.put(USER_ADDRESS, getAddressJSON(user.getAddress()));
-    userJSON.put(USER_UUID, user.getId());
+    userJSON.put(USER_UUID, user.getId().toString());
     userJSON.put(USER_TYPE, user.getType().toString());
-    userJSON.put(USER_RECIEVED_ALERTS, getAlertsArray(user.getRecievedAlerts()));
+    userJSON.put(USER_RECEIVED_ALERTS, getAlertsArray(user.getReceivedAlerts()));
     userJSON.put(ADMIN_PHONE_NUMBER, user.getPhoneNumber());
     return userJSON;
   }
@@ -239,9 +241,9 @@ public class DataWriter extends DataConstants {
     userJSON.put(USER_EMAIL_ADDRESS, user.getEmailAddress());
     userJSON.put(USER_PASSWORD, user.getPassword());
     userJSON.put(USER_ADDRESS, getAddressJSON(user.getAddress()));
-    userJSON.put(USER_UUID, user.getId());
+    userJSON.put(USER_UUID, user.getId().toString());
     userJSON.put(USER_TYPE, user.getType().toString());
-    userJSON.put(USER_RECIEVED_ALERTS, getAlertsArray(user.getRecievedAlerts()));
+    userJSON.put(USER_RECEIVED_ALERTS, getAlertsArray(user.getReceivedAlerts()));
     userJSON.put(SHELTER_WORKER_SHELTER, getShelterJSON(user.getShelter()));
     return userJSON;
   }
@@ -259,7 +261,8 @@ public class DataWriter extends DataConstants {
   private static JSONObject getCredentialJSON(Credential credential) {
     JSONObject credentialObject = new JSONObject();
     credentialObject.put(CREDENTIAL_TYPE, credential.getType());
-    credentialObject.put(CREDENTIAL_EXPIRATION_DATE, credential.getExpirationDate().toString());
+    String dateString = DateFormat.getDateTimeInstance().format(credential.getExpirationDate());
+    credentialObject.put(CREDENTIAL_EXPIRATION_DATE, dateString);
     credentialObject.put(CREDENTIAL_ISSUER, credential.getIssuer());
     credentialObject.put(CREDENTIAL_VERIFIED, credential.isVerified());
     return credentialObject;
@@ -268,6 +271,9 @@ public class DataWriter extends DataConstants {
   @SuppressWarnings("unchecked")
   private static JSONArray getAlertsArray(ArrayList<Alert> alerts) {
     JSONArray alertsJSONArray = new JSONArray();
+    if (alerts == null || alerts.size() == 0) {
+      return alertsJSONArray;
+    }
     for (Alert a : alerts) {
       alertsJSONArray.add(getAlertJSON(a));
     }
@@ -280,15 +286,24 @@ public class DataWriter extends DataConstants {
     alertObject.put(ALERT_AFFECTED_LOCATIONS, getLocationArray(alert.getAffectedLocations()));
     alertObject.put(ALERT_DESCRIPTION, alert.getDescription());
     alertObject.put(ALERT_ISSUED_BY, alert.getIssuedBy());
-    alertObject.put(ALERT_TIMESTAMP, alert.getTimestamp().toString());
+    String timestampFormatted = DateFormat.getDateTimeInstance().format(alert.getTimestamp());
+    alertObject.put(ALERT_TIMESTAMP, timestampFormatted);
     return alertObject;
   }
 
   @SuppressWarnings("unchecked")
+  private static JSONArray getRequestListJSON(ArrayList<Request> requests) {
+    JSONArray requestListJSON = new JSONArray();
+    for (Request r : requests) {
+      requestListJSON.add(getRequestJSON(r));
+    }
+    return requestListJSON;
+  }
+  @SuppressWarnings("unchecked")
   private static JSONObject getRequestJSON(Request request) {
     JSONObject requestJSON = new JSONObject();
     requestJSON.put(REQUEST_UUID, request.getId().toString());
-    requestJSON.put(REQUEST_REQUESTEE, getUserJSON(request.getRequestee()));
+    requestJSON.put(REQUEST_REQUESTEE, request.getRequestee());
     requestJSON.put(REQUEST_SEVERITY, request.getSeverity());
     requestJSON.put(REQUEST_LOCATION, getLocationJSON(request.getLocation()));
     requestJSON.put(REQUEST_STATUS, request.getStatus().toString());

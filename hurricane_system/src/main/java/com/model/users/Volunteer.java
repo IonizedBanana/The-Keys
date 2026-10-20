@@ -103,6 +103,9 @@ public class Volunteer extends User {
 
     public void finishRequest(Request request) {
         //marks a request as done
-        request.updateStatus(ResponseStatus.COMPLETED);
+        request.updateStatus(ResponseStatus.COMPLETE);
+    }
+    public String toString() {
+        return (this.firstName + " " + this.lastName + " " + this.username);
     }
 }

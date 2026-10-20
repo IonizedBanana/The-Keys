@@ -146,4 +146,7 @@ public class Admin extends User {
     public void verifyCredential(Credential credential) {
         credential.setVerified(true);
     }
+    public String toString() {
+        return (this.firstName + " " + this.lastName + " " + this.username);
+    }
 }

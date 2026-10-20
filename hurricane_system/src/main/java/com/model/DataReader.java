@@ -168,7 +168,8 @@ public class DataReader extends DataConstants {
    */
   public static HashMap<String, User> getUsers() {
     HashMap<String, User> users = new HashMap<String, User>();
-    File userFile = new File(USER_FILE_PATH);
+    // File userFile = new File(USER_FILE_PATH);
+    File userFile = new File("../json/testing/user.json");
     try {
       FileReader reader = new FileReader(userFile);
       JSONArray userJSONArray = (JSONArray) new JSONParser().parse(reader);
@@ -214,8 +215,11 @@ public class DataReader extends DataConstants {
    * @see {@link DataReader#getAlert}
    * @see {@link Alert}
    */
-  private static ArrayList<Alert> getRecievedAlerts(JSONArray arr) {
+  private static ArrayList<Alert> getReceivedAlerts(JSONArray arr) {
     ArrayList<Alert> alerts = new ArrayList<Alert>();
+    if (arr == null || arr.size() < 1) {
+      return alerts;
+    }
     for (int i = 0; i < arr.size(); i++) {
       JSONObject o = (JSONObject) arr.get(i);
       Alert alert = getAlert(o);
@@ -232,10 +236,10 @@ public class DataReader extends DataConstants {
   private static Alert getAlert(JSONObject alert) {
     ArrayList<Location> affectedLocations = getLoactionList((JSONArray) alert.get(ALERT_AFFECTED_LOCATIONS));
     String description = (String) alert.get(ALERT_DESCRIPTION);
-    User issuedBy = getUser((JSONObject) alert.get(ALERT_ISSUED_BY));
+    String issuedBy = (String) alert.get(ALERT_ISSUED_BY);
     Date timestamp;
     try {
-      timestamp = DateFormat.getDateInstance().parse((String) alert.get(ALERT_TIMESTAMP));
+      timestamp = DateFormat.getDateTimeInstance().parse((String) alert.get(ALERT_TIMESTAMP));
     } catch (ParseException e) {
       System.out.println(e.getMessage());
       System.out.println(e.getStackTrace());
@@ -281,7 +285,7 @@ public class DataReader extends DataConstants {
 
   private static Request getRequest(JSONObject requestObject) {
     UUID id = UUID.fromString((String) requestObject.get(REQUEST_UUID));
-    User requestee = getUser((JSONObject) requestObject.get(REQUEST_REQUESTEE));
+    String requestee = (String) requestObject.get(REQUEST_REQUESTEE);
     byte severity = ((Long) requestObject.get(REQUEST_SEVERITY)).byteValue();
     Location location = getLocation((JSONObject) requestObject.get(REQUEST_LOCATION));
     ResponseStatus status = getResponseStatus((String) requestObject.get(REQUEST_STATUS));
@@ -304,7 +308,7 @@ public class DataReader extends DataConstants {
     String password = (String) userObject.get(USER_PASSWORD);
     Address address = getAddress((JSONObject) userObject.get(USER_ADDRESS));
     UserType type = getUserType((String) userObject.get(USER_TYPE));
-    ArrayList<Alert> recievedAlerts = getRecievedAlerts((JSONArray) userObject.get(USER_RECIEVED_ALERTS));
+    ArrayList<Alert> receivedAlerts = getReceivedAlerts((JSONArray) userObject.get(USER_RECEIVED_ALERTS));
     switch (type) {
       case VOLUNTEER -> {
         ArrayList<Credential> credentials = getCredentialList((JSONArray) userObject.get(VOLUNTEER_CREDENTIALS));
@@ -312,7 +316,7 @@ public class DataReader extends DataConstants {
             (JSONArray) userObject.get(VOLUNTEER_FIELDS_OF_EXPERTISE));
         boolean identityVerified = (Boolean) userObject.get(VOLUNTEER_IDENTITY_VERIFIED);
         boolean available = (Boolean) userObject.get(VOLUNTEER_AVAILABLE);
-        return new Volunteer(id, firstName, lastName, username, emailAddress, password, address, credentials,
+        return new Volunteer(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts, credentials,
             fieldsOfExpertise, identityVerified, available);
       }
       case VICTIM -> {
@@ -321,20 +325,20 @@ public class DataReader extends DataConstants {
         String description = (String) userObject.get(VICTIM_DESCRIPTION);
         byte partySize = ((Long) userObject.get(VICTIM_PARTY_SIZE)).byteValue();
         ArrayList<Request> createdRequests = getRequests((JSONArray) userObject.get(VICTIM_CREATED_REQUESTS));
-        return new Victim(id, firstName, lastName, username, emailAddress, password, address, age, sex, description,
+        return new Victim(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts, age, sex, description,
             partySize, createdRequests);
       }
       case ADMIN -> {
         String phoneNumber = (String) userObject.get(ADMIN_PHONE_NUMBER);
-        return new Admin(firstName, lastName, username, emailAddress, password, address, phoneNumber);
+        return new Admin(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts, phoneNumber);
       }
       case DISPATCHER -> {
         String phoneNumber = (String) userObject.get(ADMIN_PHONE_NUMBER);
-        return new Dispatcher(firstName, lastName, username, emailAddress, password, address, phoneNumber);
+        return new Dispatcher(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts, phoneNumber);
       }
       case SHELTER_WORKER -> {
         Shelter shelter = getShelter((JSONObject) userObject.get(SHELTER_WORKER_SHELTER));
-        return new ShelterWorker(firstName, lastName, username, password, emailAddress, address, shelter);
+        return new ShelterWorker(id, firstName, lastName, username, password, emailAddress, address, receivedAlerts, shelter);
       }
     }
     return null;
@@ -349,6 +353,9 @@ public class DataReader extends DataConstants {
    */
   private static ArrayList<Credential> getCredentialList(JSONArray arr) {
     ArrayList<Credential> credentials = new ArrayList<Credential>();
+    if (arr == null || arr.size() < 1) {
+      return credentials;
+    }
     for (int i = 0; i < arr.size(); i++) {
       JSONObject credentialObject = (JSONObject) arr.get(i);
       Credential credential = getCredential(credentialObject);
@@ -367,7 +374,7 @@ public class DataReader extends DataConstants {
     String issuer = (String) o.get(CREDENTIAL_ISSUER);
     Date date = null;
     try {
-      date = DateFormat.getDateInstance().parse((String) o.get(CREDENTIAL_EXPIRATION_DATE));
+      date = DateFormat.getDateTimeInstance().parse((String) o.get(CREDENTIAL_EXPIRATION_DATE));
     } catch (Exception e) {
       System.out.println(e.getMessage());
       System.out.println(e.getStackTrace());
@@ -427,9 +434,12 @@ public class DataReader extends DataConstants {
    */
   private static ArrayList<ResponseType> getResponseTypeList(JSONArray arr) {
     ArrayList<ResponseType> types = new ArrayList<ResponseType>();
+    if (arr == null || arr.size() < 1) {
+      return types;
+    }
     for (int i = 0; i < arr.size(); i++) {
-      JSONObject responseObject = (JSONObject) arr.get(i);
-      ResponseType response = getResponseType(responseObject.toString());
+      String responseString = (String) arr.get(i);
+      ResponseType response = getResponseType(responseString);
       types.add(response);
     }
     return types;
@@ -529,8 +539,13 @@ public class DataReader extends DataConstants {
     }
     HashMap<String, User> users = getUsers();
     for (Map.Entry<String, User> set : users.entrySet()) {
-      System.out.println(set.getValue());
+      System.out.println(set.getValue().toString());
     }
+
+    DataWriter.saveUsers(users);
+    DataWriter.saveHurricanes(hurricanes);
+    DataWriter.saveRequests(requests);
+    DataWriter.saveShelters(shelters);
 
   }
 }
