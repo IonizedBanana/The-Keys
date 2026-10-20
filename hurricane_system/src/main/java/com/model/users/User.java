@@ -32,6 +32,7 @@ public abstract class User {
      * @param emailAddress The user's email.
      * @param password The user's password.
      * @param address The user's address.
+     * @param recivedAlerts The user's recieved alerts.
      */
     public User(UUID id, String firstName,  String lastName, String username, String emailAddress,
         String password, Address address, ArrayList<Alert> recievedAlerts) {

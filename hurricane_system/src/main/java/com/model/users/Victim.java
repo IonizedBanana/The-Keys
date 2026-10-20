@@ -132,7 +132,7 @@ public class Victim extends User {
     }
 
     /**
-     * Sets the user's party size
+     * Sets the user's party size.
      * @param partySize The user's party size (must be at least 1).
      */
     public void setPartySize(int partySize) {
