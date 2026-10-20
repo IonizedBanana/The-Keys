@@ -65,23 +65,43 @@ public class Alert {
         this.description = description;
     }
 
-    
+    /**
+     * Gets the alert's issuer.
+     * @return The alert's issuer.
+     */
     public User getIssuedBy() {
         return this.issuedBy;
     }
 
+    /**
+     * Sets the alert's issuer.
+     * @param issuedBy The alert's issuer.
+     */
     public void setIssuedBy(User issuedBy) {
         this.issuedBy = issuedBy;
     }
 
+    /**
+     * Gets the alert's timestamp.
+     * @return The alert's timestamp.
+     */
     public Date getTimestamp() {
         return this.timestamp;
     }
 
+    /**
+     * Set's the alert's timestamp.
+     * @param timestamp The alert's timestamp.
+     */
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 
+    /**
+     * Returns whether or not the alert is relevent to a user.
+     * @param user The user that is being involved.
+     * @return Returns true only if the alerts impact area contains the user's location.
+     */
     public boolean isRelevantTo(User user) {
         return (this.getAffectedLocations().contains(user.getAddress().getLocation()));
     }
