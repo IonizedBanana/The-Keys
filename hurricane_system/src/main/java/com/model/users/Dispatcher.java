@@ -7,10 +7,10 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * Dispatcher
+ * A Dispatcher that assigns people to requests.
  * @author Jason
  */
-public class Dispatcher extends User{
+public class Dispatcher extends User {
     private String phoneNumber;
 
     public Dispatcher(String firstName,  String lastName, String username, String emailAddress, String password, Address address, String phoneNumber) {
@@ -43,7 +43,7 @@ public class Dispatcher extends User{
     //other methods
 
     public void respondToRequest(Request request, Volunteer volunteer) {
-        //TODO
+        //Return if the volunteer is not availible
         if (!volunteer.getIsAvailible())
             return;
         volunteer.setAvailible(false);

@@ -4,6 +4,7 @@ import java.util.UUID;
 import com.model.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -67,70 +68,149 @@ public abstract class User {
 
     //getters and setters
 
+    /**
+     * Gets the UUID.
+     * @return The user's UUID.
+     */
     public UUID getId() {
       return this.id;
     }
 
+    /**
+     * Gets the first name.
+     * @return The user's first name.
+     */
     public String getFirstName() {
         return this.firstName;
     }
 
+    /**
+     * Sets the first name.
+     * @param firstName The new first name.
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    /**
+     * Gets the user's last name.
+     * @return The last name.
+     */
     public String getLastName() {
         return this.lastName;
     }
 
+    /**
+     * Sets the last name.
+     * @param lastName The new first name.
+     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    /**
+     * Gets the username.
+     * @return The new username.
+     */
     public String getUsername() {
         return this.username;
     }
 
+    /**
+     * Sets the username.
+     * @param userName The new username.
+     */
     public void setUsername(String userName) {
+        //Check if the username has already been taken
+        //TODO Wait for UserList to be added
+        /*
+        HashMap<String, User> list = UserList.getInstance();
+        if(list.containsKey(userName))
+            return;
+        */
         this.username = userName;
     }
 
+    /**
+     * Gets the email.
+     * @return The user's email.
+     */
     public String getEmailAddress() {
         return this.emailAddress;
     }
 
+    /**
+     * Sets the email (cannot be blank).
+     * @param emailAddress The user's email.
+     */
     public void setEmailAddress(String emailAddress) {
+        if (emailAddress.isBlank())
+            return;
         this.emailAddress = emailAddress;
     }
 
+    /**
+     * Gets the password.
+     * @return The user's password.
+     */
     public String getPassword() {
         return this.password;
     }
 
+    /**
+     * Sets a new password only if it is at least 4 characters long.
+     * @param password The new password.
+     */
     public void setPassword(String password) {
+        if (password.length() < 4)
+            return;
         this.password = password;
     }
 
+    /**
+     * Gets the address.
+     * @return The user's address.
+     */
     public Address getAddress() {
         return this.address;
     }
 
+    /**
+     * Sets the user's address.
+     * @param address The user's new address.
+     */
     public void setAddress(Address address) {
         this.address = address;
     }
 
+    /**
+     * Get's the user's type.
+     * @return The user's type.
+     */
     public UserType getType() {
         return this.type;
     }
 
+    /**
+     * Sets the user's type.
+     * @param type The new type.
+     */
     public void setType(UserType type) {
         this.type = type;
     }
 
+    /**
+     * Gets the user's alerts.
+     * @return The user's alerts.
+     */
     public ArrayList<Alert> getRecievedAlerts() {
         return this.recievedAlerts;
     }
 
+    /**
+     * Sets the user's alerts.
+     * @param recievedAlerts The new alerts.
+     */
     public void setRecievedAlerts(ArrayList<Alert> recievedAlerts) {
         this.recievedAlerts = recievedAlerts;
     }
