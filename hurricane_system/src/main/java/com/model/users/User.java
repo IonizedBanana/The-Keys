@@ -8,7 +8,6 @@ import java.util.HashMap;
 
 
 /**
- * User
  * A user without a specific type yet.
  * @author Jason
  */
