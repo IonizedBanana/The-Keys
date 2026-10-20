@@ -43,6 +43,7 @@ public class DataConstants {
   public static final String VICTIM_SEX = "sex";
   public static final String VICTIM_DESCRIPTION = "description";
   public static final String VICTIM_PARTY_SIZE = "partySize";
+  public static final String VICTIM_CREATED_REQUESTS = "createdRequests";
   public static final String ADMIN_PHONE_NUMBER = "phoneNumber";
   public static final String SHELTER_WORKER_SHELTER = "shelter";
 

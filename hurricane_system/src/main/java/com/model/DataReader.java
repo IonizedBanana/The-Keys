@@ -47,6 +47,7 @@ public class DataReader extends DataConstants {
       return shelters;
     } catch (Exception e) {
       System.out.println(e.getMessage());
+      System.out.println(e.getStackTrace());
       return null;
     }
   }
@@ -180,6 +181,7 @@ public class DataReader extends DataConstants {
       reader.close();
     } catch (Exception e) {
       System.out.println(e.getMessage());
+      System.out.println(e.getStackTrace());
     }
     return users;
   }
@@ -236,6 +238,7 @@ public class DataReader extends DataConstants {
       timestamp = DateFormat.getDateInstance().parse((String) alert.get(ALERT_TIMESTAMP));
     } catch (ParseException e) {
       System.out.println(e.getMessage());
+      System.out.println(e.getStackTrace());
       timestamp = null;
     }
     return new Alert(affectedLocations, description, issuedBy, timestamp);
@@ -254,22 +257,37 @@ public class DataReader extends DataConstants {
 
       for (int i = 0; i < requestJSONArray.size(); i++) {
         JSONObject requestObject = (JSONObject) requestJSONArray.get(i);
-        UUID id = (UUID) requestObject.get(REQUEST_UUID);
-        User requestee = getUser((JSONObject) requestObject.get(REQUEST_REQUESTEE));
-        byte severity = ((Long) requestObject.get(REQUEST_SEVERITY)).byteValue();
-        Location location = getLocation((JSONObject) requestObject.get(REQUEST_LOCATION));
-        ResponseStatus status = getResponseStatus((String) requestObject.get(REQUEST_STATUS));
-        ResponseType responderType = getResponseType((String) requestObject.get(REQUEST_RESPONSE_TYPE));
-        String description = (String) requestObject.get(REQUEST_DESCRIPTION);
 
-        Request request = new Request(id, requestee, severity, location, status, responderType, description);
+        Request request = getRequest(requestObject);
         requests.put(request.getId(), request);
       }
       reader.close();
     } catch (Exception e) {
       System.out.println(e.getMessage());
+      System.out.println(e.getStackTrace());
     }
     return requests;
+  }
+
+  private static ArrayList<Request> getRequests(JSONArray arr) {
+    ArrayList<Request> requests = new ArrayList<Request>();
+    for (int i = 0; i < arr.size(); i++) {
+      JSONObject requestObject = (JSONObject) arr.get(i);
+      Request request = getRequest(requestObject);
+      requests.add(request);
+    }
+    return requests;
+  }
+
+  private static Request getRequest(JSONObject requestObject) {
+    UUID id = UUID.fromString((String) requestObject.get(REQUEST_UUID));
+    User requestee = getUser((JSONObject) requestObject.get(REQUEST_REQUESTEE));
+    byte severity = ((Long) requestObject.get(REQUEST_SEVERITY)).byteValue();
+    Location location = getLocation((JSONObject) requestObject.get(REQUEST_LOCATION));
+    ResponseStatus status = getResponseStatus((String) requestObject.get(REQUEST_STATUS));
+    ResponseType responderType = getResponseType((String) requestObject.get(REQUEST_RESPONSE_TYPE));
+    String description = (String) requestObject.get(REQUEST_DESCRIPTION);
+    return new Request(id, requestee, severity, location, status, responderType, description);
   }
 
   /**
@@ -302,8 +320,9 @@ public class DataReader extends DataConstants {
         char sex = ((String) userObject.get(VICTIM_SEX)).toCharArray()[0];
         String description = (String) userObject.get(VICTIM_DESCRIPTION);
         byte partySize = ((Long) userObject.get(VICTIM_PARTY_SIZE)).byteValue();
-        ArrayList<Request> createdRequests = getRequestList();
-        return new Victim(id, firstName, lastName, username, emailAddress, password, address, age, sex, description, partySize, createdRequests);
+        ArrayList<Request> createdRequests = getRequests((JSONArray) userObject.get(VICTIM_CREATED_REQUESTS));
+        return new Victim(id, firstName, lastName, username, emailAddress, password, address, age, sex, description,
+            partySize, createdRequests);
       }
       case ADMIN -> {
         String phoneNumber = (String) userObject.get(ADMIN_PHONE_NUMBER);
@@ -351,6 +370,7 @@ public class DataReader extends DataConstants {
       date = DateFormat.getDateInstance().parse((String) o.get(CREDENTIAL_EXPIRATION_DATE));
     } catch (Exception e) {
       System.out.println(e.getMessage());
+      System.out.println(e.getStackTrace());
     }
     Date expirationDate = date;
     boolean verified = (Boolean) o.get(CREDENTIAL_VERIFIED);
@@ -442,6 +462,7 @@ public class DataReader extends DataConstants {
       reader.close();
     } catch (Exception e) {
       System.out.println(e.getMessage());
+      System.out.println(e.getStackTrace());
     }
     return hurricanes;
   }
@@ -502,5 +523,14 @@ public class DataReader extends DataConstants {
       System.out.println(set.getValue());
     }
     DataWriter.saveHurricanes(hurricanes);
+    HashMap<UUID, Request> requests = getRequests();
+    for (Map.Entry<UUID, Request> set : requests.entrySet()) {
+      System.out.println(set.getValue());
+    }
+    HashMap<String, User> users = getUsers();
+    for (Map.Entry<String, User> set : users.entrySet()) {
+      System.out.println(set.getValue());
+    }
+
   }
 }
