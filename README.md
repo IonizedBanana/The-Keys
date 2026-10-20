@@ -1,6 +1,5 @@
 # <img src="documents/icons/life-buoy.svg" width="30" alt=""> The Keys Hurricane Relief App
 
-![Java 11](https://img.shields.io/badge/Java-11-ED8B00?logo=openjdk&logoColor=white)
 ![JavaFX 17](https://img.shields.io/badge/JavaFX-17)
 ![Maven](https://img.shields.io/badge/Maven-build-C71A36?logo=apachemaven&logoColor=white)
 
