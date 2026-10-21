@@ -20,7 +20,7 @@ public abstract class User {
     protected String emailAddress;
     protected String password;
     protected Address address;
-    protected ArrayList<Alert> recievedAlerts;
+    protected ArrayList<Alert> receivedAlerts;
     protected UserType type;
 
     /**
@@ -32,10 +32,10 @@ public abstract class User {
      * @param emailAddress The user's email.
      * @param password The user's password.
      * @param address The user's address.
-     * @param recivedAlerts The user's recieved alerts.
+     * @param recivedAlerts The user's received alerts.
      */
     public User(UUID id, String firstName,  String lastName, String username, String emailAddress,
-        String password, Address address, ArrayList<Alert> recievedAlerts) {
+        String password, Address address, ArrayList<Alert> receivedAlerts) {
         this.id = id;
         this.setFirstName(firstName);
         this.setLastName(lastName);
@@ -43,7 +43,7 @@ public abstract class User {
         this.setEmailAddress(emailAddress);
         this.setPassword(password);
         this.setAddress(address);
-        this.setRecievedAlerts(recievedAlerts);
+        this.setReceivedAlerts(receivedAlerts);
     }
 
     /**
@@ -203,16 +203,16 @@ public abstract class User {
      * Gets the user's alerts.
      * @return The user's alerts.
      */
-    public ArrayList<Alert> getRecievedAlerts() {
-        return this.recievedAlerts;
+    public ArrayList<Alert> getReceivedAlerts() {
+        return this.receivedAlerts;
     }
 
     /**
      * Sets the user's alerts.
-     * @param recievedAlerts The new alerts.
+     * @param receivedAlerts The new alerts.
      */
-    public void setRecievedAlerts(ArrayList<Alert> recievedAlerts) {
-        this.recievedAlerts = recievedAlerts;
+    public void setReceivedAlerts(ArrayList<Alert> receivedAlerts) {
+        this.receivedAlerts = receivedAlerts;
     }
 
     //other methods
@@ -232,12 +232,12 @@ public abstract class User {
     }
 
     /**
-     * Adds an alert to the user's list of recieved alerts
-     * @param alert The alert to be recieved.
+     * Adds an alert to the user's list of received alerts
+     * @param alert The alert to be received.
      */
     public void receiveAlert(Alert alert) {
         if(alert.isRelevantTo(this)) {
-            recievedAlerts.add(alert);
+            receivedAlerts.add(alert);
         }
     }
     

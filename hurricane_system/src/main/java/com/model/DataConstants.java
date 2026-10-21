@@ -34,6 +34,7 @@ public class DataConstants {
   public static final String USER_EMAIL_ADDRESS = "emailAddress";
   public static final String USER_PASSWORD = "password";
   public static final String USER_ADDRESS = "address";
+  public static final String USER_RECEIVED_ALERTS = "receivedAlerts";
   public static final String VOLUNTEER_CREDENTIALS = "credentials";
   public static final String VOLUNTEER_FIELDS_OF_EXPERTISE = "fieldsOfExpertise";
   public static final String VOLUNTEER_IDENTITY_VERIFIED = "identityVerified";
@@ -42,6 +43,9 @@ public class DataConstants {
   public static final String VICTIM_SEX = "sex";
   public static final String VICTIM_DESCRIPTION = "description";
   public static final String VICTIM_PARTY_SIZE = "partySize";
+  public static final String VICTIM_CREATED_REQUESTS = "createdRequests";
+  public static final String ADMIN_PHONE_NUMBER = "phoneNumber";
+  public static final String SHELTER_WORKER_SHELTER = "shelter";
 
   // request consts
   public static final String REQUEST_FILE_PATH = "../json/requests.json";
@@ -62,4 +66,17 @@ public class DataConstants {
   public static final String HURRICANE_PREDICTED_PATH = "predictedPath";
   public static final String HURRICANE_IMPACT_AREA = "impactArea";
   public static final String HURRICANE_STATUS = "status";
+
+  // Alert consts
+  public static final String ALERT_AFFECTED_LOCATIONS = "affectedLocations";
+  public static final String ALERT_DESCRIPTION = "description";
+  public static final String ALERT_ISSUED_BY = "issuedBy";
+  public static final String ALERT_TIMESTAMP = "timestamp";
+
+  // Credential consts
+  public static final String CREDENTIAL_TYPE = "type";
+  public static final String CREDENTIAL_ISSUER = "issuer";
+  public static final String CREDENTIAL_EXPIRATION_DATE = "expirationDate";
+  public static final String CREDENTIAL_VERIFIED = "verified";
+
 }

@@ -7,8 +7,11 @@
       "city": "jacksonville",
       "state": "florida"
     },
-    "predictedPath": [{ }],
-    "impactArea": [{ }],
+    "predictedPath": [{"city": "Orlando", "state": "florida"}],
+    "impactArea": [{
+      "city": "jacksonville",
+      "state": "florida"
+    }],
     "status": "IN_PROGRESS"
   },
   {
@@ -19,8 +22,8 @@
       "city": "Houston",
       "state": "Texas"
     },
-    "predictedPath": [{ }],
-    "impactArea": [{ }],
+    "predictedPath": [{ "city": "Dallas", "state":"Texas" }],
+    "impactArea": [{"city": "Houston", "state":"Texas" }],
     "status": "OVER"
   }
 ]

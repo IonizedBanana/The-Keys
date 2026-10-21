@@ -46,4 +46,7 @@ private Shelter shelter;
             System.out.println("Invalid shelter.");
         }
     }
+    public String toString() {
+        return (this.firstName + " " + this.lastName + " " + this.username);
+    }
 }
