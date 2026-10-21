@@ -12,7 +12,7 @@ import java.util.Date;
 public class Alert {
     private ArrayList<Location> affectedLocations;
     private String description;
-    private User issuedBy;
+    private String issuedBy;
     private Date timestamp;
 
     /**
@@ -22,7 +22,7 @@ public class Alert {
      * @param issuedBy The user issuing the alert.
      * @param timestamp
      */
-    public Alert(ArrayList<Location> affectedLocations, String description, User issuedBy, Date timestamp) {
+    public Alert(ArrayList<Location> affectedLocations, String description, String issuedBy, Date timestamp) {
         setAffectedLocations(affectedLocations);
         setDescription(description);
         setIssuedBy(issuedBy);
@@ -69,7 +69,7 @@ public class Alert {
      * Gets the alert's issuer.
      * @return The alert's issuer.
      */
-    public User getIssuedBy() {
+    public String getIssuedBy() {
         return this.issuedBy;
     }
 
@@ -77,7 +77,7 @@ public class Alert {
      * Sets the alert's issuer.
      * @param issuedBy The alert's issuer.
      */
-    public void setIssuedBy(User issuedBy) {
+    public void setIssuedBy(String issuedBy) {
         this.issuedBy = issuedBy;
     }
 

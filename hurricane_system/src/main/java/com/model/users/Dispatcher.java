@@ -54,6 +54,7 @@ public class Dispatcher extends User {
      */
     public Dispatcher(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Alert> recievedAlerts, String phoneNumber) {
         super(id, firstName, lastName, username, emailAddress, password, address, recievedAlerts);
+        this.setType(UserType.DISPATCHER);
         this.setPhoneNumber(phoneNumber);
     }
 
@@ -86,7 +87,10 @@ public class Dispatcher extends User {
         //Return if the volunteer is not availible
         if (!volunteer.getIsAvailible())
             return;
+        //Set the volunteer as not availible so it can't be assigned to somewhere else.
         volunteer.setAvailible(false);
+        //Mark the request as in progress
+        request.updateStatus(ResponseStatus.IN_PROGRESS);
 
         //create an arrayList with the volunteers location
         //this is needed so the User recieveAlert method doesn't filter out the alert
@@ -97,10 +101,11 @@ public class Dispatcher extends User {
         Alert notification = new Alert(temp, "Dispatcher has assigned you to the following request \n"+request, this, Date.from(Instant.now()));
         volunteer.receiveAlert(notification);
 
+        //Make an arrayList with the victim's location.
         temp = new ArrayList<Location>();
         temp.add(request.getRequestee().getAddress().getLocation());
 
-        //send notification to volunteer as an alert
+        //send notification to victim as an alert
         notification = new Alert(temp, "Dispatcher has assigned"+volunteer.firstName+" "+volunteer.lastName+"to your request", this, Date.from(Instant.now()));
         request.getRequestee().receiveAlert(notification);
         
@@ -115,7 +120,7 @@ public class Dispatcher extends User {
         ArrayList<Location> temp = new ArrayList<Location>();
         temp.add(request.getRequestee().getAddress().getLocation());
 
-        //send notification to volunteer as an alert
+        //send notification to victim as an alert
         Alert notification = new Alert(temp, whatIsNeeded, this, Date.from(Instant.now()));
         request.getRequestee().receiveAlert(notification);
         
@@ -135,6 +140,10 @@ public class Dispatcher extends User {
      * @param request The request.
      */
     public void finishRequest(Request request) {
-        request.updateStatus(ResponseStatus.COMPLETED);
+        //marks a request as done
+        request.updateStatus(ResponseStatus.COMPLETE);
+    }
+    public String toString() {
+        return (this.firstName + " " + this.lastName + " " + this.username);
     }
 }

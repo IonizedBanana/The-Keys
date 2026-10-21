@@ -1,8 +1,6 @@
 # <img src="documents/icons/life-buoy.svg" width="30" alt=""> The Keys Hurricane Relief App
 
-![Java 11](https://img.shields.io/badge/Java-11-ED8B00?logo=openjdk&logoColor=white)
 ![JavaFX 17](https://img.shields.io/badge/JavaFX-17)
-![Maven](https://img.shields.io/badge/Maven-build-C71A36?logo=apachemaven&logoColor=white)
 
 The Hurricane Relief App is an all-in-one app for requesting, providing, and coordinating help in hurricane-affected areas. It connects victims, volunteers, and shelters so help gets to the people who need it.
 
@@ -54,3 +52,13 @@ Admins run the app. They manage shelters, push alerts to users, and create and m
 https://github.com/users/IonizedBanana/projects/2
 
 > Icons were provided by Lucide Icons at [lucide.dev](https://lucide.dev/).
+
+## <img src="documents/icons/user-group.svg" width="22" alt=""> Contributors: 
+[SynthwaveFox](https://github.com/SynthwaveFox) - Tucker Souder
+
+[IonizedBanana](https://github.com/IonizedBanana) - Cayden Barnett
+
+[jah73cse](https://github.com/jah73cse) - Jason Howard
+
+[LoganH627](https://github.com/LoganH627) - Logan Hargadine
+

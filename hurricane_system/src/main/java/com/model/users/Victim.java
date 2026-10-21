@@ -166,7 +166,7 @@ public class Victim extends User {
      * @param description The request's description.
      */
     public void createRequest(byte severity, Location location, String description) {
-        Request newRequest = new Request(this, severity, location, description);
+        Request newRequest = new Request(this.username, severity, location, description);
         this.createdRequests.add(newRequest);
     }
 
@@ -195,5 +195,11 @@ public class Victim extends User {
      */
     public void editRequestDescription(Request request, String description) {
         request.setDescription(description);
+    }
+    public String toString() {
+        return (this.firstName + " " + this.lastName + " " + this.username);
+    }
+    public ArrayList<Request> getCreatedRequests() {
+        return createdRequests;
     }
 }
