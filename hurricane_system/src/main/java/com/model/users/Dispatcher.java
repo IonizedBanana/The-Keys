@@ -98,16 +98,16 @@ public class Dispatcher extends User {
         temp.add(volunteer.getAddress().getLocation());
 
         //send notification to volunteer as an alert
-        Alert notification = new Alert(temp, "Dispatcher has assigned you to the following request \n"+request, this, Date.from(Instant.now()));
+        Alert notification = new Alert(temp, "Dispatcher has assigned you to the following request \n"+request, this.username, Date.from(Instant.now()));
         volunteer.receiveAlert(notification);
 
         //Make an arrayList with the victim's location.
         temp = new ArrayList<Location>();
-        temp.add(request.getRequestee().getAddress().getLocation());
+        temp.add(request.getRequesteeUser().getAddress().getLocation());
 
         //send notification to victim as an alert
-        notification = new Alert(temp, "Dispatcher has assigned"+volunteer.firstName+" "+volunteer.lastName+"to your request", this, Date.from(Instant.now()));
-        request.getRequestee().receiveAlert(notification);
+        notification = new Alert(temp, "Dispatcher has assigned"+volunteer.firstName+" "+volunteer.lastName+"to your request", this.username, Date.from(Instant.now()));
+        request.getRequesteeUser().receiveAlert(notification); 
         
     }
 
@@ -118,11 +118,11 @@ public class Dispatcher extends User {
      */
     public void requestMoreInfo(Request request, String whatIsNeeded) {
         ArrayList<Location> temp = new ArrayList<Location>();
-        temp.add(request.getRequestee().getAddress().getLocation());
+        temp.add(request.getRequesteeUser().getAddress().getLocation());
 
         //send notification to victim as an alert
-        Alert notification = new Alert(temp, whatIsNeeded, this, Date.from(Instant.now()));
-        request.getRequestee().receiveAlert(notification);
+        Alert notification = new Alert(temp, whatIsNeeded, this.username, Date.from(Instant.now()));
+        request.getRequesteeUser().receiveAlert(notification); 
         
     }
 
