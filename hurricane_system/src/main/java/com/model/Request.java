@@ -121,4 +121,9 @@ public class Request {
                 "Description: " + description;
     }
 
+    public User getRequesteeUser() {
+        UserList users = UserList.getInstance();
+        return users.getUser(requestee);
+    }
+
 }
