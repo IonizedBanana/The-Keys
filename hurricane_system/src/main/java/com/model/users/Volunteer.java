@@ -64,12 +64,12 @@ public class Volunteer extends User {
      */
     public Volunteer(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Alert> receivedAlerts, ArrayList<Credential> credentials,
         ArrayList<ResponseType> fieldsOfExpertise, boolean identityVerified, boolean availible) {
-            super(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts);
-            this.setType(UserType.VOLUNTEER);
-            this.credentials = credentials;
-            this.fieldsOfExpertise = fieldsOfExpertise;
-            this.identityVerified = identityVerified;
-            this.availible = availible;
+        super(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts);
+        this.setType(UserType.VOLUNTEER);
+        this.credentials = credentials;
+        this.fieldsOfExpertise = fieldsOfExpertise;
+        this.identityVerified = identityVerified;
+        this.availible = availible;
     }
 
     //getters and setters
@@ -169,6 +169,10 @@ public class Volunteer extends User {
      * @param status The new status.
      */
     public void updateRequest(Request request, ResponseStatus status) {
+        if (status == ResponseStatus.COMPLETE) {
+            System.out.println("Volunteers do not have permission to mark requests as complete.");
+            return;
+        }
         request.updateStatus(status);
     }
 
@@ -177,8 +181,10 @@ public class Volunteer extends User {
      * @param request The request to be updated.
      */
     public void finishRequest(Request request) {
+        System.out.println("Volunteers do not have permission to mark requests as complete.");
+        return;
         //marks a request as done
-        request.updateStatus(ResponseStatus.COMPLETE);
+        //request.updateStatus(ResponseStatus.COMPLETE);
     }
     public String toString() {
         return (this.firstName + " " + this.lastName + " " + this.username);
