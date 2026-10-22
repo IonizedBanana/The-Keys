@@ -26,7 +26,7 @@ replay_pid*
 # ignore any local shell/config files
 *.sh
 *.nix
-/hurricane_system
+/hurricane_system/.*
 
 # ignore build files
 target/
