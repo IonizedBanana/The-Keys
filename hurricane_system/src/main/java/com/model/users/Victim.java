@@ -14,6 +14,8 @@ public class Victim extends User {
     private String description;
     private int partySize;
     private ArrayList<Request> createdRequests;
+    // New stuff
+    private ArrayList<Person> party;
 
     /**
      * Creates a victim with only the required information (victims don't provide all information immediately; They can add more info later).
@@ -207,5 +209,66 @@ public class Victim extends User {
      */
     public ArrayList<Request> getCreatedRequests() {
         return createdRequests;
+    }
+
+    public String getPerson(int index) {
+        return this.party.get(index).getName()
+        + ", age: " + this.party.get(index).getAge()
+        + ". " + this.party.get(index).getDescription();
+    }
+
+    /**
+     * A member of a victim's party that does not have an account.
+     */
+    public class Person {
+        private String name;
+        private int age;
+        private boolean isPet;
+        private String description;
+        public Person(String name, int age, boolean isPet, String description) {
+            this.setName(name);
+            this.setAge(age);
+            this.setIsPet(isPet);
+            this.setDescription(description);
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getAge() {
+            return this.age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
+
+        public boolean getIsPet() {
+            return this.isPet;
+        }
+
+        public void setIsPet(boolean isPet) {
+            this.isPet = isPet;
+        }
+
+        public String getDescription() {
+            return this.description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String toString() {
+            return this.getName()
+                + ", age: " + this.getAge()
+                + ". " + this.getDescription();
+        }
+
     }
 }
