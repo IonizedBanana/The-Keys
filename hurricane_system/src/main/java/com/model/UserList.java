@@ -34,4 +34,8 @@ public class UserList {
   public HashMap<String, User> getUserList() {
     return this.users;
   }
+
+  public boolean usernameTaken(String username) {
+    return users.containsKey(username);
+  }
 }

@@ -34,5 +34,5 @@ target/
 # ignore testing data
 json/testing/
 
-# dont put env in main idiot
+# dont put .env in main idiot
 .env
