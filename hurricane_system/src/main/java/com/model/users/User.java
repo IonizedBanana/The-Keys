@@ -37,13 +37,13 @@ public abstract class User {
     public User(UUID id, String firstName,  String lastName, String username, String emailAddress,
         String password, Address address, ArrayList<Alert> receivedAlerts) {
         this.id = id;
-        this.setFirstName(firstName);
-        this.setLastName(lastName);
-        this.setUsername(username);
-        this.setEmailAddress(emailAddress);
-        this.setPassword(password);
-        this.setAddress(address);
-        this.setReceivedAlerts(receivedAlerts);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.emailAddress = emailAddress;
+        this.password = password;
+        this.address = address;
+        this.receivedAlerts = receivedAlerts;
     }
 
     /**
@@ -122,12 +122,9 @@ public abstract class User {
      */
     public void setUsername(String userName) {
         //Check if the username has already been taken
-        HashMap<String, User> list = UserList.getInstance().getUserList();
-        if(list.containsKey(userName)){
-            System.out.println("Username is already taken.");
-            return;
+        if (!UserList.getInstance().usernameTaken(userName)) {
+            this.username = userName;
         }
-        this.username = userName;
     }
 
     /**
