@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Run UI",
+      "request": "launch",
+      "mainClass": "com.hurricane/com.model.UI",
+      "projectName": "hurricane_system",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Run Map App",
+      "request": "launch",
+      "mainClass": "com.hurricane/com.hurricane.App",
+      "projectName": "hurricane_system",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
