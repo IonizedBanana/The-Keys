@@ -2,7 +2,7 @@ package com.model;
 
 public class DataConstants {
   // shelter consts
-  public static final String SHELTER_FILE_PATH = "../json/shelter.json";
+  public static final String SHELTER_FILE_PATH = "../json/stable/shelter.json";
   public static final String SHELTER_UUID = "id";
   public static final String SHELTER_NAME = "name";
   public static final String SHELTER_ADDRESS = "address";
@@ -25,7 +25,7 @@ public class DataConstants {
   public static final String RESOURCE_UNIT = "unit";
 
   // user consts
-  public static final String USER_FILE_PATH = "../json/user.json";
+  public static final String USER_FILE_PATH = "../json/stable/user.json";
   public static final String USER_UUID = "id";
   public static final String USER_TYPE = "type";
   public static final String USER_FIRST_NAME = "firstName";
@@ -48,7 +48,7 @@ public class DataConstants {
   public static final String SHELTER_WORKER_SHELTER = "shelter";
 
   // request consts
-  public static final String REQUEST_FILE_PATH = "../json/requests.json";
+  public static final String REQUEST_FILE_PATH = "../json/stable/requests.json";
   public static final String REQUEST_UUID = "id";
   public static final String REQUEST_REQUESTEE = "requestee";
   public static final String REQUEST_SEVERITY = "severity";
@@ -58,7 +58,7 @@ public class DataConstants {
   public static final String REQUEST_DESCRIPTION = "description";
 
   // hurricane consts
-  public static final String HURRICANE_FILE_PATH = "../json/hurricane.json";
+  public static final String HURRICANE_FILE_PATH = "../json/stable/hurricane.json";
   public static final String HURRICANE_UUID = "id";
   public static final String HURRICANE_NAME = "name";
   public static final String HURRICANE_CATEGORY = "category";

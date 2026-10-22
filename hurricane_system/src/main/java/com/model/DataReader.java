@@ -522,30 +522,4 @@ public class DataReader extends DataConstants {
     return null;
   }
 
-  public static void main(String[] args) {
-    HashMap<String, Shelter> shelters = getShelters();
-    for (Map.Entry<String, Shelter> set : shelters.entrySet()) {
-      System.out.println(set.getValue());
-    }
-    DataWriter.saveShelters(shelters);
-    HashMap<String, Hurricane> hurricanes = getHurricanes();
-    for (Map.Entry<String, Hurricane> set : hurricanes.entrySet()) {
-      System.out.println(set.getValue());
-    }
-    DataWriter.saveHurricanes(hurricanes);
-    HashMap<UUID, Request> requests = getRequests();
-    for (Map.Entry<UUID, Request> set : requests.entrySet()) {
-      System.out.println(set.getValue());
-    }
-    HashMap<String, User> users = getUsers();
-    for (Map.Entry<String, User> set : users.entrySet()) {
-      System.out.println(set.getValue().toString());
-    }
-
-    DataWriter.saveUsers(users);
-    DataWriter.saveHurricanes(hurricanes);
-    DataWriter.saveRequests(requests);
-    DataWriter.saveShelters(shelters);
-
-  }
 }
