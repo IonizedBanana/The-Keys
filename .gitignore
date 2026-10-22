@@ -1,9 +1,6 @@
 # Compiled class file
 *.class
 
-#api key
-.env
-
 # Log file
 *.log
 
@@ -29,10 +26,13 @@ replay_pid*
 # ignore any local shell/config files
 *.sh
 *.nix
-/hurricane_system/.*
+/hurricane_system
 
 # ignore build files
 target/
 
 # ignore testing data
 json/testing/
+
+# dont put env in main idiot
+.env
