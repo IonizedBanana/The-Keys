@@ -117,17 +117,16 @@ public abstract class User {
     }
 
     /**
-     * Sets the username.
+     * Sets the username, provided the new username is not already taken.
      * @param userName The new username.
      */
     public void setUsername(String userName) {
         //Check if the username has already been taken
-        //TODO Wait for UserList to be added
-        /*
-        HashMap<String, User> list = UserList.getInstance();
-        if(list.containsKey(userName))
+        HashMap<String, User> list = UserList.getInstance().getUserList();
+        if(list.containsKey(userName)){
+            System.out.println("Username is already taken.");
             return;
-        */
+        }
         this.username = userName;
     }
 
@@ -224,11 +223,7 @@ public abstract class User {
      * @return Whether the username and password provided match the user.
      */
     public boolean isMatch(String username, String password) {
-        if (username.equalsIgnoreCase(this.getUsername()) && password.equals(this.password)) {
-            return true;
-        } else {
-            return false;
-        }
+        return(username.equalsIgnoreCase(this.getUsername()) && password.equals(this.password));
     }
 
     /**

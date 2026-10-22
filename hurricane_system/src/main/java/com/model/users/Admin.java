@@ -84,11 +84,8 @@ public class Admin extends User {
      * @param hurricane The hurricane to be added.
      */
     public void addHurricane(Hurricane hurricane) {
-        //TODO Wait for HurricaneList to be added
-        /*
-        HashMap<String, Hurricane> list = HurricaneList.getInstance();
+        HashMap<String, Hurricane> list = HurricaneList.getInstance().getHurricaneList();
         list.put(hurricane.getName(), hurricane);
-        */
     }
 
     /**
@@ -96,11 +93,8 @@ public class Admin extends User {
      * @param hurricane The hurricane to be removed.
      */
     public void removeHurricane(Hurricane hurricane) {
-        //TODO Wait for HurricaneList to be added
-        /*
-        HashMap<String, Hurricane> list = HurricaneList.getInstance();
+        HashMap<String, Hurricane> list = HurricaneList.getInstance().getHurricaneList();
         list.remove(hurricane.getName());
-        */
 
     }
 
@@ -127,16 +121,12 @@ public class Admin extends User {
      * @param alert The alert to be sent.
      */
     public void sendAlert(Alert alert) {
-        //TODO
-        // Wait for UserList to be added.
-        /*
-        HashMap<String, User> list = userList.getInstance();
+        HashMap<String, User> list = UserList.getInstance().getUserList();
+        //send to all users
         for (String key : list.keySet()) {
+            //the filtering of alerts based on location happens in the User class
             list.get(key).receiveAlert(alert);
         }
-        */
-
-        
     }
 
     /**

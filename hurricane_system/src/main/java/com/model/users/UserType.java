@@ -2,9 +2,14 @@ package com.model.users;
 
 
 /**
- * UserType
+ * A user's type.
  * @author Jason
  */
 public enum UserType {
-    VICTIM, VOLUNTEER, ADMIN, DISPATCHER, SHELTER_WORKER;
+    VICTIM("Victim"),
+    VOLUNTEER("Volunteer"), ADMIN("Admin"), DISPATCHER("Dispatcher"), SHELTER_WORKER("Shelter Worker");
+    public final String ASCII;
+     private UserType(String ASCII) {
+         this.ASCII = ASCII;
+     }
 }

@@ -196,9 +196,15 @@ public class Victim extends User {
     public void editRequestDescription(Request request, String description) {
         request.setDescription(description);
     }
+    
     public String toString() {
         return (this.firstName + " " + this.lastName + " " + this.username);
     }
+
+    /**
+     * Gets the created requests.
+     * @return The created requests.
+     */
     public ArrayList<Request> getCreatedRequests() {
         return createdRequests;
     }

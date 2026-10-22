@@ -46,6 +46,16 @@ private Shelter shelter;
             System.out.println("Invalid shelter.");
         }
     }
+
+    /**
+     * Marks a request as done.
+     * @param request The request to be updated.
+     */
+    public void finishRequest(Request request) {
+        //marks a request as done
+        request.updateStatus(ResponseStatus.COMPLETE);
+    }
+    
     public String toString() {
         return (this.firstName + " " + this.lastName + " " + this.username);
     }
