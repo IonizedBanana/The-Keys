@@ -30,4 +30,8 @@ public class UserList {
   public boolean save() {
     return DataWriter.saveUsers(users);
   }
+  
+  public HashMap<String, User> getUserList() {
+    return this.users;
+  }
 }
