@@ -133,6 +133,18 @@ public class Victim extends User {
         return this.partySize;
     }
 
+    public ArrayList<Person> getParty() {
+        return this.party;
+    }
+
+    public void setParty(ArrayList<Person> party) {
+        this.party = party;
+    }
+
+    public void addPartyMember(Person person) {
+        this.party.add(person);
+    }
+
     /**
      * Sets the user's party size.
      * @param partySize The user's party size (must be at least 1).
