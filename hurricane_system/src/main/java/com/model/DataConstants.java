@@ -12,11 +12,10 @@ public class DataConstants {
   public static final String SHELTER_RESOURCES = "resources";
   
   // location/address consts
-  public static final String LOCATION_CITY = "city";
-  public static final String LOCATION_STATE = "state";
-  // public static final String ADDRESS_CITY = "city";
-  // public static final String ADDRESS_STATE = "state";
+  public static final String ADDRESS_CITY = "city";
+  public static final String ADDRESS_STATE= "state";
   public static final String ADDRESS_ADDRESS = "address";
+  public static final String ADDRESS_ZIP = "zip";
   
   // resources consts
   public static final String RESOURCE_TYPE = "type";
@@ -39,13 +38,17 @@ public class DataConstants {
   public static final String VOLUNTEER_FIELDS_OF_EXPERTISE = "fieldsOfExpertise";
   public static final String VOLUNTEER_IDENTITY_VERIFIED = "identityVerified";
   public static final String VOLUNTEER_AVAILABLE = "available";
+  public static final String VOLUNTEER_ASSIGNED_REQUEST = "assignedRequest";
   public static final String VICTIM_AGE = "age";
   public static final String VICTIM_SEX = "sex";
   public static final String VICTIM_DESCRIPTION = "description";
   public static final String VICTIM_PARTY_SIZE = "partySize";
   public static final String VICTIM_CREATED_REQUESTS = "createdRequests";
+  public static final String VICTIM_PARTY = "party";
   public static final String ADMIN_PHONE_NUMBER = "phoneNumber";
   public static final String SHELTER_WORKER_SHELTER = "shelter";
+  public static final String PERSON_NAME = "name";
+  public static final String PERSON_IS_PET = "isPet";
 
   // request consts
   public static final String REQUEST_FILE_PATH = "../json/requests.json";

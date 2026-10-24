@@ -1,6 +1,7 @@
 package com.model.users;
 
 import com.model.*;
+import com.model.location.*;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -13,6 +14,7 @@ public class Volunteer extends User {
     private ArrayList<ResponseType> fieldsOfExpertise;
     private boolean identityVerified;
     private boolean availible;
+    private Request assignedRequest;
 
     /**
      * Create a volunteer.
@@ -63,13 +65,14 @@ public class Volunteer extends User {
      * @param availible Whether or not the user is availible to be assigned to a request.
      */
     public Volunteer(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Alert> receivedAlerts, ArrayList<Credential> credentials,
-        ArrayList<ResponseType> fieldsOfExpertise, boolean identityVerified, boolean availible) {
+        ArrayList<ResponseType> fieldsOfExpertise, boolean identityVerified, boolean availible, Request assignedRequest) {
         super(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts);
         this.setType(UserType.VOLUNTEER);
         this.credentials = credentials;
         this.fieldsOfExpertise = fieldsOfExpertise;
         this.identityVerified = identityVerified;
         this.availible = availible;
+        this.assignedRequest = assignedRequest;
     }
 
     //getters and setters
@@ -137,6 +140,14 @@ public class Volunteer extends User {
     public void setAvailible(boolean available) {
         //set availibility (for consistancy with UML, has name setAvailibility)
         this.availible = available;
+    }
+
+    public Request getAssignedRequest() {
+        return assignedRequest;
+    }
+
+    public void setAssignedRequest(Request request) {
+        this.assignedRequest = request;
     }
 
     //other methods

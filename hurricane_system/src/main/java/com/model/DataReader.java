@@ -1,6 +1,7 @@
 package com.model;
 
 import com.model.users.*;
+import com.model.location.*;
 
 import java.io.File;
 import java.io.FileReader;
@@ -9,7 +10,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import org.json.simple.JSONArray;
@@ -74,10 +74,15 @@ public class DataReader extends DataConstants {
    * @see {@link Address}
    */
   private static Address getAddress(JSONObject addressObject) {
-    String state = (String) addressObject.get(LOCATION_STATE);
-    String city = (String) addressObject.get(LOCATION_CITY);
+    String state = (String) addressObject.get(ADDRESS_STATE);
+    String city = (String) addressObject.get(ADDRESS_CITY);
     String address_string = (String) addressObject.get(ADDRESS_ADDRESS);
-    Address address = new Address(state, city, address_string);
+    String zip = (String) addressObject.get(ADDRESS_ZIP);
+    if (address_string == null && zip == null) {
+      Address address = new Address(city, state);
+      return address;
+    }
+    Address address = new Address(address_string, city, state, zip);
     return address;
   }
 
@@ -168,8 +173,8 @@ public class DataReader extends DataConstants {
    */
   public static HashMap<String, User> getUsers() {
     HashMap<String, User> users = new HashMap<String, User>();
-    // File userFile = new File(USER_FILE_PATH);
-    File userFile = new File("../json/testing/user.json");
+    File userFile = new File(USER_FILE_PATH);
+    // File userFile = new File("../json/testing/user.json");
     try {
       FileReader reader = new FileReader(userFile);
       JSONArray userJSONArray = (JSONArray) new JSONParser().parse(reader);
@@ -234,7 +239,7 @@ public class DataReader extends DataConstants {
    * @see {@link Alert}
    */
   private static Alert getAlert(JSONObject alert) {
-    ArrayList<Location> affectedLocations = getLoactionList((JSONArray) alert.get(ALERT_AFFECTED_LOCATIONS));
+    ArrayList<Address> affectedAddresss = getAddressList((JSONArray) alert.get(ALERT_AFFECTED_LOCATIONS));
     String description = (String) alert.get(ALERT_DESCRIPTION);
     String issuedBy = (String) alert.get(ALERT_ISSUED_BY);
     Date timestamp;
@@ -245,7 +250,7 @@ public class DataReader extends DataConstants {
       System.out.println(e.getStackTrace());
       timestamp = null;
     }
-    return new Alert(affectedLocations, description, issuedBy, timestamp);
+    return new Alert(affectedAddresss, description, issuedBy, timestamp);
   }
 
   /**
@@ -287,11 +292,11 @@ public class DataReader extends DataConstants {
     UUID id = UUID.fromString((String) requestObject.get(REQUEST_UUID));
     String requestee = (String) requestObject.get(REQUEST_REQUESTEE);
     byte severity = ((Long) requestObject.get(REQUEST_SEVERITY)).byteValue();
-    Location location = getLocation((JSONObject) requestObject.get(REQUEST_LOCATION));
+    Address address = getAddress((JSONObject) requestObject.get(REQUEST_LOCATION));
     ResponseStatus status = getResponseStatus((String) requestObject.get(REQUEST_STATUS));
     ResponseType responderType = getResponseType((String) requestObject.get(REQUEST_RESPONSE_TYPE));
     String description = (String) requestObject.get(REQUEST_DESCRIPTION);
-    return new Request(id, requestee, severity, location, status, responderType, description);
+    return new Request(id, requestee, severity, address, status, responderType, description);
   }
 
   /**
@@ -316,8 +321,9 @@ public class DataReader extends DataConstants {
             (JSONArray) userObject.get(VOLUNTEER_FIELDS_OF_EXPERTISE));
         boolean identityVerified = (Boolean) userObject.get(VOLUNTEER_IDENTITY_VERIFIED);
         boolean available = (Boolean) userObject.get(VOLUNTEER_AVAILABLE);
-        return new Volunteer(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts, credentials,
-            fieldsOfExpertise, identityVerified, available);
+        Request assignedRequest = getRequest((JSONObject) userObject.get(VOLUNTEER_ASSIGNED_REQUEST));
+        return new Volunteer(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts,
+            credentials, fieldsOfExpertise, identityVerified, available, assignedRequest);
       }
       case VICTIM -> {
         byte age = ((Long) userObject.get(VICTIM_AGE)).byteValue();
@@ -325,24 +331,47 @@ public class DataReader extends DataConstants {
         String description = (String) userObject.get(VICTIM_DESCRIPTION);
         byte partySize = ((Long) userObject.get(VICTIM_PARTY_SIZE)).byteValue();
         ArrayList<Request> createdRequests = getRequests((JSONArray) userObject.get(VICTIM_CREATED_REQUESTS));
-        return new Victim(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts, age, sex, description,
-            partySize, createdRequests);
+        ArrayList<Victim.Person> party = getParty((JSONArray) userObject.get(VICTIM_PARTY));
+        return new Victim(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts, age, sex,
+            description, partySize, createdRequests, party);
       }
       case ADMIN -> {
         String phoneNumber = (String) userObject.get(ADMIN_PHONE_NUMBER);
-        return new Admin(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts, phoneNumber);
+        return new Admin(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts,
+            phoneNumber);
       }
       case DISPATCHER -> {
         String phoneNumber = (String) userObject.get(ADMIN_PHONE_NUMBER);
-        return new Dispatcher(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts, phoneNumber);
+        return new Dispatcher(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts,
+            phoneNumber);
       }
       case SHELTER_WORKER -> {
         Shelter shelter = getShelter((JSONObject) userObject.get(SHELTER_WORKER_SHELTER));
-        return new ShelterWorker(id, firstName, lastName, username, password, emailAddress, address, receivedAlerts, shelter);
+        return new ShelterWorker(id, firstName, lastName, username, password, emailAddress, address, receivedAlerts,
+            shelter);
       }
     }
     return null;
 
+  }
+
+  private static ArrayList<Victim.Person> getParty(JSONArray arr) {
+    ArrayList<Victim.Person> party = new ArrayList<Victim.Person>();
+    for (int i = 0; i < arr.size(); i++) {
+      JSONObject o = (JSONObject) arr.get(i);
+      Victim.Person person = getPerson(o);
+      party.add(person);
+    }
+    return party;
+  }
+
+  private static Victim.Person getPerson(JSONObject personObject) {
+    String name = (String) personObject.get(PERSON_NAME);
+    byte age = ((Long) personObject.get(VICTIM_AGE)).byteValue();
+    boolean isPet = (Boolean) personObject.get(PERSON_IS_PET);
+    String description = (String) personObject.get(VICTIM_DESCRIPTION);
+    Victim victimInstance = new Victim();
+    return victimInstance.new Person(name, age, isPet, description);
   }
 
   /**
@@ -461,12 +490,12 @@ public class DataReader extends DataConstants {
         UUID id = UUID.fromString((String) hurricaneObject.get(HURRICANE_UUID));
         String name = (String) hurricaneObject.get(HURRICANE_NAME);
         byte category = ((Long) hurricaneObject.get(HURRICANE_CATEGORY)).byteValue();
-        Location currentLocation = getLocation((JSONObject) hurricaneObject.get(HURRICANE_CURRENT_LOCATION));
-        ArrayList<Location> predictedPath = getLoactionList((JSONArray) hurricaneObject.get(HURRICANE_PREDICTED_PATH));
-        ArrayList<Location> impactArea = getLoactionList((JSONArray) hurricaneObject.get(HURRICANE_IMPACT_AREA));
+        Address currentAddress = getAddress((JSONObject) hurricaneObject.get(HURRICANE_CURRENT_LOCATION));
+        ArrayList<Address> predictedPath = getAddressList((JSONArray) hurricaneObject.get(HURRICANE_PREDICTED_PATH));
+        ArrayList<Address> impactArea = getAddressList((JSONArray) hurricaneObject.get(HURRICANE_IMPACT_AREA));
         HurricaneStatus status = getHurricaneStatus((String) hurricaneObject.get(HURRICANE_STATUS));
 
-        Hurricane hurricane = new Hurricane(id, name, category, currentLocation, predictedPath, impactArea, status);
+        Hurricane hurricane = new Hurricane(id, name, category, currentAddress, predictedPath, impactArea, status);
         hurricanes.put(hurricane.getName(), hurricane);
       }
       reader.close();
@@ -478,30 +507,19 @@ public class DataReader extends DataConstants {
   }
 
   /**
-   * @param object a JSONObject of a Location
-   * @return a Location specified in the JSON
-   * @see {@link Location}
+   * @param arr a JSONArray of Addresses
+   * @return an ArrayList of Addresses
+   * @see {@link Address}
+   * @see {@link DataReader#getAddress}
    */
-  private static Location getLocation(JSONObject object) {
-    String city = (String) object.get(LOCATION_CITY);
-    String state = (String) object.get(LOCATION_STATE);
-    return new Location(state, city);
-  }
-
-  /**
-   * @param arr a JSONArray of Locations
-   * @return an ArrayList of Locations
-   * @see {@link Location}
-   * @see {@link DataReader#getLocation}
-   */
-  private static ArrayList<Location> getLoactionList(JSONArray arr) {
-    ArrayList<Location> locations = new ArrayList<Location>();
+  private static ArrayList<Address> getAddressList(JSONArray arr) {
+    ArrayList<Address> addresses = new ArrayList<Address>();
     for (Object o : arr) {
-      JSONObject locationObject = (JSONObject) o;
-      Location location = getLocation(locationObject);
-      locations.add(location);
+      JSONObject addressObject = (JSONObject) o;
+      Address address = getAddress(addressObject);
+      addresses.add(address);
     }
-    return locations;
+    return addresses;
   }
 
   /**
@@ -522,30 +540,4 @@ public class DataReader extends DataConstants {
     return null;
   }
 
-  public static void main(String[] args) {
-    HashMap<String, Shelter> shelters = getShelters();
-    for (Map.Entry<String, Shelter> set : shelters.entrySet()) {
-      System.out.println(set.getValue());
-    }
-    DataWriter.saveShelters(shelters);
-    HashMap<String, Hurricane> hurricanes = getHurricanes();
-    for (Map.Entry<String, Hurricane> set : hurricanes.entrySet()) {
-      System.out.println(set.getValue());
-    }
-    DataWriter.saveHurricanes(hurricanes);
-    HashMap<UUID, Request> requests = getRequests();
-    for (Map.Entry<UUID, Request> set : requests.entrySet()) {
-      System.out.println(set.getValue());
-    }
-    HashMap<String, User> users = getUsers();
-    for (Map.Entry<String, User> set : users.entrySet()) {
-      System.out.println(set.getValue().toString());
-    }
-
-    DataWriter.saveUsers(users);
-    DataWriter.saveHurricanes(hurricanes);
-    DataWriter.saveRequests(requests);
-    DataWriter.saveShelters(shelters);
-
-  }
 }
