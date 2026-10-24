@@ -226,7 +226,21 @@ public class Request {
         UserList users = UserList.getInstance();
         return users.getUser(requestee);
     }
-
+     /**
+     * Returns the medical note for the request.
+     * @return the medical note for the request
+     */
+    public String getMedicalNote() {
+        return MedicalNote;
+    }
+    /**
+     * Sets the medical note for the request.
+     * @param MedicalNote the new medical note for the request
+     */
+    public void setMedicalNote(String MedicalNote) {    
+        this.MedicalNote = MedicalNote;
+    }
+    
     /**
      * Writes a printable summary of this request to a .txt file, for a responder to take with them.
      * @param fileName The file to write to (".txt" is added if missing).
