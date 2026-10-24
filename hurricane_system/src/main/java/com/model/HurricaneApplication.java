@@ -118,4 +118,73 @@ public class HurricaneApplication {
     private static boolean isBlank(String text) {
         return text == null || text.trim().isEmpty();
     }
+    /* Attempt at a driver to show what methods should be in the facade.
+        public static void main(String[] args) {
+        //Hurricane Scarlett should already be in hurricanes.json, as it being created is not part of the scenario
+
+        HurricaneApplication h = new HurricaneApplication();
+        
+        System.out.println("Scenario 1:");
+
+        // The Carters' request
+        //TODO Add location and usertype to createAccount method
+        h.createAccount("Gary Sam", "Carter", "garysam", "garysam@email.com", "123456");
+        //TODO Add party members
+        // will probably need more than this one line
+        h.addInfo();
+
+        //Must have a Charleston home address
+        h.newRequest(h.currentUser.getUsername(), 1, LOCATION, "We've lost power, my daughter Sophie’s asthma symptoms have worsened." + 
+        "Floodwater is rising around our home, so we can't use our car. We need transportation to a shelter with" +
+        "medical assistance for two adults and our dog, Buddy.");
+
+        h.logout();
+
+        System.out.println("Scenario 2:");
+        // Rose Delgado
+        // Scenario says account has already been created (ADD IT TO USERS.JSON BEFORE RUNNING)
+        // Travel is her field of expertise
+        h.login("rdelgado", "delgado123");
+        // Must see SEVEN requests (ADD 6 requests to requests.json)
+        // The Carter's request must be first and say it is recommended because of proximity
+        System.out.println(h.viewRequests());
+
+        // However a request gets picked (Picking a number from a numbered list?)
+        h.assignToRequest(INSERT_CARTERS_REQUEST);
+
+        // searching for shelter
+        // There must be TEN shelters in shelters.json
+        h.viewShelters();
+
+        // The shelter needs to be attached to the request
+        // so that directions to it can be put into the .txt file
+        h.pickShelter();
+
+        // makes .txt file
+        h.exportTripInfo();
+
+        // She picks them up, goes to shelter
+        // Nothing in code happens until she reaches there
+
+        // Rose tries to mark request as done
+        // it fails because volunteers don't have permission to do that
+        h.finishRequest(INSERT_CARTERS_REQUEST);
+
+        h.logout();
+        
+        System.out.println("Scenario 3:");
+        // Felix, the shelter manager
+        h.login("Felix44", "passwordpassword");
+        //"He can view his shelter’s name, location, total capacity, current occupancy, available spaces, and list of occupants."
+        h.viewMyShelter();
+        // This could check in all of the family because they are associated with Gary Sam
+        // The actual checkIn method would handle that
+        h.checkIn(CARTER);
+        // Completes request, shelter workers can do this
+        h.finishRequest(INSERT_CARTERS_REQUEST);
+        h.logout();
+
+        //MAKE SURE TO SHOW JSON FILES AND HOW THEY CHANGED AFTER RUNNNING THIS
+
+    }*/
 }
