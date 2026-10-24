@@ -59,9 +59,9 @@ public class HurricaneUI {
         System.out.println("Gary Carter created an account and is logged in.");
 
         app.addInfo(41, 'm', "(843) 555-0142", "Father");
-        if (!app.addPartyMember("Megan Carter", 39, false, "Mother",null)
-                || !app.addPartyMember("Sophie Carter", 9, false, "Daughter", "Sophie (9) has asthma that is getting worse and needs medical assistance.")
-                || !app.addPartyMember("Buddy", 4, true, "Dog",null)) {
+        if (!app.addPartyMember("Megan Carter", 39, false, "Mother")
+                || !app.addPartyMember("Sophie Carter", 9, false, "Daughter. Asthma is getting worse, needs medical assistance.")
+                || !app.addPartyMember("Buddy", 4, true, "Dog")) {
             System.out.println("Sorry, the Carters' party couldn't be saved.");
         } else {
             System.out.println("Added Megan, Sophie, and Buddy the dog to Gary's party.");
@@ -70,8 +70,8 @@ public class HurricaneUI {
         carterRequest = app.newRequest((byte) 4, ResponseType.TRAVEL,
                 "Need transportation to a shelter with medical staff for 2 adults, 1 child, and our dog Buddy. "
                 + "Power is out and floodwater is rising, so we can't use our car. " 
-                + "worse and she needs medical assistance. We won't leave Buddy behind. "
-                + "Contact: gary.carter@email.com, (843) 555-0142." , "Sophie (9) has asthma that is getting worse and needs medical assistance. ");
+                + "We won't leave Buddy behind. Contact: gary.carter@email.com, (843) 555-0142.",
+                "Sophie (9) has asthma that is getting worse and needs medical assistance. ");
         if (carterRequest == null) {
             System.out.println("Sorry, the Carters' request couldn't be submitted.");
             app.logout();

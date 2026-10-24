@@ -194,10 +194,9 @@ public class HurricaneApplication {
      * @param age         their age
      * @param isPet       true for a pet
      * @param description anything responders should know, like "dog" or "asthma"
-     * @param string 
      * @return true if they were added
      */
-    public boolean addPartyMember(String name, int age, boolean isPet, String description, String string) {
+    public boolean addPartyMember(String name, int age, boolean isPet, String description) {
         if (!isType(UserType.VICTIM) || isBlank(name) || age < 0 || age > Byte.MAX_VALUE) {
             return false;
         }
