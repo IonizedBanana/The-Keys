@@ -194,9 +194,10 @@ public class HurricaneApplication {
      * @param age         their age
      * @param isPet       true for a pet
      * @param description anything responders should know, like "dog" or "asthma"
+     * @param string 
      * @return true if they were added
      */
-    public boolean addPartyMember(String name, int age, boolean isPet, String description) {
+    public boolean addPartyMember(String name, int age, boolean isPet, String description, String string) {
         if (!isType(UserType.VICTIM) || isBlank(name) || age < 0 || age > Byte.MAX_VALUE) {
             return false;
         }
@@ -222,14 +223,14 @@ public class HurricaneApplication {
      * @param description what is going on
      * @return the new request, or null if it couldn't be made
      */
-    public Request newRequest(byte severity, ResponseType type, String description) {
+    public Request newRequest(byte severity, ResponseType type, String description, String medicalNote) {
         if (!isType(UserType.VICTIM) || type == null || isBlank(description)
                 || severity < 1 || severity > 5 || currentUser.getAddress() == null) {
             return null;
         }
         Victim victim = (Victim) currentUser;
         Request request = new Request(UUID.randomUUID(), victim.getUsername(), severity,
-                victim.getAddress(), ResponseStatus.WAITING, type, description);
+                victim.getAddress(), ResponseStatus.WAITING, type, description, medicalNote);
         RequestList.getInstance().addRequest(request);
         victim.getCreatedRequests().add(request);
         if (!saveData()) {
