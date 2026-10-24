@@ -422,8 +422,6 @@ public class HurricaneApplication {
     /**
      * Writes a printable .txt summary of a trip for the logged in responder.
      *
-     * TODO uncomment once txt is merged (its Request still uses Location, so switch it to Address first)
-     *
      * @param request  the request being responded to
      * @param shelter  the shelter the party is going to
      * @param fileName the file to write
@@ -433,8 +431,7 @@ public class HurricaneApplication {
         if (currentUser == null || request == null) {
             return false;
         }
-        // return request.exportToTxt(fileName, currentUser, shelter);
-        return false;
+        return request.exportToTxt(fileName, currentUser, shelter);
     }
 
     // ---------------------------------------------------------------- maps
