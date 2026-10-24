@@ -37,7 +37,7 @@ public class Main {
     Coordinates generalCoords = generalAddress.getCoordinates();
     System.out.println(generalCoords.getLatitude() + "\n" + generalCoords.getLongitude());
     Address shelterAddress = new Address("1069 King St", "Charleston", "SC", "29403");
-    Address farAddress = new Address("505 Coldstream Drive", "Columbia", "SC", "29212");
+    Address farAddress = new Address("360 Harbison Blvd", "Columbia", "SC", "29212");
     // System.out.println(shelterAddress.getDistanceTo(generalAddress) < 5);
     System.out.println(shelterAddress.isWithin(generalAddress, 5));
     // System.out.println(farAddress.getDistanceTo(generalAddress) < 100);
