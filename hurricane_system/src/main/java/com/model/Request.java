@@ -16,9 +16,9 @@ public class Request {
     private ResponseStatus status;
     private ResponseType responderType;
     private String description;
-    private String needsMedical;
+    private String MedicalNote;
 
-    public Request(UUID id, String requestee, byte severity, Address address, ResponseStatus status, ResponseType responderType, String description, String needsMedical) {
+    public Request(UUID id, String requestee, byte severity, Address address, ResponseStatus status, ResponseType responderType, String description, String MedicalNote) {
         this.id = id;
         this.requestee = requestee;
         this.severity = severity;
@@ -26,14 +26,14 @@ public class Request {
         this.status = status;
         this.responderType = responderType;
         this.description = description;
-        this.needsMedical = needsMedical;
+        this.MedicalNote = MedicalNote;
     }
-    public Request(String requestee, byte severity, Address address, String description, String needsMedical) {
+    public Request(String requestee, byte severity, Address address, String description) {
         this.requestee = requestee;
         this.severity = severity;
         this.address = address;
         this.description = description;
-        this.needsMedical = needsMedical;
+        this.MedicalNote = null;
     }
     public void editSeverity(byte severity) {
         if(severity < 1 || severity > 5) {
@@ -129,15 +129,15 @@ public class Request {
         UserList users = UserList.getInstance();
         return users.getUser(requestee);
     }
-    public String getNeedsMedical() {
-        return needsMedical;
+    public String getMedicalNote() {
+        return MedicalNote;
     }
-    public void setNeedsMedical(String needsMedical) {
-        if (needsMedical == null || needsMedical.isEmpty()) {
-            throw new IllegalArgumentException("Needs medical cannot be null or empty");
+    public void setMedicalNote(String MedicalNote) {
+        if (MedicalNote == null) {
+            throw new IllegalArgumentException("The medical note cannot be null");
         }
         else {
-            this.needsMedical = needsMedical;
+            this.MedicalNote = MedicalNote;
         }
     }
 
