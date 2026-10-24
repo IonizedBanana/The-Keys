@@ -1,8 +1,10 @@
 package com.model;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.UUID;
 import com.model.users.*;
+import com.model.users.Victim.Person;
 import com.model.location.*;
 
 /**
@@ -163,64 +165,71 @@ public class Request {
      */
     public String toPrintableText(User responder, Shelter shelter) {
         User user = getRequesteeUser();
+        Victim victim = (user instanceof Victim) ? (Victim) user : null;
         String divider = "----------------------------------------\n";
         StringBuilder text = new StringBuilder();
 
         text.append("========================================\n");
-        text.append("RESCUE REQUEST SUMMARY\n");
+        text.append("RESCUE TRIP SHEET\n");
         text.append("========================================\n");
         text.append("Request ID: " + id + "\n");
         text.append("Severity: " + severity + " / 5\n");
         text.append("Status: " + (status == null ? "Unknown" : status.ASCII) + "\n");
-        text.append("Responder Type: " + (responderType == null ? "Unknown" : responderType.ASCII) + "\n\n");
-
-        text.append("PARTY MEMBERS\n").append(divider);
-        if (user == null) {
-            text.append("Requestee: " + requestee + " (user not found)\n");
-        } else if (user instanceof Victim) {
-            Victim victim = (Victim) user;
-            text.append("- " + user.getFirstName() + " " + user.getLastName()
-                    + ", age " + (victim.getAge() < 0 ? "unknown" : victim.getAge()) + "\n");
-            // TODO list the rest of the family's names and ages once party members are stored
-            text.append("Party size: " + victim.getPartySize() + "\n");
-        } else {
-            text.append("- " + user.getFirstName() + " " + user.getLastName() + "\n");
+        text.append("Help Needed: " + (responderType == null ? "Unknown" : responderType.ASCII) + "\n");
+        if (responder != null) {
+            text.append("Responder: " + responder.getFirstName() + " " + responder.getLastName() + "\n");
         }
-        // TODO list pets (name and species, e.g. "Buddy (dog)") once pets are implemented
-        text.append("Pets: TODO\n\n");
+        text.append("\n");
 
-        text.append("CONTACT INFORMATION\n").append(divider);
+        text.append("PEOPLE\n").append(divider);
+        ArrayList<Person> pets = new ArrayList<Person>();
+        if (victim != null) {
+            for (Person person : victim.getFullParty()) {
+                if (person.getIsPet()) {
+                    pets.add(person);
+                } else {
+                    text.append("- " + person.getName() + ", age " + ageText(person.getAge())
+                            + describe(person.getDescription()) + "\n");
+                }
+            }
+            text.append("Total people: " + victim.getPartySize() + "\n\n");
+        } else if (user != null) {
+            text.append("- " + user.getFirstName() + " " + user.getLastName() + "\n\n");
+        } else {
+            text.append("- " + requestee + " (account not found)\n\n");
+        }
+
+        text.append("PETS\n").append(divider);
+        if (pets.isEmpty()) {
+            text.append("None\n");
+        }
+        for (Person pet : pets) {
+            text.append("- " + pet.getName() + " (" + (isBlank(pet.getDescription()) ? "pet" : pet.getDescription().toLowerCase())
+                    + "), age " + ageText(pet.getAge()) + "\n");
+        }
+        text.append("\n");
+
+        text.append("CONTACT AND PICKUP\n").append(divider);
         if (user != null) {
+            text.append("Name: " + user.getFirstName() + " " + user.getLastName() + "\n");
             text.append("Email: " + user.getEmailAddress() + "\n");
         }
-        // TODO add phone number once User stores one
-        text.append("Phone: TODO\n");
-        // TODO switch to the new address handling once Location/Address changes are merged
-        Location pickup = (user != null && user.getAddress() != null) ? user.getAddress() : location;
-        text.append("Pickup Address: " + (pickup == null ? "Unknown" : pickup.toString()) + "\n\n");
-
-        text.append("MEDICAL NOTES\n").append(divider);
-        // TODO use a dedicated medical needs field once one exists; for now this relies on the responder type and description
-        if (responderType == ResponseType.MEDICAL) {
-            text.append("Medical assistance required.\n");
-        } else {
-            text.append("No medical assistance requested.\n");
+        if (victim != null) {
+            text.append("Phone: " + (isBlank(victim.getPhoneNumber()) ? "Not given" : victim.getPhoneNumber()) + "\n");
         }
-        text.append("Details: " + (description == null ? "None" : description) + "\n\n");
+        text.append("Pickup Address: " + (address == null ? "Unknown" : address.toString()) + "\n\n");
 
-        text.append("DIRECTIONS: RESPONDER TO PICKUP\n").append(divider);
-        Location start = (responder == null) ? null : responder.getAddress();
-        text.append("From: " + (start == null ? "Unknown" : start.toString()) + "\n");
-        text.append("To: " + (pickup == null ? "Unknown" : pickup.toString()) + "\n");
-        // TODO generate turn-by-turn directions once routing is implemented
-        text.append("Directions: TODO\n\n");
+        text.append("MEDICAL\n").append(divider);
+        // TODO use the request's medical note once Logan's Request changes are merged
+        // text.append(isBlank(medicalNote) ? "No medical assistance requested.\n" : "MEDICAL ASSISTANCE NEEDED: " + medicalNote + "\n");
+        text.append(responderType == ResponseType.MEDICAL ? "Medical assistance required.\n" : "See details below.\n");
+        text.append("Details: " + (isBlank(description) ? "None" : description) + "\n\n");
 
-        text.append("DIRECTIONS: PICKUP TO SHELTER\n").append(divider);
-        Location shelterAddress = (shelter == null) ? null : shelter.getAddress();
-        text.append("From: " + (pickup == null ? "Unknown" : pickup.toString()) + "\n");
-        text.append("To: " + (shelterAddress == null ? "Unknown" : shelterAddress.toString()) + "\n");
-        // TODO generate turn-by-turn directions once routing is implemented
-        text.append("Directions: TODO\n\n");
+        Address start = (responder == null) ? null : responder.getAddress();
+        appendDirections(text, divider, "DIRECTIONS: RESPONDER TO PICKUP", start, address);
+
+        Address shelterAddress = (shelter == null) ? null : shelter.getAddress();
+        appendDirections(text, divider, "DIRECTIONS: PICKUP TO SHELTER", address, shelterAddress);
 
         text.append("SHELTER\n").append(divider);
         if (shelter == null) {
@@ -231,6 +240,63 @@ public class Request {
         }
 
         return text.toString();
+    }
+
+    /**
+     * Adds one leg of the trip, with turn by turn directions from the map api, to the trip sheet.
+     * @param text The trip sheet being built.
+     * @param divider The line printed under the heading.
+     * @param heading The heading for this leg.
+     * @param from Where the leg starts.
+     * @param to Where the leg ends.
+     */
+    private static void appendDirections(StringBuilder text, String divider, String heading, Address from, Address to) {
+        text.append(heading + "\n").append(divider);
+        text.append("From: " + (from == null ? "Unknown" : from.toString()) + "\n");
+        text.append("To: " + (to == null ? "Unknown" : to.toString()) + "\n");
+        String[] steps = null;
+        if (from != null && to != null) {
+            try {
+                steps = MapTools.getInstance().getDrivingDirections(from, to);
+            } catch (Exception e) {
+                steps = null;
+            }
+        }
+        if (steps == null || steps.length == 0) {
+            text.append("Directions: not available\n\n");
+            return;
+        }
+        for (int i = 0; i < steps.length; i++) {
+            text.append("  " + (i + 1) + ". " + steps[i] + "\n");
+        }
+        text.append("\n");
+    }
+
+    /**
+     * Formats an age for the trip sheet.
+     * @param age The age, or a negative number if unknown.
+     * @return The age, or "unknown".
+     */
+    private static String ageText(int age) {
+        return age < 0 ? "unknown" : String.valueOf(age);
+    }
+
+    /**
+     * Formats a party member's description to follow their name and age.
+     * @param description The description.
+     * @return ". " and the description, or nothing if there isn't one.
+     */
+    private static String describe(String description) {
+        return isBlank(description) ? "" : ". " + description;
+    }
+
+    /**
+     * Reports whether text is missing or only whitespace.
+     * @param text The text to check.
+     * @return true if the text is null or blank.
+     */
+    private static boolean isBlank(String text) {
+        return text == null || text.trim().isEmpty();
     }
 
 }
