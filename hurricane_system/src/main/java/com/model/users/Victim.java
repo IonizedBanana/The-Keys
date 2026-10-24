@@ -183,7 +183,7 @@ public class Victim extends User {
     public void setParty(ArrayList<Person> party) {
         this.party = party;
         //Gets new party size (excluding pets)
-        int size = 0;
+        int size = 1;
         for (int i=0; i<party.size(); i++) {
             if (!party.get(i).getIsPet()) {
                 size++;
@@ -199,7 +199,7 @@ public class Victim extends User {
     public void addPartyMember(Person person) {
         this.party.add(person);
         //Gets new party size (excluding pets)
-        int size = 0;
+        int size = 2;
         for (int i=0; i<party.size(); i++) {
             if (!party.get(i).getIsPet()) {
                 size++;
