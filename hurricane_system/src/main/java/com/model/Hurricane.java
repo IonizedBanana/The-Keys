@@ -2,18 +2,19 @@ package com.model;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import com.model.location.*;
 
 /**
  * A tracked hurricane.
  *
- * <p>Admins add a hurricane when one forms, update its current location and
+ * <p>Admins add a hurricane when one forms, update its current address and
  * predicted path as it moves, and end it once the storm passes. The system
- * uses a hurricane's current location and predicted path to decide which
+ * uses a hurricane's current address and predicted path to decide which
  * users are in danger and should receive an alert.</p>
  *
- * <p>A hurricane keeps three separate sets of locations:</p>
+ * <p>A hurricane keeps three separate sets of addresss:</p>
  * <ul>
- *   <li>{@code currentLocation} - where the storm is right now</li>
+ *   <li>{@code currentAddress} - where the storm is right now</li>
  *   <li>{@code predictedPath} - where it is forecast to go next, in order</li>
  *   <li>{@code impactArea} - everywhere it has already hit</li>
  * </ul>
@@ -32,13 +33,13 @@ public class Hurricane {
     private byte category;
 
     /** Where the storm is at the moment. */
-    private Location currentLocation;
+    private Address currentAddress;
 
-    /** Locations the storm is forecast to reach, in the order it will reach them. */
-    private ArrayList<Location> predictedPath;
+    /** Addresss the storm is forecast to reach, in the order it will reach them. */
+    private ArrayList<Address> predictedPath;
 
-    /** Locations the storm has already hit. */
-    private ArrayList<Location> impactArea;
+    /** Addresss the storm has already hit. */
+    private ArrayList<Address> impactArea;
 
     /** Where the storm is in its lifecycle. */
     private HurricaneStatus status;
@@ -56,20 +57,20 @@ public class Hurricane {
      * @param id              the saved identifier
      * @param name            the storm's name
      * @param category        the storm category, 1 through 5
-     * @param currentLocation where the storm is now
-     * @param predictedPath   forecast locations in order, or null for none
-     * @param impactArea      locations already hit, or null for none
+     * @param currentAddress where the storm is now
+     * @param predictedPath   forecast addresss in order, or null for none
+     * @param impactArea      addresss already hit, or null for none
      * @param status          the storm's lifecycle status
      */
-    public Hurricane(UUID id, String name, byte category, Location currentLocation,
-                     ArrayList<Location> predictedPath, ArrayList<Location> impactArea,
+    public Hurricane(UUID id, String name, byte category, Address currentAddress,
+                     ArrayList<Address> predictedPath, ArrayList<Address> impactArea,
                      HurricaneStatus status) {
         this.id = id;
         this.name = name;
         this.category = category;
-        this.currentLocation = currentLocation;
-        this.predictedPath = (predictedPath == null) ? new ArrayList<Location>() : predictedPath;
-        this.impactArea = (impactArea == null) ? new ArrayList<Location>() : impactArea;
+        this.currentAddress = currentAddress;
+        this.predictedPath = (predictedPath == null) ? new ArrayList<Address>() : predictedPath;
+        this.impactArea = (impactArea == null) ? new ArrayList<Address>() : impactArea;
         this.status = status;
     }
 
@@ -82,11 +83,11 @@ public class Hurricane {
      *
      * @param name            the storm's name
      * @param category        the storm category, 1 through 5
-     * @param currentLocation where the storm is now
+     * @param currentAddress where the storm is now
      */
-    public Hurricane(String name, byte category, Location currentLocation) {
-        this(UUID.randomUUID(), name, category, currentLocation,
-             new ArrayList<Location>(), new ArrayList<Location>(), HurricaneStatus.INCOMING);
+    public Hurricane(String name, byte category, Address currentAddress) {
+        this(UUID.randomUUID(), name, category, currentAddress,
+             new ArrayList<Address>(), new ArrayList<Address>(), HurricaneStatus.INCOMING);
     }
 
     /**
@@ -119,10 +120,10 @@ public class Hurricane {
     /**
      * Returns where the storm is at the moment.
      *
-     * @return the current location
+     * @return the current address
      */
-    public Location getCurrentLocation() {
-        return currentLocation;
+    public Address getCurrentAddress() {
+        return currentAddress;
     }
 
     /**
@@ -131,9 +132,9 @@ public class Hurricane {
      * <p>This is the live collection, not a copy, so changes made to the
      * returned queue affect this hurricane.</p>
      *
-     * @return locations the storm is forecast to reach, in order; empty if unknown
+     * @return addresss the storm is forecast to reach, in order; empty if unknown
      */
-    public ArrayList<Location> getPredictedPath() {
+    public ArrayList<Address> getPredictedPath() {
         return predictedPath;
     }
 
@@ -143,9 +144,9 @@ public class Hurricane {
      * <p>This is the live collection, not a copy, so changes made to the
      * returned list affect this hurricane.</p>
      *
-     * @return locations already affected; empty for a storm that has not landed
+     * @return addresss already affected; empty for a storm that has not landed
      */
-    public ArrayList<Location> getImpactArea() {
+    public ArrayList<Address> getImpactArea() {
         return impactArea;
     }
 
@@ -159,57 +160,57 @@ public class Hurricane {
     }
 
     /**
-     * Records a location as having been hit by this storm.
+     * Records a address as having been hit by this storm.
      *
      * <p>Duplicates and nulls are ignored, so the same place is never listed
-     * twice. Depends on {@code Location.equals()} comparing by value rather
+     * twice. Depends on {@code Address.equals()} comparing by value rather
      * than by reference.</p>
      *
-     * @param location the location to record; ignored if null or already present
+     * @param address the address to record; ignored if null or already present
      */
-    public void addImpactArea(Location location) {
-        if (location != null && !impactArea.contains(location)) {
-            impactArea.add(location);
+    public void addImpactArea(Address address) {
+        if (address != null && !impactArea.contains(address)) {
+            impactArea.add(address);
         }
     }
 
     /**
-     * Moves the storm to a new location.
+     * Moves the storm to a new address.
      *
-     * <p>Arriving somewhere changes all three sets of locations, so this does
-     * three things: sets the current location, records it as affected, and
+     * <p>Arriving somewhere changes all three sets of addresss, so this does
+     * three things: sets the current address, records it as affected, and
      * drops it from the predicted path, since a storm is no longer forecast
      * to reach somewhere it has already arrived.</p>
      *
-     * @param location the storm's new current location
+     * @param address the storm's new current address
      */
-    public void updateLocation(Location location) {
-        this.currentLocation = location;
-        addImpactArea(location);
-        predictedPath.remove(location);
+    public void updateAddress(Address address) {
+        this.currentAddress = address;
+        addImpactArea(address);
+        predictedPath.remove(address);
     }
 
     /**
      * Replaces the forecast track, as an admin would when the forecast changes.
      *
-     * @param path the new forecast locations in order; null is treated as empty
+     * @param path the new forecast addresss in order; null is treated as empty
      */
-    public void updatePredictedPath(ArrayList<Location> path) {
-        this.predictedPath = (path == null) ? new ArrayList<Location>() : path;
+    public void updatePredictedPath(ArrayList<Address> path) {
+        this.predictedPath = (path == null) ? new ArrayList<Address>() : path;
     }
 
     /**
-     * Reports whether the storm is forecast to hit a location.
+     * Reports whether the storm is forecast to hit a address.
      *
      * <p>Checks the predicted path only. Somewhere the storm is already over
      * is not somewhere it <em>will</em> reach, so alert filtering that needs
-     * to cover both cases should also compare {@link #getCurrentLocation()}.</p>
+     * to cover both cases should also compare {@link #getCurrentAddress()}.</p>
      *
-     * @param location the location to test
-     * @return true if the location is on the predicted path
+     * @param address the address to test
+     * @return true if the address is on the predicted path
      */
-    public boolean willReach(Location location) {
-        return predictedPath.contains(location);
+    public boolean willReach(Address address) {
+        return predictedPath.contains(address);
     }
 
     /**
@@ -228,10 +229,10 @@ public class Hurricane {
     /**
      * Returns a one-line summary suitable for lists and logs.
      *
-     * @return the name, category, current location, and status
+     * @return the name, category, current address, and status
      */
     @Override
     public String toString() {
-        return name + " (Category " + category + ") - " + currentLocation + " [" + status + "]";
+        return name + " (Category " + category + ") - " + currentAddress + " [" + status + "]";
     }
 }

@@ -1,6 +1,7 @@
 package com.model.users;
 
 import com.model.*;
+import com.model.location.*;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -13,6 +14,7 @@ public class Volunteer extends User {
     private ArrayList<ResponseType> fieldsOfExpertise;
     private boolean identityVerified;
     private boolean availible;
+    private Request assignedRequest;
 
     /**
      * Create a volunteer.
@@ -30,6 +32,7 @@ public class Volunteer extends User {
         this.fieldsOfExpertise = new ArrayList<ResponseType>();
         this.identityVerified = false;
         this.availible = false;
+        this.assignedRequest = null;
     }
 
     /**
@@ -44,6 +47,7 @@ public class Volunteer extends User {
         this.fieldsOfExpertise = new ArrayList<ResponseType>();
         this.identityVerified = false;
         this.availible = false;
+        this.assignedRequest = null;
 
     }
 
@@ -63,13 +67,14 @@ public class Volunteer extends User {
      * @param availible Whether or not the user is availible to be assigned to a request.
      */
     public Volunteer(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Alert> receivedAlerts, ArrayList<Credential> credentials,
-        ArrayList<ResponseType> fieldsOfExpertise, boolean identityVerified, boolean availible) {
+        ArrayList<ResponseType> fieldsOfExpertise, boolean identityVerified, boolean availible, Request assignedRequest) {
         super(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts);
         this.setType(UserType.VOLUNTEER);
         this.credentials = credentials;
         this.fieldsOfExpertise = fieldsOfExpertise;
         this.identityVerified = identityVerified;
         this.availible = availible;
+        this.assignedRequest = assignedRequest;
     }
 
     //getters and setters
@@ -139,6 +144,22 @@ public class Volunteer extends User {
         this.availible = available;
     }
 
+    /**
+     * Gets the user's assigned request.
+     * @return The user's assigned request.
+     */
+    public Request getAssignedRequest() {
+        return assignedRequest;
+    }
+
+    /**
+     * Sets the user's assigned request.
+     * @param request The user's assigned request.
+     */
+    public void setAssignedRequest(Request request) {
+        this.assignedRequest = request;
+    }
+
     //other methods
 
     /**
@@ -185,7 +206,13 @@ public class Volunteer extends User {
         return;
         //marks a request as done
         //request.updateStatus(ResponseStatus.COMPLETE);
+        //this.assignedRequest = null;
     }
+
+    /**
+     * Gets the volunteer as a String.
+     * @return The first name, last name and username of the volunteer.
+     */
     public String toString() {
         return (this.firstName + " " + this.lastName + " " + this.username);
     }
