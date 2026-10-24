@@ -132,7 +132,7 @@ public class DataWriter extends DataConstants {
     addressObject.put(ADDRESS_STATE, address.getState());
     addressObject.put(ADDRESS_CITY, address.getCity());
     addressObject.put(ADDRESS_ADDRESS, address.getStreet());
-    addressObject.put(ADDRESS_ZIP, address.getStreet());
+    addressObject.put(ADDRESS_ZIP, address.getZip());
     return addressObject;
   }
 
@@ -174,7 +174,18 @@ public class DataWriter extends DataConstants {
     userJSON.put(VOLUNTEER_CREDENTIALS, getCredentialsArray(user.getCredentials()));
     userJSON.put(VOLUNTEER_AVAILABLE, user.getIsAvailible());
     userJSON.put(VOLUNTEER_IDENTITY_VERIFIED, user.getIdentityVerified());
+    userJSON.put(VOLUNTEER_FIELDS_OF_EXPERTISE, getFieldsOfExpertiseJSON(user.getFieldsOfExpertise()));
+    userJSON.put(VOLUNTEER_ASSIGNED_REQUEST, getRequestJSON(user.getAssignedRequest()));
+
     return userJSON;
+  }
+  @SuppressWarnings("unchecked")
+  private static JSONArray getFieldsOfExpertiseJSON(ArrayList<ResponseType> fieldsOfExpertise) {
+    JSONArray fieldsJSON = new JSONArray();
+    for (ResponseType r : fieldsOfExpertise) {
+      fieldsJSON.add(r.toString());
+    }
+    return fieldsJSON;
   }
 
   @SuppressWarnings("unchecked")

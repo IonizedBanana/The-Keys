@@ -289,6 +289,9 @@ public class DataReader extends DataConstants {
   }
 
   private static Request getRequest(JSONObject requestObject) {
+    if (requestObject == null) {
+      return null;
+    }
     UUID id = UUID.fromString((String) requestObject.get(REQUEST_UUID));
     String requestee = (String) requestObject.get(REQUEST_REQUESTEE);
     byte severity = ((Long) requestObject.get(REQUEST_SEVERITY)).byteValue();
@@ -356,6 +359,9 @@ public class DataReader extends DataConstants {
   }
 
   private static ArrayList<Victim.Person> getParty(JSONArray arr) {
+    if (arr == null || arr.size() < 1) {
+      return null;
+    }
     ArrayList<Victim.Person> party = new ArrayList<Victim.Person>();
     for (int i = 0; i < arr.size(); i++) {
       JSONObject o = (JSONObject) arr.get(i);
