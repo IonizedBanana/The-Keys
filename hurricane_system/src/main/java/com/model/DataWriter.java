@@ -296,6 +296,7 @@ public class DataWriter extends DataConstants {
     }
     return requestListJSON;
   }
+
   @SuppressWarnings("unchecked")
   private static JSONObject getRequestJSON(Request request) {
     JSONObject requestJSON = new JSONObject();

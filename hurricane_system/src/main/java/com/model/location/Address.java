@@ -13,7 +13,7 @@ public class Address {
     this.zip = zip;
   }
 
-  public Address(String city, String state){
+  public Address(String city, String state) {
     this.city = city;
     this.state = state;
     this.street = null;
@@ -60,7 +60,7 @@ public class Address {
     double latDiff = Math.abs(here.getLatitude() - there.getLatitude());
     double longDiff = Math.abs(here.getLongitude() - there.getLongitude());
     double distanceApprox = Math.sqrt(Math.pow(latDiff, 2) + Math.pow(longDiff, 2));
-    return distanceApprox*DEGREES_TO_KM*KM_TO_MILES;
+    return distanceApprox * DEGREES_TO_KM * KM_TO_MILES;
   }
 
   public boolean isWithin(Address address, int distance) {
