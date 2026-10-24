@@ -1,6 +1,7 @@
 package com.model.users;
 
 import com.model.*;
+import com.model.location.*;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -162,11 +163,11 @@ public class Victim extends User {
     /**
      * Creates a new request.
      * @param severity The request's severity.
-     * @param location The request's location.
+     * @param address The request's address.
      * @param description The request's description.
      */
-    public void createRequest(byte severity, Location location, String description) {
-        Request newRequest = new Request(this.username, severity, location, description);
+    public void createRequest(byte severity, Address address, String description) {
+        Request newRequest = new Request(this.username, severity, address, description);
         this.createdRequests.add(newRequest);
     }
 
@@ -180,12 +181,12 @@ public class Victim extends User {
     }
 
     /**
-     * Edits the request location.
+     * Edits the request address.
      * @param request The request to be edited.
-     * @param location The new location.
+     * @param address The new address.
      */
-    public void editRequestLocation(Request request, Location location) {
-        request.setLocation(location);
+    public void editRequestAddress(Request request, Address address) {
+        request.setAddress(address);
     }
 
     /**

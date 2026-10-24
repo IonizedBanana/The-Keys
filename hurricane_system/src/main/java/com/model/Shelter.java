@@ -2,6 +2,7 @@ package com.model;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import com.model.location.*;
 
 /**
  * <h2>Shelter</h2>

@@ -1,6 +1,7 @@
 package com.model;
 
 import com.model.users.*;
+import com.model.location.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.text.DateFormat;
@@ -15,9 +16,7 @@ import org.json.simple.JSONObject;
 public class DataWriter extends DataConstants {
   @SuppressWarnings("unchecked")
   public static boolean saveShelters(HashMap<String, Shelter> shelters) {
-    // File shelterFile = new File(SHELTER_FILE_PATH); TODO change this once saving
-    // is tested fully
-    File shelterFile = new File("../json/testing/shelter.json");
+    File shelterFile = new File(SHELTER_FILE_PATH);
     JSONArray shelterJSONArray = new JSONArray();
     for (Map.Entry<String, Shelter> set : shelters.entrySet()) {
       shelterJSONArray.add(getShelterJSON(set.getValue()));
@@ -37,8 +36,7 @@ public class DataWriter extends DataConstants {
 
   @SuppressWarnings("unchecked")
   public static boolean saveUsers(HashMap<String, User> users) {
-    // File userFile = new File(USER_FILE_PATH);
-    File userFile = new File("../json/testing/user.json");
+    File userFile = new File(USER_FILE_PATH);
     JSONArray userJSONArray = new JSONArray();
     for (Map.Entry<String, User> set : users.entrySet()) {
       userJSONArray.add(getUserJSON(set.getValue()));
@@ -58,15 +56,14 @@ public class DataWriter extends DataConstants {
 
   @SuppressWarnings("unchecked")
   public static boolean saveRequests(HashMap<UUID, Request> requests) {
-    // File userFile = new File(REQUEST_FILE_PATH);
-    File requestFile = new File("../json/testing/request.json");
-    JSONArray userJSONArray = new JSONArray();
+    File requestFile = new File(REQUEST_FILE_PATH);
+    JSONArray requestJSONArray = new JSONArray();
     for (Map.Entry<UUID, Request> set : requests.entrySet()) {
-      userJSONArray.add(getRequestJSON(set.getValue()));
+      requestJSONArray.add(getRequestJSON(set.getValue()));
     }
     try {
       FileWriter writer = new FileWriter(requestFile);
-      writer.write(userJSONArray.toJSONString());
+      writer.write(requestJSONArray.toJSONString());
       writer.flush();
       writer.close();
       return true;
@@ -79,8 +76,7 @@ public class DataWriter extends DataConstants {
 
   @SuppressWarnings("unchecked")
   public static boolean saveHurricanes(HashMap<String, Hurricane> hurricanes) {
-    // File hurricaneFile = new File(HURRICANE_FILE_PATH);
-    File hurricaneFile = new File("../json/testing/hurricane.json");
+    File hurricaneFile = new File(HURRICANE_FILE_PATH);
     JSONArray hurricaneJSONArray = new JSONArray();
     for (Map.Entry<String, Hurricane> set : hurricanes.entrySet()) {
       hurricaneJSONArray.add(getHurricaneJSON(set.getValue()));
@@ -133,9 +129,10 @@ public class DataWriter extends DataConstants {
   @SuppressWarnings("unchecked")
   private static JSONObject getAddressJSON(Address address) {
     JSONObject addressObject = new JSONObject();
-    addressObject.put(LOCATION_STATE, address.getState());
-    addressObject.put(LOCATION_CITY, address.getCity());
-    addressObject.put(ADDRESS_ADDRESS, address.getAddress());
+    addressObject.put(ADDRESS_STATE, address.getState());
+    addressObject.put(ADDRESS_CITY, address.getCity());
+    addressObject.put(ADDRESS_ADDRESS, address.getStreet());
+    addressObject.put(ADDRESS_ZIP, address.getStreet());
     return addressObject;
   }
 
@@ -283,7 +280,7 @@ public class DataWriter extends DataConstants {
   @SuppressWarnings("unchecked")
   private static JSONObject getAlertJSON(Alert alert) {
     JSONObject alertObject = new JSONObject();
-    alertObject.put(ALERT_AFFECTED_LOCATIONS, getLocationArray(alert.getAffectedLocations()));
+    alertObject.put(ALERT_AFFECTED_LOCATIONS, getAddressArray(alert.getAffectedAddresses()));
     alertObject.put(ALERT_DESCRIPTION, alert.getDescription());
     alertObject.put(ALERT_ISSUED_BY, alert.getIssuedBy());
     String timestampFormatted = DateFormat.getDateTimeInstance().format(alert.getTimestamp());
@@ -305,7 +302,7 @@ public class DataWriter extends DataConstants {
     requestJSON.put(REQUEST_UUID, request.getId().toString());
     requestJSON.put(REQUEST_REQUESTEE, request.getRequestee());
     requestJSON.put(REQUEST_SEVERITY, request.getSeverity());
-    requestJSON.put(REQUEST_LOCATION, getLocationJSON(request.getLocation()));
+    requestJSON.put(REQUEST_LOCATION, getAddressJSON(request.getAddress()));
     requestJSON.put(REQUEST_STATUS, request.getStatus().toString());
     requestJSON.put(REQUEST_RESPONSE_TYPE, request.getResponderType().toString());
     requestJSON.put(REQUEST_DESCRIPTION, request.getDescription());
@@ -318,27 +315,19 @@ public class DataWriter extends DataConstants {
     hurricaneJSON.put(HURRICANE_UUID, hurricane.getId().toString());
     hurricaneJSON.put(HURRICANE_NAME, hurricane.getName());
     hurricaneJSON.put(HURRICANE_CATEGORY, hurricane.getCategory());
-    hurricaneJSON.put(HURRICANE_CURRENT_LOCATION, getLocationJSON(hurricane.getCurrentLocation()));
-    hurricaneJSON.put(HURRICANE_PREDICTED_PATH, getLocationArray(hurricane.getPredictedPath()));
-    hurricaneJSON.put(HURRICANE_IMPACT_AREA, getLocationArray(hurricane.getImpactArea()));
+    hurricaneJSON.put(HURRICANE_CURRENT_LOCATION, getAddressJSON(hurricane.getCurrentAddress()));
+    hurricaneJSON.put(HURRICANE_PREDICTED_PATH, getAddressArray(hurricane.getPredictedPath()));
+    hurricaneJSON.put(HURRICANE_IMPACT_AREA, getAddressArray(hurricane.getImpactArea()));
     hurricaneJSON.put(HURRICANE_STATUS, hurricane.getStatus().toString());
     return hurricaneJSON;
   }
 
   @SuppressWarnings("unchecked")
-  private static JSONObject getLocationJSON(Location location) {
-    JSONObject locationJSON = new JSONObject();
-    locationJSON.put(LOCATION_STATE, location.getState());
-    locationJSON.put(LOCATION_CITY, location.getCity());
-    return locationJSON;
-  }
-
-  @SuppressWarnings("unchecked")
-  private static JSONArray getLocationArray(ArrayList<Location> locations) {
-    JSONArray locationsJSON = new JSONArray();
-    for (Location l : locations) {
-      locationsJSON.add(getLocationJSON(l));
+  private static JSONArray getAddressArray(ArrayList<Address> addresses) {
+    JSONArray addressesJSON = new JSONArray();
+    for (Address l : addresses) {
+      addressesJSON.add(getAddressJSON(l));
     }
-    return locationsJSON;
+    return addressesJSON;
   }
 }

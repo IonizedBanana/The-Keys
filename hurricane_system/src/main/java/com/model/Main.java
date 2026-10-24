@@ -27,15 +27,21 @@ public class Main {
     for (Map.Entry<String, User> set : users.entrySet()) {
       System.out.println(set.getValue().toString());
     }
-
+    
     DataWriter.saveUsers(users);
     DataWriter.saveHurricanes(hurricanes);
     DataWriter.saveRequests(requests);
     DataWriter.saveShelters(shelters);
 
-    Address address = new Address("Charleston", "SC");
-    Coordinates coords = address.getCoordinates();
-    System.out.println(coords.getLatitude() + "\n" + coords.getLongitude());
-
+    Address generalAddress = new Address("Charleston", "SC");
+    Coordinates generalCoords = generalAddress.getCoordinates();
+    System.out.println(generalCoords.getLatitude() + "\n" + generalCoords.getLongitude());
+    Address shelterAddress = new Address("1069 King St", "Charleston", "SC", "29403");
+    Address farAddress = new Address("505 Coldstream Drive", "Columbia", "SC", "29212");
+    // System.out.println(shelterAddress.getDistanceTo(generalAddress) < 5);
+    System.out.println(shelterAddress.isWithin(generalAddress, 5));
+    // System.out.println(farAddress.getDistanceTo(generalAddress) < 100);
+    System.out.println(farAddress.isWithin(generalAddress, 5));
+    System.out.println(farAddress.getDistanceTo(shelterAddress));
   }
 }

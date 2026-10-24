@@ -1,6 +1,7 @@
 package com.model.users;
 
 import com.model.*;
+import com.model.location.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -92,18 +93,18 @@ public class Dispatcher extends User {
         //Mark the request as in progress
         request.updateStatus(ResponseStatus.IN_PROGRESS);
 
-        //create an arrayList with the volunteers location
+        //create an arrayList with the volunteers address
         //this is needed so the User recieveAlert method doesn't filter out the alert
-        ArrayList<Location> temp = new ArrayList<Location>();
-        temp.add(volunteer.getAddress().getLocation());
+        ArrayList<Address> temp = new ArrayList<Address>();
+        temp.add(volunteer.getAddress());
 
         //send notification to volunteer as an alert
         Alert notification = new Alert(temp, "Dispatcher has assigned you to the following request \n"+request, this.username, Date.from(Instant.now()));
         volunteer.receiveAlert(notification);
 
-        //Make an arrayList with the victim's location.
-        temp = new ArrayList<Location>();
-        temp.add(request.getRequesteeUser().getAddress().getLocation());
+        //Make an arrayList with the victim's address.
+        temp = new ArrayList<Address>();
+        temp.add(request.getRequesteeUser().getAddress());
 
         //send notification to victim as an alert
         notification = new Alert(temp, "Dispatcher has assigned"+volunteer.firstName+" "+volunteer.lastName+"to your request", this.username, Date.from(Instant.now()));
@@ -117,8 +118,8 @@ public class Dispatcher extends User {
      * @param whatIsNeeded The description of the alert, describing what needs to be edited.
      */
     public void requestMoreInfo(Request request, String whatIsNeeded) {
-        ArrayList<Location> temp = new ArrayList<Location>();
-        temp.add(request.getRequesteeUser().getAddress().getLocation());
+        ArrayList<Address> temp = new ArrayList<Address>();
+        temp.add(request.getRequesteeUser().getAddress());
 
         //send notification to victim as an alert
         Alert notification = new Alert(temp, whatIsNeeded, this.username, Date.from(Instant.now()));

@@ -62,4 +62,8 @@ public class Address {
     double distanceApprox = Math.sqrt(Math.pow(latDiff, 2) + Math.pow(longDiff, 2));
     return distanceApprox*DEGREES_TO_KM*KM_TO_MILES;
   }
+
+  public boolean isWithin(Address address, int distance) {
+    return getDistanceTo(address) < distance;
+  }
 }

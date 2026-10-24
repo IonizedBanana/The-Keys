@@ -11,4 +11,6 @@ module com.hurricane {
 
     opens com.model to javafx.fxml;
     exports com.model;
+    exports com.model.users;
+    exports com.model.location;
 }
