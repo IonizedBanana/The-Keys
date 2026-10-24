@@ -16,21 +16,24 @@ public class Request {
     private ResponseStatus status;
     private ResponseType responderType;
     private String description;
+    private String needsMedical;
 
-    public Request(UUID id, String requestee, byte severity, Address address, ResponseStatus status, ResponseType responderType, String description) {
-        this.id = UUID.randomUUID();
+    public Request(UUID id, String requestee, byte severity, Address address, ResponseStatus status, ResponseType responderType, String description, String needsMedical) {
+        this.id = id;
         this.requestee = requestee;
         this.severity = severity;
         this.address = address;
         this.status = status;
         this.responderType = responderType;
         this.description = description;
+        this.needsMedical = needsMedical;
     }
-    public Request(String requestee, byte severity, Address address, String description) {
+    public Request(String requestee, byte severity, Address address, String description, String needsMedical) {
         this.requestee = requestee;
         this.severity = severity;
         this.address = address;
         this.description = description;
+        this.needsMedical = needsMedical;
     }
     public void editSeverity(byte severity) {
         if(severity < 1 || severity > 5) {
@@ -125,6 +128,17 @@ public class Request {
     public User getRequesteeUser() {
         UserList users = UserList.getInstance();
         return users.getUser(requestee);
+    }
+    public String getNeedsMedical() {
+        return needsMedical;
+    }
+    public void setNeedsMedical(String needsMedical) {
+        if (needsMedical == null || needsMedical.isEmpty()) {
+            throw new IllegalArgumentException("Needs medical cannot be null or empty");
+        }
+        else {
+            this.needsMedical = needsMedical;
+        }
     }
 
 }

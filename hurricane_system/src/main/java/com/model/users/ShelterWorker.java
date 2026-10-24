@@ -13,12 +13,12 @@ public class ShelterWorker extends User {
 private Shelter shelter;
 
     public ShelterWorker(UUID id, String firstName, String lastName, String username, String password, String emailAddress, Address address, ArrayList<Alert> recievedAlerts, Shelter shelter) {
-        super(id,firstName, lastName, username, password, emailAddress, address, recievedAlerts);
+        super(id,firstName, lastName, username, emailAddress, password, address, recievedAlerts);
         this.shelter = shelter;
         this.setType(UserType.SHELTER_WORKER);
     }
     public ShelterWorker(String firstName, String lastName, String username, String password, String emailAddress, Address address, Shelter shelter) {
-        super(firstName, lastName, username, password, emailAddress, address);
+        super(firstName, lastName, username, emailAddress, password, address);
         this.shelter = shelter;
         this.setType(UserType.SHELTER_WORKER);
     }
