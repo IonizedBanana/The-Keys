@@ -37,5 +37,6 @@ json/testing/
 # dont put .env in main idiot
 .env
 
-# vscode config files
-.vscode/
+# vscode config files (launch.json is shared so everyone gets the run configs; the api key stays in .env)
+.vscode/*
+!.vscode/launch.json

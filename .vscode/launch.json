@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Run Scenarios",
+      "request": "launch",
+      "mainClass": "com.hurricane/com.model.HurricaneUI",
+      "projectName": "hurricane_system",
+      "cwd": "${workspaceFolder}/hurricane_system",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Verify Saved Data",
+      "request": "launch",
+      "mainClass": "com.hurricane/com.model.HurricaneUI",
+      "projectName": "hurricane_system",
+      "cwd": "${workspaceFolder}/hurricane_system",
+      "envFile": "${workspaceFolder}/.env",
+      "args": "verify"
+    },
+    {
+      "type": "java",
+      "name": "Run App",
+      "request": "launch",
+      "mainClass": "com.hurricane/com.hurricane.App",
+      "projectName": "hurricane_system",
+      "cwd": "${workspaceFolder}/hurricane_system",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
