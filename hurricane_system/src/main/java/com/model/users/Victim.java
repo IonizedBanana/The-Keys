@@ -15,8 +15,8 @@ public class Victim extends User {
     private String description;
     private int partySize;
     private ArrayList<Request> createdRequests;
-    // New stuff
     private ArrayList<Person> party;
+    private String phoneNumber;
 
     /**
      * Creates a victim with only the required information (victims don't provide all information immediately; They can add more info later).
@@ -35,8 +35,13 @@ public class Victim extends User {
         this.description = "No description";
         this.partySize = 1;
         this.createdRequests = new ArrayList<Request>();
+        this.party = new ArrayList<Person>();
+        this.phoneNumber = "";
     }
 
+    /**
+     * Creates a victim with no parameters.
+     */
     public Victim() {
         super();
         this.setType(UserType.VICTIM);
@@ -45,6 +50,8 @@ public class Victim extends User {
         this.description = "No description";
         this.partySize = 1;
         this.createdRequests = new ArrayList<Request>();
+        this.party = new ArrayList<Person>();
+        this.phoneNumber = "";
     }
 
     /**
@@ -63,7 +70,8 @@ public class Victim extends User {
      * @param partySize The user's party size.
      * @param createdRequests The user's requests.
      */
-    public Victim(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Alert> recievedAlerts, byte age, char sex, String description, byte partySize, ArrayList<Request> createdRequests, ArrayList<Person> party) {
+    public Victim(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Alert> recievedAlerts, byte age, char sex,
+        String description, byte partySize, ArrayList<Request> createdRequests, ArrayList<Person> party, String phoneNumber) {
         super(id, firstName, lastName, username, emailAddress, password, address, recievedAlerts);
         this.setType(UserType.VICTIM);
         this.age = age;
@@ -72,6 +80,7 @@ public class Victim extends User {
         this.partySize = partySize;
         this.createdRequests = createdRequests;
         this.party = party;
+        this.phoneNumber = phoneNumber;
     }
 
     /**
@@ -85,6 +94,9 @@ public class Victim extends User {
         this.sex = ' ';
         this.description = "No description";
         this.partySize = 1;
+        this.createdRequests = new ArrayList<Request>();
+        this.party = new ArrayList<Person>();
+        this.phoneNumber = "";
     }
 
     /**
@@ -145,16 +157,57 @@ public class Victim extends User {
         return this.partySize;
     }
 
+    /**
+     * Gets the victim's party (not including the victim user).
+     * @return The victim's party.
+     */
     public ArrayList<Person> getParty() {
         return this.party;
     }
 
-    public void setParty(ArrayList<Person> party) {
-        this.party = party;
+    /**
+     * Gets the full party, including the victim user (does not edit original party).
+     * @return The full party.
+     */
+    public ArrayList<Person> getFullParty() {
+        ArrayList<Person> fullParty = new ArrayList<Person>();
+        //make a copy of party
+        for (Person p : this.party)
+            fullParty.add(p);
+        fullParty.addFirst(new Person(firstName + " " + lastName, ((byte) this.getAge()), false, this.description));
+        return fullParty;
     }
 
+    /**
+     * Sets the victim's party.
+     * @param party The victim's party.
+     */
+    public void setParty(ArrayList<Person> party) {
+        this.party = party;
+        //Gets new party size (excluding pets)
+        int size = 1;
+        for (int i=0; i<party.size(); i++) {
+            if (!party.get(i).getIsPet()) {
+                size++;
+            }
+        }
+        this.partySize = size;
+    }
+
+    /**
+     * Adds a member to the victim's party.
+     * @param person The person to be added.
+     */
     public void addPartyMember(Person person) {
         this.party.add(person);
+        //Gets new party size (excluding pets)
+        int size = 1;
+        for (int i=0; i<party.size(); i++) {
+            if (!party.get(i).getIsPet()) {
+                size++;
+            }
+        }
+        this.partySize = size;
     }
 
     /**
@@ -165,6 +218,22 @@ public class Victim extends User {
         if (partySize >= 1) {
             this.partySize = partySize;
         }
+    }
+
+    /**
+     * Gets the phone number.
+     * @return The phone number.
+     */
+    public String getPhoneNumber() {
+        return this.phoneNumber;
+    }
+
+    /**
+     * Sets the phone number.
+     * @param phoneNumber The phone number.
+     */
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     /**
@@ -223,6 +292,10 @@ public class Victim extends User {
         request.setDescription(description);
     }
     
+    /**
+     * Gets the victim as a String.
+     * @return The first name, last name and username of the victim.
+     */
     public String toString() {
         return (this.firstName + " " + this.lastName + " " + this.username);
     }
@@ -235,6 +308,11 @@ public class Victim extends User {
         return createdRequests;
     }
 
+    /**
+     * Gets info of a single party member from the victim's party.
+     * @param index the index at which the party member is at.
+     * @return The person's information.
+     */
     public String getPerson(int index) {
         return this.party.get(index).getName()
         + ", age: " + this.party.get(index).getAge()
@@ -243,12 +321,21 @@ public class Victim extends User {
 
     /**
      * A member of a victim's party that does not have an account.
+     * @author jah73cse
      */
     public class Person {
         private String name;
         private byte age;
         private boolean isPet;
         private String description;
+
+        /**
+         * Creates a person without an account.
+         * @param name The person's name.
+         * @param age The person's age.
+         * @param isPet Whether or not the person is a pet.
+         * @param description A description of the person.
+         */
         public Person(String name, byte age, boolean isPet, String description) {
             this.setName(name);
             this.setAge(age);
@@ -256,38 +343,74 @@ public class Victim extends User {
             this.setDescription(description);
         }
 
+        /**
+         * Gets the person's name.
+         * @return The person's name.
+         */
         public String getName() {
             return this.name;
         }
 
+        /**
+         * Sets the person's name.
+         * @param name The person's name.
+         */
         public void setName(String name) {
             this.name = name;
         }
 
+        /**
+         * Gets the person's age.
+         * @return The person's age.
+         */
         public int getAge() {
             return this.age;
         }
 
+        /**
+         * Sets the person's age.
+         * @param age The person's age.
+         */
         public void setAge(byte age) {
             this.age = age;
         }
 
+        /**
+         * Gets whether the person is a pet.
+         * @return Whether the person is a pet.
+         */
         public boolean isPet() {
             return this.isPet;
         }
 
+        /**
+         * Sets whether the person is a pet.
+         * @param isPet Whether the person is a pet.
+         */
         public void setIsPet(boolean isPet) {
             this.isPet = isPet;
         }
 
+        /**
+         * Gets the description.
+         * @return The description.
+         */
         public String getDescription() {
             return this.description;
         }
 
+        /**
+         * Sets the description.
+         * @param description The description.
+         */
         public void setDescription(String description) {
             this.description = description;
         }
 
+        /**
+         * Gets the person as a String.
+         * @return The person as a String.
+         */
         public String toString() {
             return this.getName()
                 + ", age: " + this.getAge()

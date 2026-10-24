@@ -1,0 +1,61 @@
+[
+  {
+    "id": "22222222-0000-0000-0000-000000000001",
+    "type": "VOLUNTEER",
+    "firstName": "Rosa",
+    "lastName": "Delgado",
+    "username": "rdelgado",
+    "emailAddress": "rosa.delgado@email.com",
+    "password": "delgado123",
+    "address": {
+      "address": "1 Vendue Range",
+      "city": "Charleston",
+      "state": "SC",
+      "zip": "29401"
+    },
+    "receivedAlerts": [],
+    "credentials": [],
+    "fieldsOfExpertise": [
+      "TRAVEL"
+    ],
+    "identityVerified": true,
+    "available": true
+  },
+  {
+    "id": "22222222-0000-0000-0000-000000000002",
+    "type": "SHELTER_WORKER",
+    "firstName": "Felix",
+    "lastName": "Moreau",
+    "username": "Felix44",
+    "emailAddress": "felix.moreau@email.com",
+    "password": "passwordpassword",
+    "address": {
+      "address": "6401 Dorchester Road",
+      "city": "North Charleston",
+      "state": "SC",
+      "zip": "29418"
+    },
+    "receivedAlerts": [],
+    "shelter": {
+      "id": "11111111-0000-0000-0000-000000000005",
+      "name": "Zucker Middle School",
+      "address": {
+        "address": "6401 Dorchester Road",
+        "city": "North Charleston",
+        "state": "SC",
+        "zip": "29418"
+      },
+      "totalCapacity": 220,
+      "usedCapacity": 100,
+      "expectedArrivals": 0,
+      "resources": [
+        {
+          "type": "WATER",
+          "description": "jugs of water",
+          "quantity": 40,
+          "unit": "GALLONS"
+        }
+      ]
+    }
+  }
+]

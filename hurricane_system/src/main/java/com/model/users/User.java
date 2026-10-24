@@ -67,6 +67,9 @@ public abstract class User {
         this.setAddress(address);
     }
 
+    /**
+     * Creates a user with no parameters.
+     */
     public User() {
         this.id = null;
         this.firstName = null;

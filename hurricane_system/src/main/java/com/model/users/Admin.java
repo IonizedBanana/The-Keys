@@ -137,6 +137,11 @@ public class Admin extends User {
     public void verifyCredential(Credential credential) {
         credential.setVerified(true);
     }
+
+    /**
+     * Gets the admin as a String.
+     * @return The first name, last name and username of the admin.
+     */
     public String toString() {
         return (this.firstName + " " + this.lastName + " " + this.username);
     }

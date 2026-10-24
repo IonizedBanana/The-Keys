@@ -32,6 +32,7 @@ public class Volunteer extends User {
         this.fieldsOfExpertise = new ArrayList<ResponseType>();
         this.identityVerified = false;
         this.availible = false;
+        this.assignedRequest = null;
     }
 
     /**
@@ -46,6 +47,7 @@ public class Volunteer extends User {
         this.fieldsOfExpertise = new ArrayList<ResponseType>();
         this.identityVerified = false;
         this.availible = false;
+        this.assignedRequest = null;
 
     }
 
@@ -142,10 +144,18 @@ public class Volunteer extends User {
         this.availible = available;
     }
 
+    /**
+     * Gets the user's assigned request.
+     * @return The user's assigned request.
+     */
     public Request getAssignedRequest() {
         return assignedRequest;
     }
 
+    /**
+     * Sets the user's assigned request.
+     * @param request The user's assigned request.
+     */
     public void setAssignedRequest(Request request) {
         this.assignedRequest = request;
     }
@@ -196,7 +206,13 @@ public class Volunteer extends User {
         return;
         //marks a request as done
         //request.updateStatus(ResponseStatus.COMPLETE);
+        //this.assignedRequest = null;
     }
+
+    /**
+     * Gets the volunteer as a String.
+     * @return The first name, last name and username of the volunteer.
+     */
     public String toString() {
         return (this.firstName + " " + this.lastName + " " + this.username);
     }
