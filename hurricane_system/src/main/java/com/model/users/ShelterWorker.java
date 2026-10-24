@@ -23,7 +23,7 @@ private Shelter shelter;
         this.setType(UserType.SHELTER_WORKER);
     }
     public ShelterWorker(User user) {
-        super(user.firstName, user.lastName, user.username, user.password, user.emailAddress, user.address);
+        super(user.firstName, user.lastName, user.username, user.emailAddress, user.password, user.address);
         this.shelter = null;
         this.setType(UserType.SHELTER_WORKER);
     }

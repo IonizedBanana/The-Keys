@@ -132,13 +132,8 @@ public class Request {
     public String getMedicalNote() {
         return MedicalNote;
     }
-    public void setMedicalNote(String MedicalNote) {
-        if (MedicalNote == null) {
-            throw new IllegalArgumentException("The medical note cannot be null");
-        }
-        else {
-            this.MedicalNote = MedicalNote;
-        }
+    public void setMedicalNote(String MedicalNote) {    
+        this.MedicalNote = MedicalNote;
     }
 
 }
