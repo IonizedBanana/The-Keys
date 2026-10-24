@@ -36,3 +36,6 @@ json/testing/
 
 # dont put .env in main idiot
 .env
+
+# vscode config files
+.vscode/
