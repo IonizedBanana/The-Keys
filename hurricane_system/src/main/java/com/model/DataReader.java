@@ -10,7 +10,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import org.json.simple.JSONArray;
@@ -322,9 +321,9 @@ public class DataReader extends DataConstants {
             (JSONArray) userObject.get(VOLUNTEER_FIELDS_OF_EXPERTISE));
         boolean identityVerified = (Boolean) userObject.get(VOLUNTEER_IDENTITY_VERIFIED);
         boolean available = (Boolean) userObject.get(VOLUNTEER_AVAILABLE);
+        Request assignedRequest = getRequest((JSONObject) userObject.get(VOLUNTEER_ASSIGNED_REQUEST));
         return new Volunteer(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts,
-            credentials,
-            fieldsOfExpertise, identityVerified, available);
+            credentials, fieldsOfExpertise, identityVerified, available, assignedRequest);
       }
       case VICTIM -> {
         byte age = ((Long) userObject.get(VICTIM_AGE)).byteValue();
@@ -332,9 +331,9 @@ public class DataReader extends DataConstants {
         String description = (String) userObject.get(VICTIM_DESCRIPTION);
         byte partySize = ((Long) userObject.get(VICTIM_PARTY_SIZE)).byteValue();
         ArrayList<Request> createdRequests = getRequests((JSONArray) userObject.get(VICTIM_CREATED_REQUESTS));
+        ArrayList<Victim.Person> party = getParty((JSONArray) userObject.get(VICTIM_PARTY));
         return new Victim(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts, age, sex,
-            description,
-            partySize, createdRequests);
+            description, partySize, createdRequests, party);
       }
       case ADMIN -> {
         String phoneNumber = (String) userObject.get(ADMIN_PHONE_NUMBER);
@@ -354,6 +353,25 @@ public class DataReader extends DataConstants {
     }
     return null;
 
+  }
+
+  private static ArrayList<Victim.Person> getParty(JSONArray arr) {
+    ArrayList<Victim.Person> party = new ArrayList<Victim.Person>();
+    for (int i = 0; i < arr.size(); i++) {
+      JSONObject o = (JSONObject) arr.get(i);
+      Victim.Person person = getPerson(o);
+      party.add(person);
+    }
+    return party;
+  }
+
+  private static Victim.Person getPerson(JSONObject personObject) {
+    String name = (String) personObject.get(PERSON_NAME);
+    byte age = ((Long) personObject.get(VICTIM_AGE)).byteValue();
+    boolean isPet = (Boolean) personObject.get(PERSON_IS_PET);
+    String description = (String) personObject.get(VICTIM_DESCRIPTION);
+    Victim victimInstance = new Victim();
+    return victimInstance.new Person(name, age, isPet, description);
   }
 
   /**

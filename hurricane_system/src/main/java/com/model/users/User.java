@@ -67,6 +67,17 @@ public abstract class User {
         this.setAddress(address);
     }
 
+    public User() {
+        this.id = null;
+        this.firstName = null;
+        this.lastName = null;
+        this.username = null;
+        this.emailAddress = null;
+        this.password = null;
+        this.address = null;
+        this.receivedAlerts = null;
+    }
+
     //getters and setters
 
     /**

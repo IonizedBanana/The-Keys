@@ -37,6 +37,16 @@ public class Victim extends User {
         this.createdRequests = new ArrayList<Request>();
     }
 
+    public Victim() {
+        super();
+        this.setType(UserType.VICTIM);
+        this.age = -1;
+        this.sex = ' ';
+        this.description = "No description";
+        this.partySize = 1;
+        this.createdRequests = new ArrayList<Request>();
+    }
+
     /**
      * Creates a victim (this one is for loading from UserList).
      * @param id The user's UUID.
@@ -53,7 +63,7 @@ public class Victim extends User {
      * @param partySize The user's party size.
      * @param createdRequests The user's requests.
      */
-    public Victim(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Alert> recievedAlerts, byte age, char sex, String description, byte partySize, ArrayList<Request> createdRequests) {
+    public Victim(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Alert> recievedAlerts, byte age, char sex, String description, byte partySize, ArrayList<Request> createdRequests, ArrayList<Person> party) {
         super(id, firstName, lastName, username, emailAddress, password, address, recievedAlerts);
         this.setType(UserType.VICTIM);
         this.age = age;
@@ -61,6 +71,7 @@ public class Victim extends User {
         this.description = description;
         this.partySize = partySize;
         this.createdRequests = createdRequests;
+        this.party = party;
     }
 
     /**
@@ -235,10 +246,10 @@ public class Victim extends User {
      */
     public class Person {
         private String name;
-        private int age;
+        private byte age;
         private boolean isPet;
         private String description;
-        public Person(String name, int age, boolean isPet, String description) {
+        public Person(String name, byte age, boolean isPet, String description) {
             this.setName(name);
             this.setAge(age);
             this.setIsPet(isPet);
@@ -257,7 +268,7 @@ public class Victim extends User {
             return this.age;
         }
 
-        public void setAge(int age) {
+        public void setAge(byte age) {
             this.age = age;
         }
 

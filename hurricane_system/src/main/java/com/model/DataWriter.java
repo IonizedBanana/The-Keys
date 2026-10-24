@@ -194,7 +194,27 @@ public class DataWriter extends DataConstants {
     userJSON.put(VICTIM_DESCRIPTION, user.getDescription());
     userJSON.put(VICTIM_PARTY_SIZE, user.getPartySize());
     userJSON.put(VICTIM_CREATED_REQUESTS, getRequestListJSON(user.getCreatedRequests()));
+    userJSON.put(VICTIM_PARTY, getPartyJSON(user.getParty()));
     return userJSON;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static JSONArray getPartyJSON(ArrayList<Victim.Person> party) {
+    JSONArray partyJSON = new JSONArray();
+    for (Victim.Person vp : party) {
+      partyJSON.add(getPersonJSON(vp));
+    }
+    return partyJSON;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static JSONObject getPersonJSON(Victim.Person person) {
+    JSONObject personObject = new JSONObject();
+    personObject.put(PERSON_NAME, person.getName());
+    personObject.put(VICTIM_AGE, person.getAge());
+    personObject.put(PERSON_IS_PET, person.getIsPet());
+    personObject.put(VICTIM_DESCRIPTION, person.getDescription());
+    return personObject;
   }
 
   @SuppressWarnings("unchecked")
