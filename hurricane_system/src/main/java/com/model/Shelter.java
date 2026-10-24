@@ -2,11 +2,14 @@ package com.model;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import com.model.location.*;
 
 /**
  * <h2>Shelter</h2>
- * <p>a class to represent public storm shelters and refugee camps
- * a shelter has:</p>
+ * <p>
+ * a class to represent public storm shelters and refugee camps
+ * a shelter has:
+ * </p>
  * <ul>
  * <li>a name</li>
  * <li>an address</li>

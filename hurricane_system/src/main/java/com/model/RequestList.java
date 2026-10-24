@@ -30,4 +30,8 @@ public class RequestList {
   public boolean save() {
     return DataWriter.saveRequests(requests);
   }
+
+  public HashMap<UUID, Request> getRequestList() {
+    return this.requests;
+  }
 }

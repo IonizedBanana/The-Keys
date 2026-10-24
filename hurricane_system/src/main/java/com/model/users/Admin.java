@@ -1,6 +1,7 @@
 package com.model.users;
 
 import com.model.*;
+import com.model.location.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -99,12 +100,12 @@ public class Admin extends User {
     }
 
     /**
-     * Updates a hurricane's location.
+     * Updates a hurricane's address.
      * @param hurricane The hurricane.
-     * @param location The new location.
+     * @param address The new address.
      */
-    public void updateHurricaneLocation(Hurricane hurricane, Location location) {
-        hurricane.updateLocation(location);
+    public void updateHurricaneAddress(Hurricane hurricane, Address address) {
+        hurricane.updateAddress(address);
     }
 
     /**
@@ -112,7 +113,7 @@ public class Admin extends User {
      * @param hurricane The hurricane.
      * @param path The new path.
      */
-    public void updateHurricanePath(Hurricane hurricane, ArrayList<Location> path) {
+    public void updateHurricanePath(Hurricane hurricane, ArrayList<Address> path) {
         hurricane.updatePredictedPath(path);
     }
 
@@ -124,7 +125,7 @@ public class Admin extends User {
         HashMap<String, User> list = UserList.getInstance().getUserList();
         //send to all users
         for (String key : list.keySet()) {
-            //the filtering of alerts based on location happens in the User class
+            //the filtering of alerts based on address happens in the User class
             list.get(key).receiveAlert(alert);
         }
     }

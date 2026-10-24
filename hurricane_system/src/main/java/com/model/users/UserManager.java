@@ -1,6 +1,6 @@
 package com.model.users;
 import java.util.Scanner;
-import com.model.*;
+import com.model.location.*;
 /**
  * 
  * UserManager
@@ -45,7 +45,9 @@ public class UserManager {
                 String city = scanner.next();
                 System.out.println("Enter new address:");
                 String address = scanner.next();
-                Address newAddress = new Address(state, city, address);
+                System.out.println("Enter new zipcode:");
+                String zipcode = scanner.next();
+                Address newAddress = new Address(state, city, address, zipcode);
                 changeAddress(user, newAddress);
                 break;
         }

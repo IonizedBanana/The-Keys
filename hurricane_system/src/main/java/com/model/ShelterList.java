@@ -29,4 +29,8 @@ public class ShelterList {
   public boolean save() {
     return DataWriter.saveShelters(shelters);
   }
+
+  public HashMap<String, Shelter> getShelterList() {
+    return this.shelters;
+  }
 }

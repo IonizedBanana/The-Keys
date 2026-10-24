@@ -3,6 +3,7 @@ package com.model;
 import com.model.users.*;
 import java.util.ArrayList;
 import java.util.Date;
+import com.model.location.*;
 
 /**
  * Alert
@@ -10,20 +11,20 @@ import java.util.Date;
  * @author Jason
  */
 public class Alert {
-    private ArrayList<Location> affectedLocations;
+    private ArrayList<Address> affectedAddresss;
     private String description;
     private String issuedBy;
     private Date timestamp;
 
     /**
      * Create an alert.
-     * @param affectedLocations The locations involved in the alert.
+     * @param affectedAddresss The locations involved in the alert.
      * @param description The text in the alert.
      * @param issuedBy The user issuing the alert.
      * @param timestamp
      */
-    public Alert(ArrayList<Location> affectedLocations, String description, String issuedBy, Date timestamp) {
-        setAffectedLocations(affectedLocations);
+    public Alert(ArrayList<Address> affectedAddress, String description, String issuedBy, Date timestamp) {
+        setAffectedAddresses(affectedAddress);
         setDescription(description);
         setIssuedBy(issuedBy);
         setTimestamp(timestamp);
@@ -33,18 +34,18 @@ public class Alert {
      * Gets the locations involved in the alert.
      * @return An ArrayList of affected locations.
      */
-    public ArrayList<Location> getAffectedLocations() {
-        return this.affectedLocations;
+    public ArrayList<Address> getAffectedAddresses() {
+        return this.affectedAddresss;
     }
 
     /**
      * Sets the affected locations.
-     * @param affectedLocations An ArrayList of affected locations.
+     * @param affectedAddresss An ArrayList of affected locations.
      */
-    public void setAffectedLocations (ArrayList<Location> affectedLocations) {
-        if(affectedLocations == null)
+    public void setAffectedAddresses (ArrayList<Address> affectedAddresss) {
+        if(affectedAddresss == null)
             return;
-        this.affectedLocations = affectedLocations;
+        this.affectedAddresss = affectedAddresss;
     }
 
     /**
@@ -103,6 +104,11 @@ public class Alert {
      * @return Returns true only if the alerts impact area contains the user's location.
      */
     public boolean isRelevantTo(User user) {
-        return (this.getAffectedLocations().contains(user.getAddress().getLocation()));
+        for (Address a : affectedAddresss) {
+            if (user.getAddress().isWithin(a, 25)){
+                return true;
+            }
+        }
+        return false;
     }
 }

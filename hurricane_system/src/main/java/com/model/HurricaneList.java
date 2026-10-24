@@ -29,4 +29,8 @@ public class HurricaneList {
   public boolean save() {
     return DataWriter.saveHurricanes(hurricanes);
   }
+  
+  public HashMap<String, Hurricane> getHurricaneList() {
+    return this.hurricanes;
+  }
 }
