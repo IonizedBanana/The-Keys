@@ -157,8 +157,6 @@ public class HurricaneApplication {
             return false;
         }
         Victim victim = new Victim(firstName, lastName, username, emailAddress, password, address);
-        // this Victim constructor leaves the party null, and saving a null party crashes
-        victim.setParty(new ArrayList<Victim.Person>());
         users.addUser(victim);
         if (!users.save()) {
             return false;
@@ -170,22 +168,22 @@ public class HurricaneApplication {
     /**
      * Fills in the logged in victim's details.
      *
-     * TODO add a phone number once Victim stores one (the scenario wants contact info)
-     *
      * @param age         the victim's age
      * @param sex         the victim's sex
+     * @param phoneNumber a number responders can call
      * @param description anything responders should know about the victim
-     * @return true if the current user is a victim and the details were set
+     * @return true if the current user is a victim and the details were saved
      */
-    public boolean addInfo(int age, char sex, String description) {
+    public boolean addInfo(int age, char sex, String phoneNumber, String description) {
         if (!isType(UserType.VICTIM)) {
             return false;
         }
         Victim victim = (Victim) currentUser;
         victim.setAge(age);
         victim.setSex(sex);
+        victim.setPhoneNumber(phoneNumber);
         victim.setDescription(description);
-        return true;
+        return UserList.getInstance().save();
     }
 
     /**
@@ -206,10 +204,8 @@ public class HurricaneApplication {
         if (victim.getParty() == null) {
             victim.setParty(new ArrayList<Victim.Person>());
         }
+        // Victim recounts the party size itself, leaving out pets
         victim.addPartyMember(victim.new Person(name, (byte) age, isPet, description));
-        if (!isPet) {
-            victim.setPartySize(victim.getPartySize() + 1);
-        }
         return UserList.getInstance().save();
     }
 
@@ -340,15 +336,16 @@ public class HurricaneApplication {
     }
 
     /**
-     * Gets the people and pets with whoever made a request, not counting them.
+     * Gets everyone a request is for: whoever made it first, then the people
+     * and pets with them.
      *
      * @param request the request
-     * @return the party, empty if there is none
+     * @return the whole party, empty if the request wasn't made by a victim
      */
     public ArrayList<Victim.Person> getParty(Request request) {
         User user = request.getRequesteeUser();
         if (user instanceof Victim && ((Victim) user).getParty() != null) {
-            return ((Victim) user).getParty();
+            return ((Victim) user).getFullParty();
         }
         return new ArrayList<Victim.Person>();
     }

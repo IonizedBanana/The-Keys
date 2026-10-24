@@ -58,7 +58,7 @@ public class HurricaneUI {
         }
         System.out.println("Gary Carter created an account and is logged in.");
 
-        app.addInfo(41, 'm', "Father. Phone: (843) 555-0142");
+        app.addInfo(41, 'm', "(843) 555-0142", "Father");
         if (!app.addPartyMember("Megan Carter", 39, false, "Mother")
                 || !app.addPartyMember("Sophie Carter", 9, false, "Daughter. Asthma is getting worse, needs medical assistance")
                 || !app.addPartyMember("Buddy", 4, true, "Dog")) {
@@ -111,9 +111,9 @@ public class HurricaneUI {
         System.out.println();
         System.out.println("Rosa opens the Carters' request:");
         System.out.println(app.getRequest(carterRequest.getId()));
-        User requester = app.getRequester(carterRequest);
+        Victim requester = (Victim) app.getRequester(carterRequest);
+        System.out.println("Contact: " + requester.getEmailAddress() + ", " + requester.getPhoneNumber());
         System.out.println("Who needs a ride:");
-        System.out.println("- " + requester.getFirstName() + " " + requester.getLastName());
         for (Victim.Person person : app.getParty(carterRequest)) {
             System.out.println("- " + person.getName() + (person.getIsPet() ? " (pet)" : "")
                     + ", age " + person.getAge() + ". " + person.getDescription());
