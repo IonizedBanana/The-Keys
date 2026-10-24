@@ -17,6 +17,7 @@ public class Victim extends User {
     private ArrayList<Request> createdRequests;
     // New stuff
     private ArrayList<Person> party;
+    private String phoneNumber;
 
     /**
      * Creates a victim with only the required information (victims don't provide all information immediately; They can add more info later).
@@ -36,6 +37,7 @@ public class Victim extends User {
         this.partySize = 1;
         this.createdRequests = new ArrayList<Request>();
         this.party = new ArrayList<Person>();
+        this.phoneNumber = "";
     }
 
     public Victim() {
@@ -46,6 +48,8 @@ public class Victim extends User {
         this.description = "No description";
         this.partySize = 1;
         this.createdRequests = new ArrayList<Request>();
+        this.party = new ArrayList<Person>();
+        this.phoneNumber = "";
     }
 
     /**
@@ -64,15 +68,17 @@ public class Victim extends User {
      * @param partySize The user's party size.
      * @param createdRequests The user's requests.
      */
-    public Victim(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Alert> recievedAlerts, byte age, char sex, String description, byte partySize, ArrayList<Request> createdRequests, ArrayList<Person> party) {
+    public Victim(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Alert> recievedAlerts, byte age, char sex,
+        String description, byte partySize, ArrayList<Request> createdRequests, ArrayList<Person> party, String phoneNumber) {
         super(id, firstName, lastName, username, emailAddress, password, address, recievedAlerts);
         this.setType(UserType.VICTIM);
         this.age = age;
         this.sex = sex;
-        this.description = description;this.party = new ArrayList<Person>();
+        this.description = description;
         this.partySize = partySize;
         this.createdRequests = createdRequests;
         this.party = party;
+        this.phoneNumber = phoneNumber;
     }
 
     /**
@@ -88,6 +94,7 @@ public class Victim extends User {
         this.partySize = 1;
         this.createdRequests = new ArrayList<Request>();
         this.party = new ArrayList<Person>();
+        this.phoneNumber = "";
     }
 
     /**
@@ -148,18 +155,57 @@ public class Victim extends User {
         return this.partySize;
     }
 
+    /**
+     * Gets the victim's party (not including the victim user).
+     * @return The victim's party.
+     */
     public ArrayList<Person> getParty() {
         return this.party;
     }
 
-    public void setParty(ArrayList<Person> party) {
-        this.party = party;
-        this.partySize = party.size();
+    /**
+     * Gets the full party, including the victim user (does not edit original party).
+     * @return The full party.
+     */
+    public ArrayList<Person> getFullParty() {
+        ArrayList<Person> fullParty = new ArrayList<Person>();
+        //make a copy of party
+        for (Person p : this.party)
+            fullParty.add(p);
+        fullParty.addFirst(new Person(firstName + " " + lastName, ((byte) this.getAge()), false, this.description));
+        return fullParty;
     }
 
+    /**
+     * Sets the victim's party.
+     * @param party The victim's party.
+     */
+    public void setParty(ArrayList<Person> party) {
+        this.party = party;
+        //Gets new party size (excluding pets)
+        int size = 0;
+        for (int i=0; i<party.size(); i++) {
+            if (!party.get(i).getIsPet()) {
+                size++;
+            }
+        }
+        this.partySize = size;
+    }
+
+    /**
+     * Adds a member to the victim's party.
+     * @param person The person to be added.
+     */
     public void addPartyMember(Person person) {
         this.party.add(person);
-        this.partySize = party.size();
+        //Gets new party size (excluding pets)
+        int size = 0;
+        for (int i=0; i<party.size(); i++) {
+            if (!party.get(i).getIsPet()) {
+                size++;
+            }
+        }
+        this.partySize = size;
     }
 
     /**
@@ -170,6 +216,22 @@ public class Victim extends User {
         if (partySize >= 1) {
             this.partySize = partySize;
         }
+    }
+
+    /**
+     * Gets the phone number.
+     * @return The phone number.
+     */
+    public String getPhoneNumber() {
+        return this.phoneNumber;
+    }
+
+    /**
+     * Sets the phone number.
+     * @param phoneNumber The phone number.
+     */
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     /**
