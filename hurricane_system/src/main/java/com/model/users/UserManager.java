@@ -39,15 +39,15 @@ public class UserManager {
                 changeLastName(user, lastName);
                 break;
             case 6:
-                System.out.println("Enter new state:");
-                String state = scanner.next();
+                System.out.println("Enter new street:");
+                String street = scanner.next();
                 System.out.println("Enter new city:");
                 String city = scanner.next();
-                System.out.println("Enter new address:");
-                String address = scanner.next();
+                System.out.println("Enter new state:");
+                String state = scanner.next();
                 System.out.println("Enter new zipcode:");
                 String zipcode = scanner.next();
-                Address newAddress = new Address(state, city, address, zipcode);
+                Address newAddress = new Address(street, city, state, zipcode);
                 changeAddress(user, newAddress);
                 break;
         }
