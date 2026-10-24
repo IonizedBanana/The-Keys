@@ -123,10 +123,21 @@ public class Shelter {
   public void registerArrival(ArrayList<Victim.Person> party) {
     usedCapacity += party.size();
     for (Victim.Person p : party) {
-      if (p.getIsPet()) {
+      if (p.isPet()) {
         registeredPets.put(p.getName(), p);
       } else {
         registeredPeople.put(p.getName(), p);
+      }
+    }
+  }
+
+  public void unregisterArrival(ArrayList<Victim.Person> party) {
+    usedCapacity -= party.size();
+    for (Victim.Person p : party) {
+      if (p.isPet()) {
+        registeredPets.remove(p.getName());
+      } else {
+        registeredPeople.remove(p.getName());
       }
     }
   }

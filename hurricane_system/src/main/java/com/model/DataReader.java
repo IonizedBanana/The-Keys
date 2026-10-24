@@ -31,7 +31,6 @@ public class DataReader extends DataConstants {
    */
   public static HashMap<String, Shelter> getShelters() {
     HashMap<String, Shelter> shelters = new HashMap<String, Shelter>();
-    // File shelterFile = new File("../json/testing/shelter.json");
     File shelterFile = new File(SHELTER_FILE_PATH);
     System.out.println(SHELTER_FILE_PATH);
     try {
@@ -65,7 +64,36 @@ public class DataReader extends DataConstants {
     int usedCapacity = ((Long) shelterObject.get(SHELTER_USED_CAPACITY)).intValue();
     int expectedArrivals = ((Long) shelterObject.get(SHELTER_EXPECTED_ARRIVALS)).intValue();
     ArrayList<Resource> resources = getResourceList((JSONArray) shelterObject.get(SHELTER_RESOURCES));
-    return new Shelter(id, name, address, totalCapacity, usedCapacity, expectedArrivals, resources);
+    ArrayList<Accomodation> accomodations = getAccomodationList((JSONArray) shelterObject.get(SHELTER_ACCOMODATIONS));
+    HashMap<String, Victim.Person> registeredPeople = getPeopleMap((JSONArray) shelterObject.get(SHELTER_REGISTERED_PEOPLE));
+    HashMap<String, Victim.Person> registeredPets = getPeopleMap((JSONArray) shelterObject.get(SHELTER_REGISTERED_PETS));
+    return new Shelter(id, name, address, totalCapacity, usedCapacity, expectedArrivals, resources, accomodations, registeredPeople, registeredPets);
+  }
+
+  private static HashMap<String, Victim.Person> getPeopleMap(JSONArray arr) {
+    HashMap<String, Victim.Person> peopleMap = new HashMap<String, Victim.Person>();
+    for (int i = 0; i < arr.size(); i++) {
+      Victim.Person person = getPerson((JSONObject)arr.get(i));
+      peopleMap.put(person.getName(), person);
+    }
+    return peopleMap;
+  }
+
+  private static Accomodation getAccomodation(String type) {
+    if (type.equals("PET_FRIENDLY")) {
+      return Accomodation.PET_FRIENDLY;
+    } else if (type.equals("MEDICAL_STAFF")) {
+      return Accomodation.MEDICAL_STAFF;
+    }
+    return null;
+  }
+
+  private static ArrayList<Accomodation> getAccomodationList(JSONArray arr) {
+    ArrayList<Accomodation> accomodations = new ArrayList<Accomodation>();
+    for (int i = 0; i < arr.size(); i++) {
+      accomodations.add(getAccomodation((String)arr.get(i)));
+    }
+    return accomodations;
   }
 
   /**
@@ -359,10 +387,10 @@ public class DataReader extends DataConstants {
   }
 
   private static ArrayList<Victim.Person> getParty(JSONArray arr) {
-    if (arr == null || arr.size() < 1) {
-      return null;
-    }
     ArrayList<Victim.Person> party = new ArrayList<Victim.Person>();
+    if (arr == null || arr.size() < 1) {
+      return party;
+    }
     for (int i = 0; i < arr.size(); i++) {
       JSONObject o = (JSONObject) arr.get(i);
       Victim.Person person = getPerson(o);

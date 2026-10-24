@@ -272,7 +272,7 @@ public class Victim extends User {
             this.age = age;
         }
 
-        public boolean getIsPet() {
+        public boolean isPet() {
             return this.isPet;
         }
 

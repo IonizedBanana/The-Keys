@@ -10,6 +10,9 @@ public class DataConstants {
   public static final String SHELTER_USED_CAPACITY = "usedCapacity";
   public static final String SHELTER_EXPECTED_ARRIVALS = "expectedArrivals";
   public static final String SHELTER_RESOURCES = "resources";
+  public static final String SHELTER_ACCOMODATIONS = "accomodations";
+  public static final String SHELTER_REGISTERED_PEOPLE = "registeredPeople";
+  public static final String SHELTER_REGISTERED_PETS = "registeredPets";
   
   // location/address consts
   public static final String ADDRESS_CITY = "city";
