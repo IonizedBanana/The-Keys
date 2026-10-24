@@ -34,6 +34,7 @@ public class Victim extends User {
         this.description = "No description";
         this.partySize = 1;
         this.createdRequests = new ArrayList<Request>();
+        this.party = new ArrayList<Person>();
     }
 
     /**
@@ -52,14 +53,15 @@ public class Victim extends User {
      * @param partySize The user's party size.
      * @param createdRequests The user's requests.
      */
-    public Victim(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Alert> recievedAlerts, byte age, char sex, String description, byte partySize, ArrayList<Request> createdRequests) {
+    public Victim(UUID id, String firstName,  String lastName, String username, String emailAddress, String password, Address address, ArrayList<Alert> recievedAlerts, byte age, char sex, String description, byte partySize, ArrayList<Request> createdRequests, ArrayList<Person> party) {
         super(id, firstName, lastName, username, emailAddress, password, address, recievedAlerts);
         this.setType(UserType.VICTIM);
         this.age = age;
         this.sex = sex;
-        this.description = description;
+        this.description = description;this.party = new ArrayList<Person>();
         this.partySize = partySize;
         this.createdRequests = createdRequests;
+        this.party = party;
     }
 
     /**
@@ -73,6 +75,8 @@ public class Victim extends User {
         this.sex = ' ';
         this.description = "No description";
         this.partySize = 1;
+        this.createdRequests = new ArrayList<Request>();
+        this.party = new ArrayList<Person>();
     }
 
     /**
@@ -139,10 +143,12 @@ public class Victim extends User {
 
     public void setParty(ArrayList<Person> party) {
         this.party = party;
+        this.partySize = party.size();
     }
 
     public void addPartyMember(Person person) {
         this.party.add(person);
+        this.partySize = party.size();
     }
 
     /**
