@@ -144,6 +144,11 @@ public class Dispatcher extends User {
         //marks a request as done
         request.updateStatus(ResponseStatus.COMPLETE);
     }
+
+    /**
+     * Gets the dispatcher as a String.
+     * @return The first name, last name and username of the dispatcher.
+     */
     public String toString() {
         return (this.firstName + " " + this.lastName + " " + this.username);
     }

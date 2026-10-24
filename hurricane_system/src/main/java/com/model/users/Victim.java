@@ -15,7 +15,6 @@ public class Victim extends User {
     private String description;
     private int partySize;
     private ArrayList<Request> createdRequests;
-    // New stuff
     private ArrayList<Person> party;
     private String phoneNumber;
 
@@ -40,6 +39,9 @@ public class Victim extends User {
         this.phoneNumber = "";
     }
 
+    /**
+     * Creates a victim with no parameters.
+     */
     public Victim() {
         super();
         this.setType(UserType.VICTIM);
@@ -290,6 +292,10 @@ public class Victim extends User {
         request.setDescription(description);
     }
     
+    /**
+     * Gets the victim as a String.
+     * @return The first name, last name and username of the victim.
+     */
     public String toString() {
         return (this.firstName + " " + this.lastName + " " + this.username);
     }
@@ -302,6 +308,11 @@ public class Victim extends User {
         return createdRequests;
     }
 
+    /**
+     * Gets info of a single party member from the victim's party.
+     * @param index the index at which the party member is at.
+     * @return The person's information.
+     */
     public String getPerson(int index) {
         return this.party.get(index).getName()
         + ", age: " + this.party.get(index).getAge()
