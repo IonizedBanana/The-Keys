@@ -325,7 +325,7 @@ public class DataReader extends DataConstants {
   }
 
   private static Request getRequest(JSONObject requestObject) {
-    if (requestObject == null) {
+    if (requestObject == null || requestObject.size() < 1) {
       return null;
     }
     UUID id = UUID.fromString((String) requestObject.get(REQUEST_UUID));

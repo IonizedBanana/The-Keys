@@ -5,9 +5,9 @@ import com.model.location.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.text.DateFormat;
+import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.UUID;
 
 import org.json.simple.JSONArray;
@@ -16,8 +16,7 @@ import org.json.simple.JSONObject;
 public class DataWriter extends DataConstants {
   @SuppressWarnings("unchecked")
   public static boolean saveShelters(HashMap<String, Shelter> shelters) {
-    // File shelterFile = new File(SHELTER_FILE_PATH);
-    File shelterFile = new File("../json/testing/shelters.json");
+    File shelterFile = new File(SHELTER_FILE_PATH);
     JSONArray shelterJSONArray = new JSONArray();
     for (Map.Entry<String, Shelter> set : shelters.entrySet()) {
       shelterJSONArray.add(getShelterJSON(set.getValue()));
@@ -37,8 +36,7 @@ public class DataWriter extends DataConstants {
 
   @SuppressWarnings("unchecked")
   public static boolean saveUsers(HashMap<String, User> users) {
-    // File userFile = new File(USER_FILE_PATH);
-    File userFile = new File("../json/testing/user.json");
+    File userFile = new File(USER_FILE_PATH);
     JSONArray userJSONArray = new JSONArray();
     for (Map.Entry<String, User> set : users.entrySet()) {
       userJSONArray.add(getUserJSON(set.getValue()));
@@ -58,8 +56,7 @@ public class DataWriter extends DataConstants {
 
   @SuppressWarnings("unchecked")
   public static boolean saveRequests(HashMap<UUID, Request> requests) {
-    // File requestFile = new File(REQUEST_FILE_PATH);
-    File requestFile = new File("../json/testing/requests.json");
+    File requestFile = new File(REQUEST_FILE_PATH);
     JSONArray requestJSONArray = new JSONArray();
     for (Map.Entry<UUID, Request> set : requests.entrySet()) {
       requestJSONArray.add(getRequestJSON(set.getValue()));
@@ -79,8 +76,7 @@ public class DataWriter extends DataConstants {
 
   @SuppressWarnings("unchecked")
   public static boolean saveHurricanes(HashMap<String, Hurricane> hurricanes) {
-    // File hurricaneFile = new File(HURRICANE_FILE_PATH);
-    File hurricaneFile = new File("../json/testing/hurricane.json");
+    File hurricaneFile = new File(HURRICANE_FILE_PATH);
     JSONArray hurricaneJSONArray = new JSONArray();
     for (Map.Entry<String, Hurricane> set : hurricanes.entrySet()) {
       hurricaneJSONArray.add(getHurricaneJSON(set.getValue()));
@@ -108,8 +104,36 @@ public class DataWriter extends DataConstants {
     shelterJSON.put(SHELTER_USED_CAPACITY, shelter.getUsedCapacity());
     shelterJSON.put(SHELTER_EXPECTED_ARRIVALS, shelter.getExpectedArrivals());
     shelterJSON.put(SHELTER_RESOURCES, getResourceListJSON(shelter.getResources()));
+    shelterJSON.put(SHELTER_ACCOMODATIONS, getAccomodationListJSON(shelter.getAccomodations()));
+    shelterJSON.put(SHELTER_REGISTERED_PEOPLE, getPeopleList(shelter.getRegisteredPeople()));
+    shelterJSON.put(SHELTER_REGISTERED_PETS, getPeopleList(shelter.getRegisteredPets()));
     return shelterJSON;
   }
+
+  @SuppressWarnings("unchecked")
+  private static JSONArray getAccomodationListJSON(ArrayList<Accomodation> accomodations) {
+    JSONArray accomodationJSON = new JSONArray();
+    if (accomodations == null || accomodations.size() < 1) {
+      return accomodationJSON;
+    }
+    for (Accomodation a : accomodations) {
+      accomodationJSON.add(a.toString());
+    }
+    return accomodationJSON;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static JSONArray getPeopleList(HashMap<String, Victim.Person> people) {
+    JSONArray peopleList = new JSONArray();
+    if (people == null || people.size() < 1) {
+      return peopleList;
+    }
+    for(Map.Entry<String, Victim.Person> set : people.entrySet()) {
+      peopleList.add(getPersonJSON(set.getValue()));
+    }
+    return peopleList;
+  }
+  
 
   @SuppressWarnings("unchecked")
   private static JSONObject getResourceJSON(Resource resource) {
