@@ -15,7 +15,9 @@ import java.util.Collection;
  * (the JSON paths are relative to it) with MAP_API_KEY set.</p>
  *
  * <p>Run once with no arguments to play the scenarios, then again with
- * {@code verify} to show the changes were saved and survive a restart.</p>
+ * {@code verify} to show the changes were saved and survive a restart. Each
+ * scenario can also be run on its own by commenting out the others in
+ * {@link #run()}.</p>
  *
  * <p>Rosa, Felix (and his shelter), six other open requests, ten shelters, and
  * Hurricane Scarlett need to be in the JSON files before running.</p>
@@ -38,13 +40,21 @@ public class HurricaneUI {
         app = HurricaneApplication.getInstance();
     }
 
+    /**
+     * Runs the scenarios in order.
+     *
+     * <p>To run one at a time, comment out the others. Each one picks up what
+     * the earlier runs saved, so run them in order and only reset the JSON
+     * ({@code git checkout json/}) before scenario 1.</p>
+     */
     public void run() {
-        createReliefRequest();
-        matchRosa();
-        findShelterAndAssign();
-        exportTrip();
-        rolePermissions();
-        checkInFamily();
+        createReliefRequest();  // scenario 1
+        matchRosa();            // scenario 2
+        findShelterAndAssign(); // scenario 3
+        exportTrip();           // scenario 4
+        rolePermissions();      // scenario 5
+        checkInFamily();        // scenario 6
+        // verify();            // after a restart: shows everything above was saved
     }
 
     /** Sophie's father makes an account and asks for help getting the family to a shelter. */
@@ -54,7 +64,8 @@ public class HurricaneUI {
         Address home = new Address("48 Tradd St", "Charleston", "SC", "29401");
         if (!app.createAccount("Gary", "Carter", CARTER_USERNAME, "gary.carter@email.com",
                 CARTER_PASSWORD, home)) {
-            System.out.println("Sorry, Gary Carter's account couldn't be created.");
+            System.out.println("Sorry, Gary Carter's account couldn't be created. "
+                    + "If it already exists, reset the JSON (git checkout json/) and run again.");
             return;
         }
         System.out.println("Gary Carter created an account and is logged in.");
@@ -89,11 +100,9 @@ public class HurricaneUI {
     public void matchRosa() {
         heading("Match Rosa with the request");
 
-        if (!app.login(ROSA_USERNAME, ROSA_PASSWORD)) {
-            System.out.println("Sorry, Rosa Delgado couldn't log in.");
+        if (!loginAs(ROSA_USERNAME, ROSA_PASSWORD, "Rosa Delgado")) {
             return;
         }
-        System.out.println("Rosa Delgado is now logged in.");
 
         ArrayList<Request> open = app.getOpenRequests();
         System.out.println("Open relief requests: " + open.size());
@@ -106,7 +115,7 @@ public class HurricaneUI {
             }
         }
 
-        if (carterRequest == null) {
+        if (!findCarterRequest()) {
             return;
         }
         System.out.println();
@@ -125,8 +134,7 @@ public class HurricaneUI {
     public void findShelterAndAssign() {
         heading("Find a shelter and assign the request");
 
-        if (carterRequest == null) {
-            System.out.println("There's no request to assign.");
+        if (!findCarterRequest() || !loginAs(ROSA_USERNAME, ROSA_PASSWORD, "Rosa Delgado")) {
             return;
         }
 
@@ -145,11 +153,7 @@ public class HurricaneUI {
                     + accomodationText(shelter.getAccomodations()) + ")");
         }
 
-        chosenShelter = app.findClosestShelter(carterRequest);
-        if (chosenShelter == null) {
-            System.out.println("Couldn't get driving times, so Rosa picks the nearest one instead.");
-            chosenShelter = matches.get(0);
-        }
+        chosenShelter = chooseShelter(matches);
         System.out.println("Closest by driving: " + chosenShelter.getName() + ". Rosa picks it.");
 
         if (!app.assignRequest(carterRequest)) {
@@ -166,9 +170,16 @@ public class HurricaneUI {
     public void exportTrip() {
         heading("Export the trip information");
 
-        if (carterRequest == null || chosenShelter == null || app.getCurrentUser() == null) {
-            System.out.println("There's no trip to export.");
+        if (!findCarterRequest() || !loginAs(ROSA_USERNAME, ROSA_PASSWORD, "Rosa Delgado")) {
             return;
+        }
+        if (chosenShelter == null) {
+            chosenShelter = chooseShelter(app.findShelters(carterRequest));
+            if (chosenShelter == null) {
+                System.out.println("Sorry, no shelter fits the Carters.");
+                return;
+            }
+            System.out.println("Rosa is taking the Carters to " + chosenShelter.getName() + ".");
         }
         Address rosa = app.getCurrentUser().getAddress();
         Address pickup = carterRequest.getAddress();
@@ -187,7 +198,7 @@ public class HurricaneUI {
     public void rolePermissions() {
         heading("Demonstrate role permissions");
 
-        if (carterRequest == null) {
+        if (!findCarterRequest() || !loginAs(ROSA_USERNAME, ROSA_PASSWORD, "Rosa Delgado")) {
             return;
         }
         if (app.finishRequest(carterRequest)) {
@@ -205,11 +216,10 @@ public class HurricaneUI {
     public void checkInFamily() {
         heading("Check the family into the shelter");
 
-        if (!app.login(FELIX_USERNAME, FELIX_PASSWORD)) {
-            System.out.println("Sorry, Felix couldn't log in.");
+        boolean haveRequest = findCarterRequest();
+        if (!loginAs(FELIX_USERNAME, FELIX_PASSWORD, "Felix")) {
             return;
         }
-        System.out.println("Felix is now logged in.");
 
         Shelter shelter = app.getMyShelter();
         if (shelter == null) {
@@ -219,7 +229,7 @@ public class HurricaneUI {
         }
         printShelter(shelter);
 
-        if (carterRequest != null) {
+        if (haveRequest) {
             if (app.checkIn(carterRequest)) {
                 System.out.println("The Carter family and Buddy are checked in.");
             } else {
@@ -265,6 +275,57 @@ public class HurricaneUI {
             printShelter(app.getMyShelter());
             app.logout();
         }
+    }
+
+    /**
+     * Finds the Carters' request, either from this run or from what an earlier
+     * run saved, so each scenario can also be run on its own.
+     */
+    private boolean findCarterRequest() {
+        if (carterRequest == null) {
+            for (Request request : app.getOpenRequests()) {
+                if (CARTER_USERNAME.equals(request.getRequestee())) {
+                    carterRequest = request;
+                }
+            }
+        }
+        if (carterRequest == null) {
+            System.out.println("There's no open request from the Carters. Run scenario 1 first.");
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Logs a user in unless they already are, logging out whoever was.
+     */
+    private boolean loginAs(String username, String password, String name) {
+        User current = app.getCurrentUser();
+        if (current != null && current.getUsername().equals(username)) {
+            return true;
+        }
+        if (current != null) {
+            app.logout();
+        }
+        if (!app.login(username, password)) {
+            System.out.println("Sorry, " + name + " couldn't log in.");
+            return false;
+        }
+        System.out.println(name + " is now logged in.");
+        return true;
+    }
+
+    /**
+     * Picks the shelter that is the shortest drive away, or the nearest one if
+     * driving times aren't available.
+     */
+    private Shelter chooseShelter(ArrayList<Shelter> matches) {
+        Shelter closest = app.findClosestShelter(carterRequest);
+        if (closest == null && !matches.isEmpty()) {
+            System.out.println("Couldn't get driving times, so Rosa picks the nearest one instead.");
+            return matches.get(0);
+        }
+        return closest;
     }
 
     private void printDirections(String title, String[] directions) {
