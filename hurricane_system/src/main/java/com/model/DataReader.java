@@ -32,7 +32,6 @@ public class DataReader extends DataConstants {
   public static HashMap<String, Shelter> getShelters() {
     HashMap<String, Shelter> shelters = new HashMap<String, Shelter>();
     File shelterFile = new File(SHELTER_FILE_PATH);
-    System.out.println(SHELTER_FILE_PATH);
     try {
       FileReader reader = new FileReader(shelterFile);
       JSONArray shelterJSONArray = (JSONArray) new JSONParser().parse(reader);
@@ -65,15 +64,21 @@ public class DataReader extends DataConstants {
     int expectedArrivals = ((Long) shelterObject.get(SHELTER_EXPECTED_ARRIVALS)).intValue();
     ArrayList<Resource> resources = getResourceList((JSONArray) shelterObject.get(SHELTER_RESOURCES));
     ArrayList<Accomodation> accomodations = getAccomodationList((JSONArray) shelterObject.get(SHELTER_ACCOMODATIONS));
-    HashMap<String, Victim.Person> registeredPeople = getPeopleMap((JSONArray) shelterObject.get(SHELTER_REGISTERED_PEOPLE));
-    HashMap<String, Victim.Person> registeredPets = getPeopleMap((JSONArray) shelterObject.get(SHELTER_REGISTERED_PETS));
-    return new Shelter(id, name, address, totalCapacity, usedCapacity, expectedArrivals, resources, accomodations, registeredPeople, registeredPets);
+    HashMap<String, Victim.Person> registeredPeople = getPeopleMap(
+        (JSONArray) shelterObject.get(SHELTER_REGISTERED_PEOPLE));
+    HashMap<String, Victim.Person> registeredPets = getPeopleMap(
+        (JSONArray) shelterObject.get(SHELTER_REGISTERED_PETS));
+    return new Shelter(id, name, address, totalCapacity, usedCapacity, expectedArrivals, resources, accomodations,
+        registeredPeople, registeredPets);
   }
 
   private static HashMap<String, Victim.Person> getPeopleMap(JSONArray arr) {
     HashMap<String, Victim.Person> peopleMap = new HashMap<String, Victim.Person>();
+    if (arr == null || arr.size() < 1) {
+      return peopleMap;
+    }
     for (int i = 0; i < arr.size(); i++) {
-      Victim.Person person = getPerson((JSONObject)arr.get(i));
+      Victim.Person person = getPerson((JSONObject) arr.get(i));
       peopleMap.put(person.getName(), person);
     }
     return peopleMap;
@@ -90,8 +95,11 @@ public class DataReader extends DataConstants {
 
   private static ArrayList<Accomodation> getAccomodationList(JSONArray arr) {
     ArrayList<Accomodation> accomodations = new ArrayList<Accomodation>();
+    if (arr == null || arr.size() < 1) {
+      return accomodations;
+    }
     for (int i = 0; i < arr.size(); i++) {
-      accomodations.add(getAccomodation((String)arr.get(i)));
+      accomodations.add(getAccomodation((String) arr.get(i)));
     }
     return accomodations;
   }
@@ -364,7 +372,7 @@ public class DataReader extends DataConstants {
         byte partySize = ((Long) userObject.get(VICTIM_PARTY_SIZE)).byteValue();
         ArrayList<Request> createdRequests = getRequests((JSONArray) userObject.get(VICTIM_CREATED_REQUESTS));
         ArrayList<Victim.Person> party = getParty((JSONArray) userObject.get(VICTIM_PARTY));
-        String phoneNumber = (String)userObject.get(ADMIN_PHONE_NUMBER);
+        String phoneNumber = (String) userObject.get(ADMIN_PHONE_NUMBER);
         return new Victim(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts, age, sex,
             description, partySize, createdRequests, party, phoneNumber);
       }
@@ -380,8 +388,7 @@ public class DataReader extends DataConstants {
       }
       case SHELTER_WORKER -> {
         Shelter shelter = getShelter((JSONObject) userObject.get(SHELTER_WORKER_SHELTER));
-        return new ShelterWorker(id, firstName, lastName, username, password, emailAddress, address, receivedAlerts,
-            shelter);
+        return new ShelterWorker(id, firstName, lastName, username, password, emailAddress, address, receivedAlerts, shelter);
       }
     }
     return null;

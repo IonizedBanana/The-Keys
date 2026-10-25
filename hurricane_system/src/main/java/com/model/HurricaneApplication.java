@@ -229,7 +229,7 @@ public class HurricaneApplication {
         }
         Victim victim = (Victim) currentUser;
         Request request = new Request(UUID.randomUUID(), victim.getUsername(), severity,
-                victim.getAddress(), ResponseStatus.WAITING, type, description);
+                victim.getAddress(), ResponseStatus.WAITING, type, description, null);
         RequestList.getInstance().addRequest(request);
         victim.getCreatedRequests().add(request);
         if (!saveData()) {

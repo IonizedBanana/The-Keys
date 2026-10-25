@@ -16,7 +16,8 @@ import org.json.simple.JSONObject;
 public class DataWriter extends DataConstants {
   @SuppressWarnings("unchecked")
   public static boolean saveShelters(HashMap<String, Shelter> shelters) {
-    File shelterFile = new File(SHELTER_FILE_PATH);
+    // File shelterFile = new File(SHELTER_FILE_PATH);
+    File shelterFile = new File("../json/testing/shelters.json");
     JSONArray shelterJSONArray = new JSONArray();
     for (Map.Entry<String, Shelter> set : shelters.entrySet()) {
       shelterJSONArray.add(getShelterJSON(set.getValue()));
@@ -36,7 +37,8 @@ public class DataWriter extends DataConstants {
 
   @SuppressWarnings("unchecked")
   public static boolean saveUsers(HashMap<String, User> users) {
-    File userFile = new File(USER_FILE_PATH);
+    // File userFile = new File(USER_FILE_PATH);
+    File userFile = new File("../json/testing/user.json");
     JSONArray userJSONArray = new JSONArray();
     for (Map.Entry<String, User> set : users.entrySet()) {
       userJSONArray.add(getUserJSON(set.getValue()));
@@ -56,7 +58,8 @@ public class DataWriter extends DataConstants {
 
   @SuppressWarnings("unchecked")
   public static boolean saveRequests(HashMap<UUID, Request> requests) {
-    File requestFile = new File(REQUEST_FILE_PATH);
+    // File requestFile = new File(REQUEST_FILE_PATH);
+    File requestFile = new File("../json/testing/requests.json");
     JSONArray requestJSONArray = new JSONArray();
     for (Map.Entry<UUID, Request> set : requests.entrySet()) {
       requestJSONArray.add(getRequestJSON(set.getValue()));
@@ -76,7 +79,8 @@ public class DataWriter extends DataConstants {
 
   @SuppressWarnings("unchecked")
   public static boolean saveHurricanes(HashMap<String, Hurricane> hurricanes) {
-    File hurricaneFile = new File(HURRICANE_FILE_PATH);
+    // File hurricaneFile = new File(HURRICANE_FILE_PATH);
+    File hurricaneFile = new File("../json/testing/hurricane.json");
     JSONArray hurricaneJSONArray = new JSONArray();
     for (Map.Entry<String, Hurricane> set : hurricanes.entrySet()) {
       hurricaneJSONArray.add(getHurricaneJSON(set.getValue()));
@@ -212,6 +216,9 @@ public class DataWriter extends DataConstants {
   @SuppressWarnings("unchecked")
   private static JSONArray getPartyJSON(ArrayList<Victim.Person> party) {
     JSONArray partyJSON = new JSONArray();
+    if (party == null || party.size() < 1) {
+      return partyJSON;
+    }
     for (Victim.Person vp : party) {
       partyJSON.add(getPersonJSON(vp));
     }
