@@ -4,6 +4,7 @@ import com.model.location.Address;
 import com.model.users.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Console driver that runs the Hurricane Scarlett scenarios against
@@ -69,9 +70,9 @@ public class HurricaneUI {
 
         carterRequest = app.newRequest((byte) 4, ResponseType.TRAVEL,
                 "Need transportation to a shelter with medical staff for 2 adults, 1 child, and our dog Buddy. "
-                + "Power is out and floodwater is rising, so we can't use our car. Sophie's asthma is getting "
-                + "worse and she needs medical assistance. We won't leave Buddy behind. "
-                + "Contact: gary.carter@email.com, (843) 555-0142.");
+                + "Power is out and floodwater is rising, so we can't use our car. We won't leave Buddy behind. "
+                + "Contact: gary.carter@email.com, (843) 555-0142.",
+                "Sophie (9) has asthma that is getting worse and needs medical assistance.");
         if (carterRequest == null) {
             System.out.println("Sorry, the Carters' request couldn't be submitted.");
             app.logout();
@@ -129,16 +130,19 @@ public class HurricaneUI {
             return;
         }
 
-        System.out.println("Searching " + app.getShelters().size() + " shelters...");
+        System.out.println("Searching " + app.getShelters().size() + " shelters for room for "
+                + app.getParty(carterRequest).size() + " (people and pets) and: "
+                + accomodationText(app.getShelterNeeds(carterRequest)));
         ArrayList<Shelter> matches = app.findShelters(carterRequest);
         if (matches.isEmpty()) {
-            System.out.println("Sorry, no shelter has room for the Carters.");
+            System.out.println("Sorry, no shelter fits the Carters.");
             return;
         }
-        System.out.println(matches.size() + " have room for the family:");
+        System.out.println(matches.size() + " fit the family:");
         for (Shelter shelter : matches) {
             System.out.println("- " + shelter.getName() + ", " + shelter.getAddress()
-                    + " (" + shelter.availableSpace() + " spaces open)");
+                    + " (" + shelter.availableSpace() + " spaces open; "
+                    + accomodationText(shelter.getAccomodations()) + ")");
         }
 
         chosenShelter = app.findClosestShelter(carterRequest);
@@ -279,7 +283,24 @@ public class HurricaneUI {
         System.out.println("  Total capacity:    " + shelter.getTotalCapacity());
         System.out.println("  Current occupancy: " + shelter.getUsedCapacity());
         System.out.println("  Available spaces:  " + shelter.availableSpace());
-        // TODO print occupants and pets once Shelter stores them
+        System.out.println("  Offers:            " + accomodationText(shelter.getAccomodations()));
+        System.out.println("  Checked in:        " + namesText(shelter.getRegisteredPeople().keySet()));
+        System.out.println("  Pets:              " + namesText(shelter.getRegisteredPets().keySet()));
+    }
+
+    private String accomodationText(ArrayList<Accomodation> accomodations) {
+        if (accomodations == null || accomodations.isEmpty()) {
+            return "nothing extra";
+        }
+        ArrayList<String> names = new ArrayList<String>();
+        for (Accomodation accomodation : accomodations) {
+            names.add(accomodation.accomodation.toLowerCase());
+        }
+        return String.join(", ", names);
+    }
+
+    private String namesText(Collection<String> names) {
+        return names.isEmpty() ? "none" : String.join(", ", names);
     }
 
     private String summarize(Request request) {

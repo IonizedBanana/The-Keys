@@ -1,1 +1,265 @@
-[{"id":"11111111-0000-0000-0000-000000000001","name":"Military Magnet Academy","address":{"address":"2950 Carner Avenue","city":"North Charleston","state":"SC","zip":"29405"},"totalCapacity":250,"usedCapacity":249,"expectedArrivals":0,"resources":[{"type":"WATER","description":"jugs of water","quantity":40,"unit":"GALLONS"}]},{"id":"11111111-0000-0000-0000-000000000002","name":"North Charleston CAES","address":{"address":"5200 Lackawanna Boulevard","city":"North Charleston","state":"SC","zip":"29405"},"totalCapacity":200,"usedCapacity":80,"expectedArrivals":0,"resources":[{"type":"WATER","description":"jugs of water","quantity":40,"unit":"GALLONS"}]},{"id":"11111111-0000-0000-0000-000000000003","name":"Bond Court","address":{"address":"3841 Leeds Avenue","city":"North Charleston","state":"SC","zip":"29405"},"totalCapacity":150,"usedCapacity":60,"expectedArrivals":0,"resources":[{"type":"WATER","description":"jugs of water","quantity":40,"unit":"GALLONS"}]},{"id":"11111111-0000-0000-0000-000000000004","name":"Stall High School","address":{"address":"3625 Ashley Phosphate Road","city":"North Charleston","state":"SC","zip":"29418"},"totalCapacity":400,"usedCapacity":390,"expectedArrivals":0,"resources":[{"type":"WATER","description":"jugs of water","quantity":40,"unit":"GALLONS"}]},{"id":"11111111-0000-0000-0000-000000000005","name":"Zucker Middle School","address":{"address":"6401 Dorchester Road","city":"North Charleston","state":"SC","zip":"29418"},"totalCapacity":220,"usedCapacity":100,"expectedArrivals":0,"resources":[{"type":"WATER","description":"jugs of water","quantity":40,"unit":"GALLONS"}]},{"id":"11111111-0000-0000-0000-000000000006","name":"Cane Bay High School","address":{"address":"1624 State Road","city":"Summerville","state":"SC","zip":"29483"},"totalCapacity":500,"usedCapacity":200,"expectedArrivals":0,"resources":[{"type":"WATER","description":"jugs of water","quantity":40,"unit":"GALLONS"}]},{"id":"11111111-0000-0000-0000-000000000007","name":"St. Stephen Elementary","address":{"address":"1053 Russellville Road","city":"St. Stephen","state":"SC","zip":"29479"},"totalCapacity":120,"usedCapacity":30,"expectedArrivals":0,"resources":[{"type":"WATER","description":"jugs of water","quantity":40,"unit":"GALLONS"}]},{"id":"11111111-0000-0000-0000-000000000008","name":"Macedonia Middle School","address":{"address":"200 Macedonia Foxes Circle","city":"St. Stephen","state":"SC","zip":"29479"},"totalCapacity":180,"usedCapacity":40,"expectedArrivals":0,"resources":[{"type":"WATER","description":"jugs of water","quantity":40,"unit":"GALLONS"}]},{"id":"11111111-0000-0000-0000-000000000009","name":"Westview Middle School","address":{"address":"101 Westview Boulevard","city":"Goose Creek","state":"SC","zip":"29445"},"totalCapacity":260,"usedCapacity":140,"expectedArrivals":0,"resources":[{"type":"WATER","description":"jugs of water","quantity":40,"unit":"GALLONS"}]},{"id":"11111111-0000-0000-0000-000000000010","name":"Summerville High School","address":{"address":"1101 Boone Hill Road","city":"Summerville","state":"SC","zip":"29483"},"totalCapacity":450,"usedCapacity":300,"expectedArrivals":0,"resources":[{"type":"WATER","description":"jugs of water","quantity":40,"unit":"GALLONS"}]}]
+[
+  {
+    "id": "11111111-0000-0000-0000-000000000001",
+    "name": "Military Magnet Academy",
+    "address": {
+      "address": "2950 Carner Avenue",
+      "city": "North Charleston",
+      "state": "SC",
+      "zip": "29405"
+    },
+    "totalCapacity": 250,
+    "usedCapacity": 249,
+    "expectedArrivals": 0,
+    "resources": [
+      {
+        "type": "WATER",
+        "description": "jugs of water",
+        "quantity": 40,
+        "unit": "GALLONS"
+      }
+    ],
+    "accomodations": [
+      "PET_FRIENDLY",
+      "MEDICAL_STAFF"
+    ],
+    "registeredPeople": [],
+    "registeredPets": []
+  },
+  {
+    "id": "11111111-0000-0000-0000-000000000002",
+    "name": "North Charleston CAES",
+    "address": {
+      "address": "5200 Lackawanna Boulevard",
+      "city": "North Charleston",
+      "state": "SC",
+      "zip": "29405"
+    },
+    "totalCapacity": 200,
+    "usedCapacity": 80,
+    "expectedArrivals": 0,
+    "resources": [
+      {
+        "type": "WATER",
+        "description": "jugs of water",
+        "quantity": 40,
+        "unit": "GALLONS"
+      }
+    ],
+    "accomodations": [
+      "MEDICAL_STAFF"
+    ],
+    "registeredPeople": [],
+    "registeredPets": []
+  },
+  {
+    "id": "11111111-0000-0000-0000-000000000003",
+    "name": "Bond Court",
+    "address": {
+      "address": "3841 Leeds Avenue",
+      "city": "North Charleston",
+      "state": "SC",
+      "zip": "29405"
+    },
+    "totalCapacity": 150,
+    "usedCapacity": 60,
+    "expectedArrivals": 0,
+    "resources": [
+      {
+        "type": "WATER",
+        "description": "jugs of water",
+        "quantity": 40,
+        "unit": "GALLONS"
+      }
+    ],
+    "accomodations": [
+      "PET_FRIENDLY"
+    ],
+    "registeredPeople": [],
+    "registeredPets": []
+  },
+  {
+    "id": "11111111-0000-0000-0000-000000000004",
+    "name": "Stall High School",
+    "address": {
+      "address": "3625 Ashley Phosphate Road",
+      "city": "North Charleston",
+      "state": "SC",
+      "zip": "29418"
+    },
+    "totalCapacity": 400,
+    "usedCapacity": 390,
+    "expectedArrivals": 0,
+    "resources": [
+      {
+        "type": "WATER",
+        "description": "jugs of water",
+        "quantity": 40,
+        "unit": "GALLONS"
+      }
+    ],
+    "accomodations": [
+      "PET_FRIENDLY",
+      "MEDICAL_STAFF"
+    ],
+    "registeredPeople": [],
+    "registeredPets": []
+  },
+  {
+    "id": "11111111-0000-0000-0000-000000000005",
+    "name": "Zucker Middle School",
+    "address": {
+      "address": "6401 Dorchester Road",
+      "city": "North Charleston",
+      "state": "SC",
+      "zip": "29418"
+    },
+    "totalCapacity": 220,
+    "usedCapacity": 100,
+    "expectedArrivals": 0,
+    "resources": [
+      {
+        "type": "WATER",
+        "description": "jugs of water",
+        "quantity": 40,
+        "unit": "GALLONS"
+      }
+    ],
+    "accomodations": [
+      "PET_FRIENDLY",
+      "MEDICAL_STAFF"
+    ],
+    "registeredPeople": [],
+    "registeredPets": []
+  },
+  {
+    "id": "11111111-0000-0000-0000-000000000006",
+    "name": "Cane Bay High School",
+    "address": {
+      "address": "1624 State Road",
+      "city": "Summerville",
+      "state": "SC",
+      "zip": "29483"
+    },
+    "totalCapacity": 500,
+    "usedCapacity": 200,
+    "expectedArrivals": 0,
+    "resources": [
+      {
+        "type": "WATER",
+        "description": "jugs of water",
+        "quantity": 40,
+        "unit": "GALLONS"
+      }
+    ],
+    "accomodations": [
+      "PET_FRIENDLY",
+      "MEDICAL_STAFF"
+    ],
+    "registeredPeople": [],
+    "registeredPets": []
+  },
+  {
+    "id": "11111111-0000-0000-0000-000000000007",
+    "name": "St. Stephen Elementary",
+    "address": {
+      "address": "1053 Russellville Road",
+      "city": "St. Stephen",
+      "state": "SC",
+      "zip": "29479"
+    },
+    "totalCapacity": 120,
+    "usedCapacity": 30,
+    "expectedArrivals": 0,
+    "resources": [
+      {
+        "type": "WATER",
+        "description": "jugs of water",
+        "quantity": 40,
+        "unit": "GALLONS"
+      }
+    ],
+    "accomodations": [],
+    "registeredPeople": [],
+    "registeredPets": []
+  },
+  {
+    "id": "11111111-0000-0000-0000-000000000008",
+    "name": "Macedonia Middle School",
+    "address": {
+      "address": "200 Macedonia Foxes Circle",
+      "city": "St. Stephen",
+      "state": "SC",
+      "zip": "29479"
+    },
+    "totalCapacity": 180,
+    "usedCapacity": 40,
+    "expectedArrivals": 0,
+    "resources": [
+      {
+        "type": "WATER",
+        "description": "jugs of water",
+        "quantity": 40,
+        "unit": "GALLONS"
+      }
+    ],
+    "accomodations": [
+      "PET_FRIENDLY",
+      "MEDICAL_STAFF"
+    ],
+    "registeredPeople": [],
+    "registeredPets": []
+  },
+  {
+    "id": "11111111-0000-0000-0000-000000000009",
+    "name": "Westview Middle School",
+    "address": {
+      "address": "101 Westview Boulevard",
+      "city": "Goose Creek",
+      "state": "SC",
+      "zip": "29445"
+    },
+    "totalCapacity": 260,
+    "usedCapacity": 140,
+    "expectedArrivals": 0,
+    "resources": [
+      {
+        "type": "WATER",
+        "description": "jugs of water",
+        "quantity": 40,
+        "unit": "GALLONS"
+      }
+    ],
+    "accomodations": [
+      "PET_FRIENDLY"
+    ],
+    "registeredPeople": [],
+    "registeredPets": []
+  },
+  {
+    "id": "11111111-0000-0000-0000-000000000010",
+    "name": "Summerville High School",
+    "address": {
+      "address": "1101 Boone Hill Road",
+      "city": "Summerville",
+      "state": "SC",
+      "zip": "29483"
+    },
+    "totalCapacity": 450,
+    "usedCapacity": 300,
+    "expectedArrivals": 0,
+    "resources": [
+      {
+        "type": "WATER",
+        "description": "jugs of water",
+        "quantity": 40,
+        "unit": "GALLONS"
+      }
+    ],
+    "accomodations": [
+      "MEDICAL_STAFF"
+    ],
+    "registeredPeople": [],
+    "registeredPets": []
+  }
+]

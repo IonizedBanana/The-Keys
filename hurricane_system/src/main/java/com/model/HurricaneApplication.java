@@ -220,16 +220,18 @@ public class HurricaneApplication {
      * @param severity    how urgent it is, 1 to 5
      * @param type        the kind of help needed
      * @param description what is going on
+     * @param medicalNote what medical help is needed, or null/blank if none
      * @return the new request, or null if it couldn't be made
      */
-    public Request newRequest(byte severity, ResponseType type, String description) {
+    public Request newRequest(byte severity, ResponseType type, String description, String medicalNote) {
         if (!isType(UserType.VICTIM) || type == null || isBlank(description)
                 || severity < 1 || severity > 5 || currentUser.getAddress() == null) {
             return null;
         }
         Victim victim = (Victim) currentUser;
         Request request = new Request(UUID.randomUUID(), victim.getUsername(), severity,
-                victim.getAddress(), ResponseStatus.WAITING, type, description, null);
+                victim.getAddress(), ResponseStatus.WAITING, type, description,
+                isBlank(medicalNote) ? null : medicalNote);
         RequestList.getInstance().addRequest(request);
         victim.getCreatedRequests().add(request);
         if (!saveData()) {
@@ -476,10 +478,34 @@ public class HurricaneApplication {
     }
 
     /**
-     * Finds the shelters with room for a request's whole party, nearest first
-     * in a straight line.
+     * Works out what a shelter needs to offer for a request's party: pet
+     * friendly if anyone in it is a pet, and medical staff if the request has
+     * a medical note.
      *
-     * TODO filter on pets and medical staff once Shelter stores them
+     * @param request the request
+     * @return the accomodations needed, empty if none
+     */
+    public ArrayList<Accomodation> getShelterNeeds(Request request) {
+        ArrayList<Accomodation> needs = new ArrayList<Accomodation>();
+        if (request == null) {
+            return needs;
+        }
+        for (Victim.Person person : getParty(request)) {
+            if (person.isPet()) {
+                needs.add(Accomodation.PET_FRIENDLY);
+                break;
+            }
+        }
+        if (!isBlank(request.getMedicalNote())) {
+            needs.add(Accomodation.MEDICAL_STAFF);
+        }
+        return needs;
+    }
+
+    /**
+     * Finds the shelters with room for a request's whole party that offer
+     * everything the party needs (see {@link #getShelterNeeds}), nearest first
+     * in a straight line.
      *
      * @param request the request the party belongs to
      * @return the shelters that fit
@@ -490,9 +516,11 @@ public class HurricaneApplication {
             return matches;
         }
         int partySize = getPartySize(request);
+        ArrayList<Accomodation> needs = getShelterNeeds(request);
         HashMap<UUID, Double> miles = new HashMap<UUID, Double>();
         for (Shelter shelter : getShelters()) {
-            if (shelter.availableSpace() >= partySize) {
+            if (shelter.availableSpace() >= partySize && shelter.getAccomodations() != null
+                    && shelter.getAccomodations().containsAll(needs)) {
                 matches.add(shelter);
                 miles.put(shelter.getId(), distanceBetween(request.getAddress(), shelter.getAddress()));
             }
@@ -549,9 +577,9 @@ public class HurricaneApplication {
     }
 
     /**
-     * Checks a request's party into the logged in shelter worker's shelter.
-     *
-     * TODO add the party to the shelter's occupant list and record pets once Shelter stores them
+     * Checks a request's party into the logged in shelter worker's shelter:
+     * the people are added to its occupants and count toward occupancy, and
+     * pets are recorded separately.
      *
      * @param request the request whose party arrived
      * @return true if they were checked in
@@ -565,7 +593,7 @@ public class HurricaneApplication {
         if (shelter.availableSpace() < partySize) {
             return false;
         }
-        shelter.registerArrival(partySize, ((Victim)request.getRequesteeUser()).getFullParty());
+        shelter.registerArrival(partySize, getParty(request));
         return saveData();
     }
 

@@ -333,9 +333,8 @@ public class Request {
         text.append("Pickup Address: " + (address == null ? "Unknown" : address.toString()) + "\n\n");
 
         text.append("MEDICAL\n").append(divider);
-        // TODO use the request's medical note once Logan's Request changes are merged
-        // text.append(isBlank(medicalNote) ? "No medical assistance requested.\n" : "MEDICAL ASSISTANCE NEEDED: " + medicalNote + "\n");
-        text.append(responderType == ResponseType.MEDICAL ? "Medical assistance required.\n" : "See details below.\n");
+        text.append(isBlank(MedicalNote) ? "No medical assistance requested.\n"
+                : "MEDICAL ASSISTANCE NEEDED: " + MedicalNote + "\n");
         text.append("Details: " + (isBlank(description) ? "None" : description) + "\n\n");
 
         Address start = (responder == null) ? null : responder.getAddress();
