@@ -47,7 +47,7 @@ Admins run the app. They manage shelters, push alerts to users, and create and m
 - [UML Class Diagram](documents/uml-class-diagram.pdf)
 - [UML Sequence Diagram 1](documents/uml-sequence-diagram1.pdf)
 - [UML Sequence Diagram 2](documents/uml-sequence-diagram2.pdf)
-- [Implementation Presentation](https://youtu.be/R5F38-i9iBU)
+- [Implementation Presentation](https://youtu.be/NUy3YBFtiEg)
 
 ## <img src="documents/icons/square-kanban.svg" width="22" alt=""> Project Board
 https://github.com/users/IonizedBanana/projects/2
