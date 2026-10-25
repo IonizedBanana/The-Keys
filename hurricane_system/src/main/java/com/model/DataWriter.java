@@ -223,7 +223,7 @@ public class DataWriter extends DataConstants {
     JSONObject personObject = new JSONObject();
     personObject.put(PERSON_NAME, person.getName());
     personObject.put(VICTIM_AGE, person.getAge());
-    personObject.put(PERSON_IS_PET, person.getIsPet());
+    personObject.put(PERSON_IS_PET, person.isPet());
     personObject.put(VICTIM_DESCRIPTION, person.getDescription());
     return personObject;
   }
@@ -331,6 +331,9 @@ public class DataWriter extends DataConstants {
   @SuppressWarnings("unchecked")
   private static JSONObject getRequestJSON(Request request) {
     JSONObject requestJSON = new JSONObject();
+    if (request == null) {
+      return requestJSON;
+    }
     requestJSON.put(REQUEST_UUID, request.getId().toString());
     requestJSON.put(REQUEST_REQUESTEE, request.getRequestee());
     requestJSON.put(REQUEST_SEVERITY, request.getSeverity());
@@ -338,6 +341,7 @@ public class DataWriter extends DataConstants {
     requestJSON.put(REQUEST_STATUS, request.getStatus().toString());
     requestJSON.put(REQUEST_RESPONSE_TYPE, request.getResponderType().toString());
     requestJSON.put(REQUEST_DESCRIPTION, request.getDescription());
+    requestJSON.put(REQUEST_MEDICAL_NOTE, request.getMedicalNote());
     return requestJSON;
   }
 

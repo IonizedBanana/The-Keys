@@ -327,7 +327,8 @@ public class DataReader extends DataConstants {
     ResponseStatus status = getResponseStatus((String) requestObject.get(REQUEST_STATUS));
     ResponseType responderType = getResponseType((String) requestObject.get(REQUEST_RESPONSE_TYPE));
     String description = (String) requestObject.get(REQUEST_DESCRIPTION);
-    return new Request(id, requestee, severity, address, status, responderType, description);
+    String medicalNote = (String) requestObject.get(REQUEST_MEDICAL_NOTE);
+    return new Request(id, requestee, severity, address, status, responderType, description, medicalNote);
   }
 
   /**
@@ -363,8 +364,9 @@ public class DataReader extends DataConstants {
         byte partySize = ((Long) userObject.get(VICTIM_PARTY_SIZE)).byteValue();
         ArrayList<Request> createdRequests = getRequests((JSONArray) userObject.get(VICTIM_CREATED_REQUESTS));
         ArrayList<Victim.Person> party = getParty((JSONArray) userObject.get(VICTIM_PARTY));
+        String phoneNumber = (String)userObject.get(ADMIN_PHONE_NUMBER);
         return new Victim(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts, age, sex,
-            description, partySize, createdRequests, party);
+            description, partySize, createdRequests, party, phoneNumber);
       }
       case ADMIN -> {
         String phoneNumber = (String) userObject.get(ADMIN_PHONE_NUMBER);

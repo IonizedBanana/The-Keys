@@ -115,7 +115,7 @@ public class HurricaneUI {
         System.out.println("Contact: " + requester.getEmailAddress() + ", " + requester.getPhoneNumber());
         System.out.println("Who needs a ride:");
         for (Victim.Person person : app.getParty(carterRequest)) {
-            System.out.println("- " + person.getName() + (person.getIsPet() ? " (pet)" : "")
+            System.out.println("- " + person.getName() + (person.isPet() ? " (pet)" : "")
                     + ", age " + person.getAge() + ". " + person.getDescription());
         }
     }
@@ -244,7 +244,7 @@ public class HurricaneUI {
         }
         System.out.println("Gary Carter's account was saved, with his party:");
         for (Victim.Person person : ((Victim) app.getCurrentUser()).getParty()) {
-            System.out.println("- " + person.getName() + (person.getIsPet() ? " (pet)" : ""));
+            System.out.println("- " + person.getName() + (person.isPet() ? " (pet)" : ""));
         }
         app.logout();
 

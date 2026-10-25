@@ -187,7 +187,7 @@ public class Victim extends User {
         //Gets new party size (excluding pets)
         int size = 1;
         for (int i=0; i<party.size(); i++) {
-            if (!party.get(i).getIsPet()) {
+            if (!party.get(i).isPet()) {
                 size++;
             }
         }
@@ -203,7 +203,7 @@ public class Victim extends User {
         //Gets new party size (excluding pets)
         int size = 1;
         for (int i=0; i<party.size(); i++) {
-            if (!party.get(i).getIsPet()) {
+            if (!party.get(i).isPet()) {
                 size++;
             }
         }

@@ -62,6 +62,7 @@ public class DataConstants {
   public static final String REQUEST_STATUS = "status";
   public static final String REQUEST_RESPONSE_TYPE = "responderType";
   public static final String REQUEST_DESCRIPTION = "description";
+  public static final String REQUEST_MEDICAL_NOTE = "medicalNote";
 
   // hurricane consts
   public static final String HURRICANE_FILE_PATH = "../json/hurricane.json";

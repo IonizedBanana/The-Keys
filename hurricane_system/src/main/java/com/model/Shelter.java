@@ -120,8 +120,8 @@ public class Shelter {
     expectedArrivals += partySize;
   }
 
-  public void registerArrival(ArrayList<Victim.Person> party) {
-    usedCapacity += party.size();
+  public void registerArrival(int partySize, ArrayList<Victim.Person> party) {
+    usedCapacity += partySize;
     for (Victim.Person p : party) {
       if (p.isPet()) {
         registeredPets.put(p.getName(), p);
@@ -131,8 +131,8 @@ public class Shelter {
     }
   }
 
-  public void unregisterArrival(ArrayList<Victim.Person> party) {
-    usedCapacity -= party.size();
+  public void unregisterArrival(int partySize, ArrayList<Victim.Person> party) {
+    usedCapacity -= partySize;
     for (Victim.Person p : party) {
       if (p.isPet()) {
         registeredPets.remove(p.getName());

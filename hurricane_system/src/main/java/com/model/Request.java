@@ -185,7 +185,7 @@ public class Request {
         ArrayList<Person> pets = new ArrayList<Person>();
         if (victim != null) {
             for (Person person : victim.getFullParty()) {
-                if (person.getIsPet()) {
+                if (person.isPet()) {
                     pets.add(person);
                 } else {
                     text.append("- " + person.getName() + ", age " + ageText(person.getAge())

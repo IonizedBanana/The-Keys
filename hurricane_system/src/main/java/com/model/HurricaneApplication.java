@@ -565,7 +565,7 @@ public class HurricaneApplication {
         if (shelter.availableSpace() < partySize) {
             return false;
         }
-        shelter.registerArrival(partySize);
+        shelter.registerArrival(partySize, ((Victim)request.getRequesteeUser()).getFullParty());
         return saveData();
     }
 
