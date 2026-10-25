@@ -31,9 +31,7 @@ public class DataReader extends DataConstants {
    */
   public static HashMap<String, Shelter> getShelters() {
     HashMap<String, Shelter> shelters = new HashMap<String, Shelter>();
-    // File shelterFile = new File("../json/testing/shelter.json");
     File shelterFile = new File(SHELTER_FILE_PATH);
-    System.out.println(SHELTER_FILE_PATH);
     try {
       FileReader reader = new FileReader(shelterFile);
       JSONArray shelterJSONArray = (JSONArray) new JSONParser().parse(reader);
@@ -65,7 +63,45 @@ public class DataReader extends DataConstants {
     int usedCapacity = ((Long) shelterObject.get(SHELTER_USED_CAPACITY)).intValue();
     int expectedArrivals = ((Long) shelterObject.get(SHELTER_EXPECTED_ARRIVALS)).intValue();
     ArrayList<Resource> resources = getResourceList((JSONArray) shelterObject.get(SHELTER_RESOURCES));
-    return new Shelter(id, name, address, totalCapacity, usedCapacity, expectedArrivals, resources);
+    ArrayList<Accomodation> accomodations = getAccomodationList((JSONArray) shelterObject.get(SHELTER_ACCOMODATIONS));
+    HashMap<String, Victim.Person> registeredPeople = getPeopleMap(
+        (JSONArray) shelterObject.get(SHELTER_REGISTERED_PEOPLE));
+    HashMap<String, Victim.Person> registeredPets = getPeopleMap(
+        (JSONArray) shelterObject.get(SHELTER_REGISTERED_PETS));
+    return new Shelter(id, name, address, totalCapacity, usedCapacity, expectedArrivals, resources, accomodations,
+        registeredPeople, registeredPets);
+  }
+
+  private static HashMap<String, Victim.Person> getPeopleMap(JSONArray arr) {
+    HashMap<String, Victim.Person> peopleMap = new HashMap<String, Victim.Person>();
+    if (arr == null || arr.size() < 1) {
+      return peopleMap;
+    }
+    for (int i = 0; i < arr.size(); i++) {
+      Victim.Person person = getPerson((JSONObject) arr.get(i));
+      peopleMap.put(person.getName(), person);
+    }
+    return peopleMap;
+  }
+
+  private static Accomodation getAccomodation(String type) {
+    if (type.equals("PET_FRIENDLY")) {
+      return Accomodation.PET_FRIENDLY;
+    } else if (type.equals("MEDICAL_STAFF")) {
+      return Accomodation.MEDICAL_STAFF;
+    }
+    return null;
+  }
+
+  private static ArrayList<Accomodation> getAccomodationList(JSONArray arr) {
+    ArrayList<Accomodation> accomodations = new ArrayList<Accomodation>();
+    if (arr == null || arr.size() < 1) {
+      return accomodations;
+    }
+    for (int i = 0; i < arr.size(); i++) {
+      accomodations.add(getAccomodation((String) arr.get(i)));
+    }
+    return accomodations;
   }
 
   /**
@@ -289,6 +325,9 @@ public class DataReader extends DataConstants {
   }
 
   private static Request getRequest(JSONObject requestObject) {
+    if (requestObject == null || requestObject.size() < 1) {
+      return null;
+    }
     UUID id = UUID.fromString((String) requestObject.get(REQUEST_UUID));
     String requestee = (String) requestObject.get(REQUEST_REQUESTEE);
     byte severity = ((Long) requestObject.get(REQUEST_SEVERITY)).byteValue();
@@ -296,7 +335,8 @@ public class DataReader extends DataConstants {
     ResponseStatus status = getResponseStatus((String) requestObject.get(REQUEST_STATUS));
     ResponseType responderType = getResponseType((String) requestObject.get(REQUEST_RESPONSE_TYPE));
     String description = (String) requestObject.get(REQUEST_DESCRIPTION);
-    return new Request(id, requestee, severity, address, status, responderType, description);
+    String medicalNote = (String) requestObject.get(REQUEST_MEDICAL_NOTE);
+    return new Request(id, requestee, severity, address, status, responderType, description, medicalNote);
   }
 
   /**
@@ -332,8 +372,9 @@ public class DataReader extends DataConstants {
         byte partySize = ((Long) userObject.get(VICTIM_PARTY_SIZE)).byteValue();
         ArrayList<Request> createdRequests = getRequests((JSONArray) userObject.get(VICTIM_CREATED_REQUESTS));
         ArrayList<Victim.Person> party = getParty((JSONArray) userObject.get(VICTIM_PARTY));
+        String phoneNumber = (String) userObject.get(ADMIN_PHONE_NUMBER);
         return new Victim(id, firstName, lastName, username, emailAddress, password, address, receivedAlerts, age, sex,
-            description, partySize, createdRequests, party);
+            description, partySize, createdRequests, party, phoneNumber);
       }
       case ADMIN -> {
         String phoneNumber = (String) userObject.get(ADMIN_PHONE_NUMBER);
@@ -347,8 +388,7 @@ public class DataReader extends DataConstants {
       }
       case SHELTER_WORKER -> {
         Shelter shelter = getShelter((JSONObject) userObject.get(SHELTER_WORKER_SHELTER));
-        return new ShelterWorker(id, firstName, lastName, username, password, emailAddress, address, receivedAlerts,
-            shelter);
+        return new ShelterWorker(id, firstName, lastName, username, password, emailAddress, address, receivedAlerts, shelter);
       }
     }
     return null;
@@ -357,6 +397,9 @@ public class DataReader extends DataConstants {
 
   private static ArrayList<Victim.Person> getParty(JSONArray arr) {
     ArrayList<Victim.Person> party = new ArrayList<Victim.Person>();
+    if (arr == null || arr.size() < 1) {
+      return party;
+    }
     for (int i = 0; i < arr.size(); i++) {
       JSONObject o = (JSONObject) arr.get(i);
       Victim.Person person = getPerson(o);

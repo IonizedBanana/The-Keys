@@ -50,10 +50,13 @@ public class Request {
      * @param description the description of the request
      */
     public Request(String requestee, byte severity, Address address, String description) {
+        this.id = UUID.randomUUID();
         this.requestee = requestee;
         this.severity = severity;
         this.address = address;
         this.description = description;
+        this.responderType = ResponseType.ASSISTANCE;
+        this.status = ResponseStatus.WAITING;
         this.MedicalNote = null;
     }
     /**
@@ -295,7 +298,7 @@ public class Request {
         ArrayList<Person> pets = new ArrayList<Person>();
         if (victim != null) {
             for (Person person : victim.getFullParty()) {
-                if (person.getIsPet()) {
+                if (person.isPet()) {
                     pets.add(person);
                 } else {
                     text.append("- " + person.getName() + ", age " + ageText(person.getAge())
@@ -330,9 +333,8 @@ public class Request {
         text.append("Pickup Address: " + (address == null ? "Unknown" : address.toString()) + "\n\n");
 
         text.append("MEDICAL\n").append(divider);
-        // TODO use the request's medical note once Logan's Request changes are merged
-        // text.append(isBlank(medicalNote) ? "No medical assistance requested.\n" : "MEDICAL ASSISTANCE NEEDED: " + medicalNote + "\n");
-        text.append(responderType == ResponseType.MEDICAL ? "Medical assistance required.\n" : "See details below.\n");
+        text.append(isBlank(MedicalNote) ? "No medical assistance requested.\n"
+                : "MEDICAL ASSISTANCE NEEDED: " + MedicalNote + "\n");
         text.append("Details: " + (isBlank(description) ? "None" : description) + "\n\n");
 
         Address start = (responder == null) ? null : responder.getAddress();

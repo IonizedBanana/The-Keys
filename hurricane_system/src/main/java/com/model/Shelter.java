@@ -1,8 +1,10 @@
 package com.model;
 
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.UUID;
 import com.model.location.*;
+import com.model.users.*;
 
 /**
  * <h2>Shelter</h2>
@@ -27,9 +29,13 @@ public class Shelter {
   private int usedCapacity;
   private int expectedArrivals;
   private ArrayList<Resource> resources;
+  private ArrayList<Accomodation> accomodations;
+  private HashMap<String, Victim.Person> registeredPeople;
+  private HashMap<String, Victim.Person> registeredPets;
 
   public Shelter(UUID id, String name, Address address, int totalCapacity, int usedCapacity, int expectedArrivals,
-      ArrayList<Resource> resources) {
+      ArrayList<Resource> resources, ArrayList<Accomodation> accomodations,
+      HashMap<String, Victim.Person> registeredPeople, HashMap<String, Victim.Person> registeredPets) {
     this.id = id;
     this.name = name;
     this.address = address;
@@ -37,6 +43,9 @@ public class Shelter {
     this.usedCapacity = usedCapacity;
     this.expectedArrivals = expectedArrivals;
     this.resources = resources;
+    this.accomodations = accomodations;
+    this.registeredPeople = registeredPeople;
+    this.registeredPets = registeredPets;
   }
 
   public UUID getId() {
@@ -49,6 +58,18 @@ public class Shelter {
 
   public Address getAddress() {
     return address;
+  }
+
+  public ArrayList<Accomodation> getAccomodations() {
+    return accomodations;
+  }
+
+  public HashMap<String, Victim.Person> getRegisteredPeople() {
+    return registeredPeople;
+  }
+
+  public HashMap<String, Victim.Person> getRegisteredPets() {
+    return registeredPets;
   }
 
   public int getTotalCapacity() {
@@ -99,8 +120,26 @@ public class Shelter {
     expectedArrivals += partySize;
   }
 
-  public void registerArrival(int partySize) {
+  public void registerArrival(int partySize, ArrayList<Victim.Person> party) {
     usedCapacity += partySize;
+    for (Victim.Person p : party) {
+      if (p.isPet()) {
+        registeredPets.put(p.getName(), p);
+      } else {
+        registeredPeople.put(p.getName(), p);
+      }
+    }
+  }
+
+  public void unregisterArrival(int partySize, ArrayList<Victim.Person> party) {
+    usedCapacity -= partySize;
+    for (Victim.Person p : party) {
+      if (p.isPet()) {
+        registeredPets.remove(p.getName());
+      } else {
+        registeredPeople.remove(p.getName());
+      }
+    }
   }
 
   public String toString() {

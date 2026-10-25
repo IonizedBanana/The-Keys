@@ -5,9 +5,9 @@ import com.model.location.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.text.DateFormat;
+import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.UUID;
 
 import org.json.simple.JSONArray;
@@ -104,8 +104,36 @@ public class DataWriter extends DataConstants {
     shelterJSON.put(SHELTER_USED_CAPACITY, shelter.getUsedCapacity());
     shelterJSON.put(SHELTER_EXPECTED_ARRIVALS, shelter.getExpectedArrivals());
     shelterJSON.put(SHELTER_RESOURCES, getResourceListJSON(shelter.getResources()));
+    shelterJSON.put(SHELTER_ACCOMODATIONS, getAccomodationListJSON(shelter.getAccomodations()));
+    shelterJSON.put(SHELTER_REGISTERED_PEOPLE, getPeopleList(shelter.getRegisteredPeople()));
+    shelterJSON.put(SHELTER_REGISTERED_PETS, getPeopleList(shelter.getRegisteredPets()));
     return shelterJSON;
   }
+
+  @SuppressWarnings("unchecked")
+  private static JSONArray getAccomodationListJSON(ArrayList<Accomodation> accomodations) {
+    JSONArray accomodationJSON = new JSONArray();
+    if (accomodations == null || accomodations.size() < 1) {
+      return accomodationJSON;
+    }
+    for (Accomodation a : accomodations) {
+      accomodationJSON.add(a.toString());
+    }
+    return accomodationJSON;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static JSONArray getPeopleList(HashMap<String, Victim.Person> people) {
+    JSONArray peopleList = new JSONArray();
+    if (people == null || people.size() < 1) {
+      return peopleList;
+    }
+    for(Map.Entry<String, Victim.Person> set : people.entrySet()) {
+      peopleList.add(getPersonJSON(set.getValue()));
+    }
+    return peopleList;
+  }
+  
 
   @SuppressWarnings("unchecked")
   private static JSONObject getResourceJSON(Resource resource) {
@@ -132,7 +160,7 @@ public class DataWriter extends DataConstants {
     addressObject.put(ADDRESS_STATE, address.getState());
     addressObject.put(ADDRESS_CITY, address.getCity());
     addressObject.put(ADDRESS_ADDRESS, address.getStreet());
-    addressObject.put(ADDRESS_ZIP, address.getStreet());
+    addressObject.put(ADDRESS_ZIP, address.getZip());
     return addressObject;
   }
 
@@ -174,7 +202,18 @@ public class DataWriter extends DataConstants {
     userJSON.put(VOLUNTEER_CREDENTIALS, getCredentialsArray(user.getCredentials()));
     userJSON.put(VOLUNTEER_AVAILABLE, user.getIsAvailible());
     userJSON.put(VOLUNTEER_IDENTITY_VERIFIED, user.getIdentityVerified());
+    userJSON.put(VOLUNTEER_FIELDS_OF_EXPERTISE, getFieldsOfExpertiseJSON(user.getFieldsOfExpertise()));
+    userJSON.put(VOLUNTEER_ASSIGNED_REQUEST, getRequestJSON(user.getAssignedRequest()));
+
     return userJSON;
+  }
+  @SuppressWarnings("unchecked")
+  private static JSONArray getFieldsOfExpertiseJSON(ArrayList<ResponseType> fieldsOfExpertise) {
+    JSONArray fieldsJSON = new JSONArray();
+    for (ResponseType r : fieldsOfExpertise) {
+      fieldsJSON.add(r.toString());
+    }
+    return fieldsJSON;
   }
 
   @SuppressWarnings("unchecked")
@@ -195,12 +234,16 @@ public class DataWriter extends DataConstants {
     userJSON.put(VICTIM_PARTY_SIZE, user.getPartySize());
     userJSON.put(VICTIM_CREATED_REQUESTS, getRequestListJSON(user.getCreatedRequests()));
     userJSON.put(VICTIM_PARTY, getPartyJSON(user.getParty()));
+    userJSON.put(ADMIN_PHONE_NUMBER, user.getPhoneNumber());
     return userJSON;
   }
 
   @SuppressWarnings("unchecked")
   private static JSONArray getPartyJSON(ArrayList<Victim.Person> party) {
     JSONArray partyJSON = new JSONArray();
+    if (party == null || party.size() < 1) {
+      return partyJSON;
+    }
     for (Victim.Person vp : party) {
       partyJSON.add(getPersonJSON(vp));
     }
@@ -212,7 +255,7 @@ public class DataWriter extends DataConstants {
     JSONObject personObject = new JSONObject();
     personObject.put(PERSON_NAME, person.getName());
     personObject.put(VICTIM_AGE, person.getAge());
-    personObject.put(PERSON_IS_PET, person.getIsPet());
+    personObject.put(PERSON_IS_PET, person.isPet());
     personObject.put(VICTIM_DESCRIPTION, person.getDescription());
     return personObject;
   }
@@ -320,6 +363,9 @@ public class DataWriter extends DataConstants {
   @SuppressWarnings("unchecked")
   private static JSONObject getRequestJSON(Request request) {
     JSONObject requestJSON = new JSONObject();
+    if (request == null) {
+      return requestJSON;
+    }
     requestJSON.put(REQUEST_UUID, request.getId().toString());
     requestJSON.put(REQUEST_REQUESTEE, request.getRequestee());
     requestJSON.put(REQUEST_SEVERITY, request.getSeverity());
@@ -327,6 +373,7 @@ public class DataWriter extends DataConstants {
     requestJSON.put(REQUEST_STATUS, request.getStatus().toString());
     requestJSON.put(REQUEST_RESPONSE_TYPE, request.getResponderType().toString());
     requestJSON.put(REQUEST_DESCRIPTION, request.getDescription());
+    requestJSON.put(REQUEST_MEDICAL_NOTE, request.getMedicalNote());
     return requestJSON;
   }
 

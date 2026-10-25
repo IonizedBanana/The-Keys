@@ -55,7 +55,13 @@
           "quantity": 40,
           "unit": "GALLONS"
         }
-      ]
+      ],
+      "accomodations": [
+        "PET_FRIENDLY",
+        "MEDICAL_STAFF"
+      ],
+      "registeredPeople": [],
+      "registeredPets": []
     }
   }
 ]
