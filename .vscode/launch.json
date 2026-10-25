@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "UI",
+      "request": "launch",
+      "mainClass": "com.hurricane/com.model.UI",
+      "projectName": "hurricane_system"
+    },
+    {
+      "type": "java",
       "name": "Run Scenarios",
       "request": "launch",
       "mainClass": "com.hurricane/com.model.HurricaneUI",
