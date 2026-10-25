@@ -234,6 +234,7 @@ public class DataWriter extends DataConstants {
     userJSON.put(VICTIM_PARTY_SIZE, user.getPartySize());
     userJSON.put(VICTIM_CREATED_REQUESTS, getRequestListJSON(user.getCreatedRequests()));
     userJSON.put(VICTIM_PARTY, getPartyJSON(user.getParty()));
+    userJSON.put(ADMIN_PHONE_NUMBER, user.getPhoneNumber());
     return userJSON;
   }
 
