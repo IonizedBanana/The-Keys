@@ -33,10 +33,8 @@ target/
 
 # ignore testing data
 json/testing/
+*.txt
+*/*.txt
 
-# dont put .env in main idiot
+# dont put .env in main
 .env
-
-# vscode config files (launch.json is shared so everyone gets the run configs; the api key stays in .env)
-.vscode/*
-!.vscode/launch.json

@@ -10,7 +10,7 @@ import java.util.UUID;
  * @author Jason
  */
 public class Victim extends User {
-    public int age;
+    private int age;
     private char sex;
     private String description;
     private int partySize;

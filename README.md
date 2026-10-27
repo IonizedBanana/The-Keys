@@ -43,15 +43,14 @@ Admins run the app. They manage shelters, push alerts to users, and create and m
 - [Design Document](documents/requirements.pdf)
 - [Requirements Spreadsheet](documents/requirements_spreadsheet.pdf)
 
-## <img src="documents/icons/chart-column-stacked.svg" width="22" alt=""> Code Design
+## <img src="documents/icons/chart-column-stacked.svg" width="22" alt=""> Code Docs and Presentations
 - [UML Class Diagram](documents/uml-class-diagram.pdf)
 - [UML Sequence Diagram 1](documents/uml-sequence-diagram1.pdf)
 - [UML Sequence Diagram 2](documents/uml-sequence-diagram2.pdf)
+- [Implementation Presentation](https://youtu.be/WpNw3_04NSM)
 
 ## <img src="documents/icons/square-kanban.svg" width="22" alt=""> Project Board
-https://github.com/users/IonizedBanana/projects/2
-
-> Icons were provided by Lucide Icons at [lucide.dev](https://lucide.dev/).
+[SCRUM Board](https://github.com/users/IonizedBanana/projects/2)
 
 ## <img src="documents/icons/user-group.svg" width="22" alt=""> Contributors: 
 [SynthwaveFox](https://github.com/SynthwaveFox) - Tucker Souder
@@ -61,4 +60,7 @@ https://github.com/users/IonizedBanana/projects/2
 [jah73cse](https://github.com/jah73cse) - Jason Howard
 
 [LoganH627](https://github.com/LoganH627) - Logan Hargadine
+
+> Icons were provided by Lucide Icons at [lucide.dev](https://lucide.dev/).
+
 
