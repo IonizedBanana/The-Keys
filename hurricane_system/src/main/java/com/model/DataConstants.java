@@ -86,4 +86,12 @@ public class DataConstants {
   public static final String CREDENTIAL_EXPIRATION_DATE = "expirationDate";
   public static final String CREDENTIAL_VERIFIED = "verified";
 
+  public static boolean isJUnitTest() {
+    for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
+      if (element.getClassName().startsWith("org.junit.")) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
