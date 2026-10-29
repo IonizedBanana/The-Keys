@@ -1,7 +1,7 @@
 // json-simple 1.1.1 has no stable module name, so its automatic name is used
 @SuppressWarnings("module")
 module com.hurricane {
-    requires javafx.controls;
+    requires transitive javafx.controls;
     requires javafx.fxml;
     requires json.simple;
     requires java.net.http;
