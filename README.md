@@ -1,6 +1,6 @@
 # <img src="documents/icons/life-buoy.svg" width="30" alt=""> The Keys Hurricane Relief App
 
-![JavaFX 17](https://img.shields.io/badge/JavaFX-17){target="_blank"}
+![JavaFX 17](https://img.shields.io/badge/JavaFX-17)
 
 The Hurricane Relief App is an all-in-one app for requesting, providing, and coordinating help in hurricane-affected areas. It connects victims, volunteers, and shelters so help gets to the people who need it.
 
@@ -40,27 +40,27 @@ Admins run the app. They manage shelters, push alerts to users, and create and m
 
 ## <img src="documents/icons/file-text.svg" width="22" alt=""> Requirements
 
-- [Design Document](documents/requirements.pdf){target="_blank"}
-- [Requirements Spreadsheet](documents/requirements_spreadsheet.pdf){target="_blank"}
+- [Design Document](documents/requirements.pdf)
+- [Requirements Spreadsheet](documents/requirements_spreadsheet.pdf)
 
 ## <img src="documents/icons/chart-column-stacked.svg" width="22" alt=""> Code Docs and Presentations
-- [UML Class Diagram](documents/uml-class-diagram.pdf){target="_blank"}
-- [UML Sequence Diagram 1](documents/uml-sequence-diagram1.pdf){target="_blank"}
-- [UML Sequence Diagram 2](documents/uml-sequence-diagram2.pdf){target="_blank"}
-- [Implementation Presentation](https://youtu.be/WpNw3_04NSM){target="_blank"}
+- [UML Class Diagram](documents/uml-class-diagram.pdf)
+- [UML Sequence Diagram 1](documents/uml-sequence-diagram1.pdf)
+- [UML Sequence Diagram 2](documents/uml-sequence-diagram2.pdf)
+- [Implementation Presentation](https://youtu.be/WpNw3_04NSM)
 
 ## <img src="documents/icons/square-kanban.svg" width="22" alt=""> Project Board
-[SCRUM Board](https://github.com/users/IonizedBanana/projects/2){target="_blank"}
+[SCRUM Board](https://github.com/users/IonizedBanana/projects/2)
 
 ## <img src="documents/icons/user-group.svg" width="22" alt=""> Contributors: 
-[SynthwaveFox](https://github.com/SynthwaveFox){target="_blank"} - Tucker Souder
+[SynthwaveFox](https://github.com/SynthwaveFox) - Tucker Souder
 
-[IonizedBanana](https://github.com/IonizedBanana){target="_blank"} - Cayden Barnett
+[IonizedBanana](https://github.com/IonizedBanana) - Cayden Barnett
 
-[jah73cse](https://github.com/jah73cse){target="_blank"} - Jason Howard
+[jah73cse](https://github.com/jah73cse) - Jason Howard
 
-[LoganH627](https://github.com/LoganH627){target="_blank"} - Logan Hargadine
+[LoganH627](https://github.com/LoganH627) - Logan Hargadine
 
-> Icons were provided by Lucide Icons at [lucide.dev](https://lucide.dev/){target="_blank"}.
+> Icons were provided by Lucide Icons at [lucide.dev](https://lucide.dev/).
 
 
