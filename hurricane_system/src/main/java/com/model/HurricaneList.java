@@ -2,6 +2,8 @@ package com.model;
 
 import java.util.HashMap;
 
+import com.model.users.User;
+
 public class HurricaneList {
   private static HurricaneList hurricaneList;
   private HashMap<String, Hurricane> hurricanes;
@@ -30,6 +32,10 @@ public class HurricaneList {
     return DataWriter.saveHurricanes(hurricanes);
   }
   
+  public void clear() {
+    this.hurricanes = new HashMap<String, Hurricane>();
+  }
+
   public HashMap<String, Hurricane> getHurricaneList() {
     return this.hurricanes;
   }
