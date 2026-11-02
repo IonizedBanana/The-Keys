@@ -35,6 +35,10 @@ public class UserList {
     return this.users;
   }
 
+  public void clear() {
+    this.users = new HashMap<String, User>();
+  }
+
   public boolean usernameTaken(String username) {
     return users.containsKey(username);
   }
