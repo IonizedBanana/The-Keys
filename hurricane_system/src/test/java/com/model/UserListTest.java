@@ -36,9 +36,19 @@ User
 -testRecieveAlertRelevent (User should be able recieve an alert that involves their location) Passed
 -testRecieveAlertIrrelevent (User should not recieve an alert if it does not involve their location) Passed
 
--testDonateResource (User should be able to donate resources to a shelter)
--testDonateNullResource (User shouldn't be able to donate null)
--testDonateResourceNullShelter (User shouldn't be able to donate resources to null)
+Victim
+-testGetFullParty (Should return all party members, including the user) Passed
+-testUpdatePartySizeWhenAddingMember (Party size should increase when adding a party member) Passed
+-testUpdatePartySizeWhenAddingPet (Party size shouldn't increase when adding a pet) Passed
+-testAddPartyMemberValid (Party members should have no problems being added if they are valid) Passed
+
+Person
+
+Admin
+-testSendValidAlert (Admins can send alerts) Passed
+-testSendBlankIssuedByAlert (Admins shouldn't be able to send Alerts with no "issuedBy") --Failed #69
+-testVerifyCredential (Admins should be able to verify credentials)
+
 
 
 
@@ -58,17 +68,29 @@ public class UserListTest {
 
         // Add a victim (with a pet)
         UserList.getInstance().addUser(new Victim("Trey", "Climber", "treeclimber", "tclimber@mailmail.org", "iliketrees", new Address("Columbia", "SC")));
+        UserList.getInstance().getUser("treeclimber").setReceivedAlerts(new ArrayList<Alert>());
+
         Victim victimInstance = new Victim();
         Person p = victimInstance.new Person("Peter Chimney", (byte)1, true, "A perfectly normal hamster with no special attributes. He seems to have a habit of getting lost.");
         ((Victim)(UserList.getInstance().getUser("treeclimber"))).addPartyMember(p);
+        p = victimInstance.new Person("Nick Name", (byte)31, false, "A friend.");
+        ((Victim)(UserList.getInstance().getUser("treeclimber"))).addPartyMember(p);
+
 
         // Add a dispatcher
         UserList.getInstance().addUser(new Dispatcher("Marcus", "Banker", "mbanker", "mbanker@korycrayinc.org", "ilovefoodandmoney", new Address("Columbia", "SC"), "8885551234"));
+        UserList.getInstance().getUser("mbanker").setReceivedAlerts(new ArrayList<Alert>());
+
 
         // Add a shelter worker
+        //UserList.getInstance().addUser(new ShelterWorker("Juan", "Nicolas", "lamburger", "password123", "lamburger@lamburgerandfert.org", SC ));
 
         // Add a volunteer
-        
+        UserList.getInstance().addUser(new Volunteer("Marco", "Martinez", "fert", "fert@lamburgerandfert.org", "L154187!@#4168923037$%&698", SC));
+        UserList.getInstance().getUser("fert").setReceivedAlerts(new ArrayList<Alert>());
+        UserList.getInstance().getUser("fert").setReceivedAlerts(new ArrayList<Alert>());
+
+
         UserList.getInstance().save();
 	}
 
@@ -131,6 +153,7 @@ public class UserListTest {
         assertFalse(UserList.getInstance().usernameTaken(""));
     }
 
+
     //User tests
     @Test
     public void testIsMatchSame() {
@@ -180,5 +203,56 @@ public class UserListTest {
         assertFalse(user.getReceivedAlerts().size() > 0);
     } 
 
-    // 
+    //Victim tests
+    @Test
+    public void testGetFullParty() {
+        Victim victim = (Victim) UserList.getInstance().getUser("treeclimber");
+        assertTrue(victim.getPartySize() == 2);
+    }
+
+    @Test
+    public void testUpdatePartySizeWhenAddingMember() {
+        Victim victimInstance = new Victim();
+        Victim victim = ((Victim)(UserList.getInstance().getUser("treeclimber")));
+        Person p = victimInstance.new Person("Place Hold", (byte)30, false, "Another friend.");
+        victim.addPartyMember(p);
+        assertTrue(victim.getPartySize() == 3);
+    }
+
+    @Test
+    public void testUpdatePartySizeWhenAddingPet() {
+        Victim victimInstance = new Victim();
+        Victim victim = ((Victim)(UserList.getInstance().getUser("treeclimber")));
+        Person p = victimInstance.new Person("Rabbo", (byte)2, true, "A pet dog.");
+        victim.addPartyMember(p);
+        assertTrue(victim.getPartySize() == 2);
+    }
+
+    // Person tests
+
+    // Admin tests
+    @Test
+    public void testSendValidAlert() {
+        Admin admin = ((Admin)(UserList.getInstance().getUser("kmcdirk"))); 
+        ArrayList<Address> temp = new ArrayList<Address>();
+        temp.add(admin.getAddress());
+        Alert alert = new Alert(temp, "Hi everyone! This is an alert!", "Issued by ME!", Date.from(Instant.now()));
+        admin.sendAlert(alert);
+        assertTrue(admin.getReceivedAlerts().size() == 1);
+    }
+
+    @Test
+    public void testSendBlankIssuedByAlert() {
+        Admin admin = ((Admin)(UserList.getInstance().getUser("kmcdirk"))); 
+        ArrayList<Address> temp = new ArrayList<Address>();
+        temp.add(admin.getAddress());
+        Alert alert = new Alert(temp, "Hi everyone! This is an alert!", "", Date.from(Instant.now()));
+        admin.sendAlert(alert);
+        assertFalse(admin.getReceivedAlerts().size() == 1);
+    }
+
+    @Test
+    public void testVerifyCredential() {
+
+    }
 }
