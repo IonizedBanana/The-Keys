@@ -3,6 +3,8 @@ package com.model;
 public class DataConstants {
   // shelter consts
   public static final String SHELTER_FILE_PATH = "../json/shelter.json";
+  public static final String SHELTER_FILE_PATH_TESTING = "./src/test/resources/data/shelter.json";
+  public static final String SHELTER_FILE_PATH_TESTING_OUT = "./src/test/resources/data/out/shelter.json";
   public static final String SHELTER_UUID = "id";
   public static final String SHELTER_NAME = "name";
   public static final String SHELTER_ADDRESS = "address";
@@ -13,13 +15,13 @@ public class DataConstants {
   public static final String SHELTER_ACCOMODATIONS = "accomodations";
   public static final String SHELTER_REGISTERED_PEOPLE = "registeredPeople";
   public static final String SHELTER_REGISTERED_PETS = "registeredPets";
-  
+
   // location/address consts
   public static final String ADDRESS_CITY = "city";
-  public static final String ADDRESS_STATE= "state";
+  public static final String ADDRESS_STATE = "state";
   public static final String ADDRESS_ADDRESS = "address";
   public static final String ADDRESS_ZIP = "zip";
-  
+
   // resources consts
   public static final String RESOURCE_TYPE = "type";
   public static final String RESOURCE_DESCRIPTION = "description";
@@ -28,6 +30,8 @@ public class DataConstants {
 
   // user consts
   public static final String USER_FILE_PATH = "../json/user.json";
+  public static final String USER_FILE_PATH_TESTING = "./src/test/resources/data/user.json";
+  public static final String USER_FILE_PATH_TESTING_OUT = "./src/test/resources/data/out/user.json";
   public static final String USER_UUID = "id";
   public static final String USER_TYPE = "type";
   public static final String USER_FIRST_NAME = "firstName";
@@ -55,6 +59,8 @@ public class DataConstants {
 
   // request consts
   public static final String REQUEST_FILE_PATH = "../json/requests.json";
+  public static final String REQUEST_FILE_PATH_TESTING = "./src/test/resources/data/requests.json";
+  public static final String REQUEST_FILE_PATH_TESTING_OUT = "./src/test/resources/data/out/requests.json";
   public static final String REQUEST_UUID = "id";
   public static final String REQUEST_REQUESTEE = "requestee";
   public static final String REQUEST_SEVERITY = "severity";
@@ -66,6 +72,8 @@ public class DataConstants {
 
   // hurricane consts
   public static final String HURRICANE_FILE_PATH = "../json/hurricane.json";
+  public static final String HURRICANE_FILE_PATH_TESTING = "./src/test/resources/data/hurricane.json";
+  public static final String HURRICANE_FILE_PATH_TESTING_OUT = "./src/test/resources/data/out/hurricane.json";
   public static final String HURRICANE_UUID = "id";
   public static final String HURRICANE_NAME = "name";
   public static final String HURRICANE_CATEGORY = "category";
@@ -93,5 +101,12 @@ public class DataConstants {
       }
     }
     return false;
+  }
+
+  public static String getFilePath(String main, String testing) {
+    if (isJUnitTest()) {
+      return testing;
+    }
+    return main;
   }
 }

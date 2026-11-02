@@ -31,7 +31,7 @@ public class DataReader extends DataConstants {
    */
   public static HashMap<String, Shelter> getShelters() {
     HashMap<String, Shelter> shelters = new HashMap<String, Shelter>();
-    File shelterFile = new File(SHELTER_FILE_PATH);
+    File shelterFile = new File(getFilePath(SHELTER_FILE_PATH, SHELTER_FILE_PATH_TESTING));
     try {
       FileReader reader = new FileReader(shelterFile);
       JSONArray shelterJSONArray = (JSONArray) new JSONParser().parse(reader);
@@ -42,12 +42,11 @@ public class DataReader extends DataConstants {
         shelters.put(shelter.getName(), shelter);
       }
       reader.close();
-      return shelters;
     } catch (Exception e) {
       System.out.println(e.getMessage());
       System.out.println(e.getStackTrace());
-      return null;
     }
+    return shelters;
   }
 
   /**
@@ -209,8 +208,7 @@ public class DataReader extends DataConstants {
    */
   public static HashMap<String, User> getUsers() {
     HashMap<String, User> users = new HashMap<String, User>();
-    File userFile = new File(USER_FILE_PATH);
-    // File userFile = new File("../json/testing/user.json");
+    File userFile = new File(getFilePath(USER_FILE_PATH, USER_FILE_PATH_TESTING));
     try {
       FileReader reader = new FileReader(userFile);
       JSONArray userJSONArray = (JSONArray) new JSONParser().parse(reader);
@@ -295,7 +293,7 @@ public class DataReader extends DataConstants {
    */
   public static HashMap<UUID, Request> getRequests() {
     HashMap<UUID, Request> requests = new HashMap<UUID, Request>();
-    File requestFile = new File(REQUEST_FILE_PATH);
+    File requestFile = new File(getFilePath(REQUEST_FILE_PATH, REQUEST_FILE_PATH_TESTING));
     try {
       FileReader reader = new FileReader(requestFile);
       JSONArray requestJSONArray = (JSONArray) new JSONParser().parse(reader);
@@ -388,7 +386,8 @@ public class DataReader extends DataConstants {
       }
       case SHELTER_WORKER -> {
         Shelter shelter = getShelter((JSONObject) userObject.get(SHELTER_WORKER_SHELTER));
-        return new ShelterWorker(id, firstName, lastName, username, password, emailAddress, address, receivedAlerts, shelter);
+        return new ShelterWorker(id, firstName, lastName, username, password, emailAddress, address, receivedAlerts,
+            shelter);
       }
     }
     return null;
@@ -523,7 +522,7 @@ public class DataReader extends DataConstants {
    */
   public static HashMap<String, Hurricane> getHurricanes() {
     HashMap<String, Hurricane> hurricanes = new HashMap<String, Hurricane>();
-    File hurricaneFile = new File(HURRICANE_FILE_PATH);
+    File hurricaneFile = new File(getFilePath(HURRICANE_FILE_PATH, HURRICANE_FILE_PATH_TESTING));
     try {
       FileReader reader = new FileReader(hurricaneFile);
       JSONArray hurricaneJSONArray = (JSONArray) new JSONParser().parse(reader);
