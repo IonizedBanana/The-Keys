@@ -43,8 +43,6 @@ Victim
 -testUpdatePartySizeWhenAddingPet       |(Party size shouldn't increase when adding a pet) Passed
 -testAddPartyMemberValid                |(Party members should have no problems being added if they are valid) Passed
 
-Person
-
 Admin
 -testSendValidAlert                     |(Admins can send alerts) Passed
 -testSendBlankIssuedByAlert             |(Admins shouldn't be able to send Alerts with no "issuedBy") --Failed #69
@@ -239,8 +237,6 @@ public class UserListTest {
         assertTrue(victim.getPartySize() == 2);
     }
 
-    // Person tests
-
     // Admin tests
     @Test
     public void testSendValidAlert() {
@@ -325,7 +321,7 @@ public class UserListTest {
         volunteer.submitCredential(new Credential(null, null, Date.from(Instant.now()), false));
         assertFalse(volunteer.getCredentials().size() == 2);
     }
-    
+
     @Test
     public void testSubmitBlankStringsCredential() {
         Volunteer volunteer = ((Volunteer) UserList.getInstance().getUser("fert"));
