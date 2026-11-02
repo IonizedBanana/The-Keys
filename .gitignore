@@ -33,8 +33,10 @@ target/
 
 # ignore testing data
 json/testing/
-*.txt
-*/*.txt
 
-# dont put .env in main
+# ignore .env
 .env
+
+# ignore local notes
+.txt
+tests.md
