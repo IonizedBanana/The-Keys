@@ -29,6 +29,150 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+/*
+ * +-----------------------------------------------------------------+-------------------------------------------------------------+
+ * | Test                                                            | Reasoning                                                   |
+ * +-----------------------------------------------------------------+-------------------------------------------------------------+
+ * | getInstanceReturnsSameInstanceEveryTime                         | the facade is a singleton, so there is only one app         |
+ * | loginWithCorrectCredentialsReturnsTrue                          | a saved user can log in with their username and password    |
+ * | loginWithCorrectCredentialsSetsCurrentUser                      | logging in makes that user the current user                 |
+ * | loginWithWrongPasswordReturnsFalse                              | the password has to match                                   |
+ * | loginWithUnknownUsernameReturnsFalse                            | only saved users can log in                                 |
+ * | loginWithBlankUsernameReturnsFalse                              | a username is required to log in                            |
+ * | loginWithNullPasswordReturnsFalse                               | a password is required to log in                            |
+ * | loginIgnoresUsernameCapitalization                              | usernames match regardless of case (like User.isMatch)      |
+ * | loginFailureLeavesNobodyLoggedIn                                | a failed login doesn't log anyone in                        |
+ * | logoutClearsCurrentUser                                         | logging out leaves nobody logged in                         |
+ * | isTypeMatchesLoggedInUsersType                                  | isType is true for the logged in user's type                |
+ * | isTypeIsFalseForADifferentType                                  | isType is false for any other type                          |
+ * | isTypeIsFalseWhenNobodyLoggedIn                                 | nobody logged in means no type                              |
+ * | createAccountWithAllFieldsReturnsTrue                           | an account with every field filled in gets created          |
+ * | createAccountLogsInTheNewUser                                   | a new user is logged in right away                          |
+ * | createAccountMakesAVictim                                       | new accounts are victims                                    |
+ * | createAccountSavesUserSoTheyCanLogInAgain                       | new accounts are saved and can log in after a restart       |
+ * | createAccountWithTakenUsernameReturnsFalse                      | each username has to be unique                              |
+ * | createAccountWithBlankUsernameReturnsFalse                      | a username is required                                      |
+ * | createAccountWithNullFirstNameReturnsFalse                      | a first name is required                                    |
+ * | createAccountWithBlankPasswordReturnsFalse                      | a password is required                                      |
+ * | createAccountWithNullAddressReturnsFalse                        | an address is required                                      |
+ * | createAccountWithoutAddressParameterReturnsFalse                | an account can't be saved without an address                |
+ * | createAccountWithEmailMissingAtSignReturnsFalse                 | emails need an @ sign                                       |
+ * | createAccountWithEmailMissingDomainReturnsFalse                 | emails need a domain name                                   |
+ * | addInfoAsVictimReturnsTrue                                      | victims can add their details                               |
+ * | addInfoAsVictimSetsPhoneNumber                                  | added details are stored on the victim                      |
+ * | addInfoAsVolunteerReturnsFalse                                  | only victims have victim details                            |
+ * | addInfoWhenNobodyLoggedInReturnsFalse                           | someone has to be logged in to add details                  |
+ * | addPartyMemberAsVictimReturnsTrue                               | victims can add people to their party                       |
+ * | addPartyMemberPersonIncreasesPartySize                          | people count toward party size                              |
+ * | addPartyMemberPetDoesNotIncreasePartySize                       | pets don't count toward party size                          |
+ * | addPartyMemberPetIsStillAddedToParty                            | pets are still part of the party                            |
+ * | addPartyMemberWithBlankNameReturnsFalse                         | party members need a name                                   |
+ * | addPartyMemberWithNegativeAgeReturnsFalse                       | age can't be negative                                       |
+ * | addPartyMemberWithAgeTooLargeForAByteReturnsFalse               | age has to fit in a byte (max 127)                          |
+ * | addPartyMemberAsVolunteerReturnsFalse                           | only victims have a party                                   |
+ * | newRequestAsVictimReturnsRequest                                | victims can make relief requests                            |
+ * | newRequestStartsWaiting                                         | new requests start out waiting                              |
+ * | newRequestIsForTheLoggedInVictim                                | a request belongs to the victim who made it                 |
+ * | newRequestUsesVictimsHomeAddress                                | requests are picked up at the victim's home                 |
+ * | newRequestCanBeLookedUpById                                     | new requests are added to the request list                  |
+ * | newRequestIsAddedToVictimsCreatedRequests                       | victims keep track of requests they made                    |
+ * | newRequestWithBlankMedicalNoteStoresNull                        | a blank medical note means no medical need                  |
+ * | newRequestKeepsMedicalNote                                      | a medical note is kept on the request                       |
+ * | newRequestWithSeverityZeroReturnsNull                           | severity has to be at least 1                               |
+ * | newRequestWithSeveritySixReturnsNull                            | severity can be at most 5                                   |
+ * | newRequestWithNullTypeReturnsNull                               | a request needs a type of help                              |
+ * | newRequestWithBlankDescriptionReturnsNull                       | a request needs a description                               |
+ * | newRequestAsVolunteerReturnsNull                                | only victims make requests                                  |
+ * | newRequestForVictimWithoutAddressReturnsNull                    | a request needs a pickup address                            |
+ * | newRequestWhenNobodyLoggedInReturnsNull                         | someone has to be logged in to make a request               |
+ * | getRequestWithSavedIdFindsIt                                    | saved requests can be found by id                           |
+ * | getRequestWithUnknownIdReturnsNull                              | an unknown id finds nothing                                 |
+ * | getOpenRequestsReturnsEveryWaitingRequest                       | every request that isn't complete is open                   |
+ * | getOpenRequestsSortsMostSevereFirst                             | the most severe requests come first                         |
+ * | getOpenRequestsLeavesOutCompleteRequests                        | complete requests aren't open                               |
+ * | getOpenRequestsPutsRecommendedRequestFirst                      | recommended requests come before more severe ones           |
+ * | isRecommendedIsFalseOutsideVolunteersSpecialty                  | only requests in the volunteer's specialty are recommended  |
+ * | isRecommendedIsFalseForFarAwayRequest                           | only requests within 5 miles are recommended                |
+ * | isRecommendedIsFalseForVictim                                   | recommendations are only for volunteers                     |
+ * | isRecommendedIsFalseForShelterWorker                            | recommendations are only for volunteers                     |
+ * | isRecommendedIsFalseForNullRequest                              | a missing request can't be recommended                      |
+ * | isRecommendedIsTrueForNearbyRequestInSpecialty                  | nearby requests in the specialty are recommended            |
+ * | getRecommendationReasonNamesTheSpecialty                        | the reason says which specialty matched                     |
+ * | getRecommendationReasonIsNullWhenNotRecommended                 | no reason when it isn't recommended                         |
+ * | getDistanceToNearbyRequestIsUnderFiveMiles                      | distance to a nearby request is worked out                  |
+ * | getDistanceToWhenNobodyLoggedInIsNegativeOne                    | no distance without a logged in user                        |
+ * | getDistanceToNullRequestIsNegativeOne                           | no distance to a missing request                            |
+ * | getRequesterReturnsVictimWhoMadeRequest                         | a request knows who made it                                 |
+ * | getRequesterOfUnknownUserReturnsNull                            | a requester who isn't saved can't be found                  |
+ * | getRequesterOfNullRequestReturnsNull                            | a missing request has no requester                          |
+ * | getPartyPutsRequesterFirst                                      | the requester is listed first in the party                  |
+ * | getPartyIncludesRequesterAndMembers                             | the party is the requester plus everyone with them          |
+ * | getPartyOfUnknownUserIsEmpty                                    | no party if the requester can't be found                    |
+ * | getPartyOfNullRequestIsEmpty                                    | a missing request has no party                              |
+ * | assignRequestAsVolunteerReturnsTrue                             | volunteers can take a request                               |
+ * | assignRequestMarksRequestAssigned                               | a taken request is marked assigned                          |
+ * | assignRequestMakesVolunteerUnavailable                          | a volunteer with a request isn't available                  |
+ * | getAssignedVolunteerFindsVolunteerWhoTookRequest                | others can see who took a request                           |
+ * | getAssignedVolunteerOfUnassignedRequestIsNull                   | nobody has a request that wasn't taken                      |
+ * | assignRequestAlreadyTakenReturnsFalse                           | two volunteers can't take the same request                  |
+ * | assignRequestThatIsCompleteReturnsFalse                         | complete requests can't be taken                            |
+ * | assignRequestAsVictimReturnsFalse                               | only volunteers take requests                               |
+ * | assignNullRequestReturnsFalse                                   | a missing request can't be taken                            |
+ * | finishRequestAsShelterWorkerReturnsTrue                         | shelter workers can finish requests                         |
+ * | finishRequestAsShelterWorkerMarksRequestComplete                | a finished request is marked complete                       |
+ * | finishRequestAsDispatcherReturnsTrue                            | dispatchers can finish requests                             |
+ * | finishRequestFreesTheAssignedVolunteer                          | finishing a request unassigns the volunteer                 |
+ * | finishRequestMakesAssignedVolunteerAvailableAgain               | the volunteer is available again                            |
+ * | finishRequestAsVolunteerReturnsFalse                            | volunteers can't finish requests                            |
+ * | finishRequestAsVolunteerLeavesRequestOpen                       | a volunteer's attempt doesn't change the request            |
+ * | finishRequestAsVictimReturnsFalse                               | victims can't finish requests                               |
+ * | finishRequestWhenNobodyLoggedInReturnsFalse                     | someone has to be logged in to finish a request             |
+ * | finishNullRequestReturnsFalse                                   | a missing request can't be finished                         |
+ * | exportTripInfoWhenNobodyLoggedInReturnsFalse                    | someone has to be logged in to export a trip                |
+ * | exportTripInfoAsVolunteerWritesFile                             | a responder can export trip info                            |
+ * | exportTripInfoWithNullRequestReturnsFalse                       | a missing request can't be exported                         |
+ * | getDirectionsWithNullStartReturnsNull                           | directions need a start                                     |
+ * | getDirectionsWithNullEndReturnsNull                             | directions need an end                                      |
+ * | getDirectionsBetweenRealAddressesHasSteps                       | real addresses get turn by turn steps                       |
+ * | getSheltersReturnsEverySavedShelter                             | every saved shelter is listed                               |
+ * | getShelterByNameFindsIt                                         | shelters can be found by name                               |
+ * | getShelterWithUnknownNameReturnsNull                            | an unknown name finds nothing                               |
+ * | getShelterNeedsIsEmptyWithoutPetsOrMedicalNote                  | no pets or medical needs means no special needs             |
+ * | getShelterNeedsIncludesPetFriendlyWhenPartyHasPet               | a party with a pet needs a pet friendly shelter             |
+ * | getShelterNeedsListsPetFriendlyOnceForTwoPets                   | each need is listed only once                               |
+ * | getShelterNeedsIncludesMedicalStaffWhenMedicalNote              | a medical note needs a shelter with medical staff           |
+ * | getShelterNeedsOfNullRequestIsEmpty                             | a missing request has no needs                              |
+ * | findSheltersWithNoNeedsReturnsSheltersWithRoom                  | any shelter with room fits a party with no needs            |
+ * | findSheltersSkipsSheltersWithoutRoomForWholeParty               | a shelter needs room for the whole party                    |
+ * | findSheltersWithPetOnlyReturnsPetFriendlyShelters               | parties with pets only get pet friendly shelters            |
+ * | findSheltersWithMedicalNoteOnlyReturnsSheltersWithMedicalStaff  | medical needs only get shelters with medical staff          |
+ * | findSheltersWithPetAndMedicalNoteReturnsSheltersWithBoth        | shelters have to meet every need                            |
+ * | findSheltersForRequestWithoutAddressIsEmpty                     | no shelters without a pickup address                        |
+ * | findSheltersForNullRequestIsEmpty                               | no shelters for a missing request                           |
+ * | findClosestShelterPicksShelterAtPickupAddress                   | the closest fitting shelter is picked                       |
+ * | findClosestShelterForNullRequestIsNull                          | no closest shelter for a missing request                    |
+ * | getMyShelterAsShelterWorkerReturnsTheirShelter                  | shelter workers can get the shelter they run                |
+ * | getMyShelterReturnsTheCopyThatGetsSaved                         | changes go to the shelter that gets saved                   |
+ * | getMyShelterForWorkerWithoutShelterReturnsNull                  | a worker without a shelter has none                         |
+ * | getMyShelterAsVolunteerReturnsNull                              | only shelter workers run a shelter                          |
+ * | checkInAsShelterWorkerReturnsTrue                               | shelter workers can check a party in                        |
+ * | checkInAddsPeopleToUsedCapacity                                 | people checked in fill up the shelter                       |
+ * | checkInDoesNotCountPetsTowardUsedCapacity                       | pets don't take up shelter space                            |
+ * | checkInRegistersPetsSeparately                                  | pets are recorded separately                                |
+ * | checkInRegistersRequesterAsOccupant                             | the requester is recorded as an occupant                    |
+ * | checkInWithoutRoomForWholePartyReturnsFalse                     | a full shelter can't take the party                         |
+ * | checkInAsVolunteerReturnsFalse                                  | only shelter workers check parties in                       |
+ * | checkInNullRequestReturnsFalse                                  | a missing request can't be checked in                       |
+ * | getHurricaneByNameFindsIt                                       | hurricanes can be found by name                             |
+ * | getHurricaneWithUnknownNameReturnsNull                          | an unknown name finds nothing                               |
+ * | isAffectedWhenNobodyLoggedInIsFalse                             | nobody logged in can't be affected                          |
+ * | isAffectedForUserWithoutAddressIsFalse                          | a user without an address can't be placed                   |
+ * | isAffectedIsTrueForUserNearActiveStorm                          | users within 25 miles of an active storm are affected       |
+ * | isAffectedIsFalseWhenStormIsOver                                | storms that are over don't affect anyone                    |
+ * | saveDataReturnsTrue                                             | all data can be saved                                       |
+ * | saveDataKeepsChangesAfterReload                                 | saved changes are still there after a restart               |
+ * +-----------------------------------------------------------------+-------------------------------------------------------------+
+ */
 /**
  * Tests for the HurricaneApplication facade.
  *
