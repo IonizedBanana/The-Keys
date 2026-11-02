@@ -21,41 +21,46 @@ import java.util.HashMap;
 import org.junit.Test;
 
 /* I did not use AI, but I'm making this table anyway, just to be safe.
+-Test------------------------------------Reasoning--------------------------------------
 UserList
--testFindUser (users with accounts should be able to be found in the list) Passed
--testUsernameNotTaken (usernames not associated with an account should not be labeled taken) Passed
--testAddValidUser (valid users should have no problems being added) Passed
--testAddUserPasswordTooShort (passwords must be at least 4 characters) --Failed #66
--testAddDuplicateUsername (usernames cannot be shared between accounts) --Failed #67
--testAddUserNoAtInEmail (emails must contain an @) --Failed #68
+-testFindUser                           |(users with accounts should be able to be found in the list) Passed
+-testUsernameNotTaken                   |(usernames not associated with an account should not be labeled taken) Passed
+-testAddValidUser                       |(valid users should have no problems being added) Passed
+-testAddUserPasswordTooShort            |(passwords must be at least 4 characters) --Failed #66
+-testAddDuplicateUsername               |(usernames cannot be shared between accounts) --Failed #67
+-testAddUserNoAtInEmail                 |(emails must contain an @) --Failed #68
 
 User
--testIsMatchSame (User should match is username and password are the same) Passed
--testIsMatchDifferentUsername (User should not match if username is different) Passed
--testIsMatchDifferentPassword (User should not match if password is different, even if username matches) Passed
--testRecieveAlertRelevent (User should be able recieve an alert that involves their location) Passed
--testRecieveAlertIrrelevent (User should not recieve an alert if it does not involve their location) Passed
+-testIsMatchSame                        |(User should match is username and password are the same) Passed
+-testIsMatchDifferentUsername           |(User should not match if username is different) Passed
+-testIsMatchDifferentPassword           |(User should not match if password is different, even if username matches) Passed
+-testRecieveAlertRelevent               |(User should be able recieve an alert that involves their location) Passed
+-testRecieveAlertIrrelevent             |(User should not recieve an alert if it does not involve their location) Passed
 
 Victim
--testGetFullParty (Should return all party members, including the user) Passed
--testUpdatePartySizeWhenAddingMember (Party size should increase when adding a party member) Passed
--testUpdatePartySizeWhenAddingPet (Party size shouldn't increase when adding a pet) Passed
--testAddPartyMemberValid (Party members should have no problems being added if they are valid) Passed
+-testGetFullParty                       |(Should return all party members, including the user) Passed
+-testUpdatePartySizeWhenAddingMember    |(Party size should increase when adding a party member) Passed
+-testUpdatePartySizeWhenAddingPet       |(Party size shouldn't increase when adding a pet) Passed
+-testAddPartyMemberValid                |(Party members should have no problems being added if they are valid) Passed
 
 Person
 
 Admin
--testSendValidAlert (Admins can send alerts) Passed
--testSendBlankIssuedByAlert (Admins shouldn't be able to send Alerts with no "issuedBy") --Failed #69
--testVerifyCredential (Admins should be able to verify credentials) Passed
+-testSendValidAlert                     |(Admins can send alerts) Passed
+-testSendBlankIssuedByAlert             |(Admins shouldn't be able to send Alerts with no "issuedBy") --Failed #69
+-testVerifyCredential                   |(Admins should be able to verify credentials) Passed
 
 Dispatcher
--testAssignToRequest (Dispatchers should be able to assign availible volunteers to a request,
-which should update the volunteer's assigned request and availibility) --Failed #75
--testRequestMoreInfo (Dispatchers should send a notifications to Victims to ask for more information) Passed
+-testAssignToRequest                    |(Dispatchers should be able to assign availible volunteers to a request, which should update the volunteer's assigned request and availibility) --Failed #75
+-testRequestMoreInfo                    |(Dispatchers should send a notifications to Victims to ask for more information) Passed
+-testAssignToUnavailible                |(Unavailible volunteer shouldn't be assigned to requests) Passed
 
+Volunteer
+-testSubmitNullCredential               |(Credential can't be null) --Failed #83
+-testSubmitNullStringsCredential        |(Attributes of Credential can't be null) --Failed #85
+-testSubmitBlankStringsCredential       |(Attributes of Credential can't be blank) --Failed #87
 
-
+-----------------------------------------------------------------------------------------------------
 */
 public class UserListTest {
     public static final Address SC = new Address("1 Vendue Range", "Charleston", "SC", "9401");
@@ -278,6 +283,17 @@ public class UserListTest {
     }
 
     @Test
+    public void testAssignToUnavailible() {
+        Dispatcher dispatcher = ((Dispatcher)(UserList.getInstance().getUser("mbanker")));
+        Victim victim = ((Victim)(UserList.getInstance().getUser("treeclimber")));
+        Request request = victim.getCreatedRequests().getFirst();
+        Volunteer volunteer = ((Volunteer)(UserList.getInstance().getUser("fert")));
+        volunteer.setAvailible(false);
+        dispatcher.respondToRequest(request, volunteer);
+        assertFalse(volunteer.getAssignedRequest() == request);
+    }
+
+    @Test
     public void testRequestMoreInfo() {
         Dispatcher dispatcher = ((Dispatcher)(UserList.getInstance().getUser("mbanker")));
         Victim victim = ((Victim)(UserList.getInstance().getUser("treeclimber")));
@@ -286,5 +302,34 @@ public class UserListTest {
         dispatcher.requestMoreInfo(request, "Tell me exactly what kind of help you need");
         System.out.println(victim.getReceivedAlerts().size() > 0);
         assertTrue(victim.getReceivedAlerts().size() > 0);
+    }
+
+    // Volunteer tests
+    @Test 
+    public void testSubmitValidCredential() {
+        Volunteer volunteer = ((Volunteer) UserList.getInstance().getUser("fert"));
+        volunteer.submitCredential(new Credential("Super driver's license 2.0", "Super SCDMV 2.0", Date.from(Instant.now()), false));
+        assertTrue(volunteer.getCredentials().size() == 2);
+    }
+
+    @Test 
+    public void testSubmitNullCredential() {
+        Volunteer volunteer = ((Volunteer) UserList.getInstance().getUser("fert"));
+        volunteer.submitCredential(null);
+        assertFalse(volunteer.getCredentials().size() == 2);
+    }
+
+    @Test 
+    public void testSubmitNullStringsCredential() {
+        Volunteer volunteer = ((Volunteer) UserList.getInstance().getUser("fert"));
+        volunteer.submitCredential(new Credential(null, null, Date.from(Instant.now()), false));
+        assertFalse(volunteer.getCredentials().size() == 2);
+    }
+    
+    @Test
+    public void testSubmitBlankStringsCredential() {
+        Volunteer volunteer = ((Volunteer) UserList.getInstance().getUser("fert"));
+        volunteer.submitCredential(new Credential("", "", Date.from(Instant.now()), false));
+        assertFalse(volunteer.getCredentials().size() == 2);
     }
 }
