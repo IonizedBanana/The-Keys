@@ -1,1 +1,1 @@
-[{"id":"44444444-0000-0000-0000-000000000001","name":"Scarlett","category":4,"currentLocation":{"city":"Charleston","state":"SC"},"predictedPath":[{"city":"Summerville","state":"SC"}],"impactArea":[{"city":"Charleston","state":"SC"}],"status":"IN_PROGRESS"}]
+[{"impactArea":[],"name":"Scarlett","id":"3c75a762-d8f2-4b1a-8874-0382fb5aca8e","category":4,"currentLocation":{"zip":null,"address":null,"city":"Charleston","state":"SC"},"predictedPath":[],"status":"INCOMING"}]

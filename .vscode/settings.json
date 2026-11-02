@@ -1,0 +1,8 @@
+{
+    "java.test.config": [
+        {
+            "name": "default",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
