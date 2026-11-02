@@ -20,7 +20,7 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-/*
+/* I did not use AI, but I'm making this table anyway, just to be safe.
 UserList
 -testFindUser (users with accounts should be able to be found in the list) Passed
 -testUsernameNotTaken (usernames not associated with an account should not be labeled taken) Passed
@@ -47,9 +47,12 @@ Person
 Admin
 -testSendValidAlert (Admins can send alerts) Passed
 -testSendBlankIssuedByAlert (Admins shouldn't be able to send Alerts with no "issuedBy") --Failed #69
--testVerifyCredential (Admins should be able to verify credentials)
+-testVerifyCredential (Admins should be able to verify credentials) Passed
 
-
+Dispatcher
+-testAssignToRequest (Dispatchers should be able to assign availible volunteers to a request,
+which should update the volunteer's assigned request and availibility) --Failed #75
+-testRequestMoreInfo (Dispatchers should send a notifications to Victims to ask for more information) Passed
 
 
 
@@ -76,6 +79,8 @@ public class UserListTest {
         p = victimInstance.new Person("Nick Name", (byte)31, false, "A friend.");
         ((Victim)(UserList.getInstance().getUser("treeclimber"))).addPartyMember(p);
 
+        ((Victim)(UserList.getInstance().getUser("treeclimber"))).createRequest((byte)1, SC, "Help me I've fallen and I can't get up.");
+
 
         // Add a dispatcher
         UserList.getInstance().addUser(new Dispatcher("Marcus", "Banker", "mbanker", "mbanker@korycrayinc.org", "ilovefoodandmoney", new Address("Columbia", "SC"), "8885551234"));
@@ -83,13 +88,14 @@ public class UserListTest {
 
 
         // Add a shelter worker
-        //UserList.getInstance().addUser(new ShelterWorker("Juan", "Nicolas", "lamburger", "password123", "lamburger@lamburgerandfert.org", SC ));
+        Shelter shelter = ShelterList.getInstance().getShelter("Bond Court");
+        UserList.getInstance().addUser(new ShelterWorker("Juan", "Nicolas", "lamburger", "password123", "lamburger@lamburgerandfert.org", SC, shelter));
 
         // Add a volunteer
         UserList.getInstance().addUser(new Volunteer("Marco", "Martinez", "fert", "fert@lamburgerandfert.org", "L154187!@#4168923037$%&698", SC));
         UserList.getInstance().getUser("fert").setReceivedAlerts(new ArrayList<Alert>());
-        UserList.getInstance().getUser("fert").setReceivedAlerts(new ArrayList<Alert>());
-
+        ((Volunteer) UserList.getInstance().getUser("fert")).submitCredential(new Credential("Driver's license", "SCDMV", Date.from(Instant.now()), false));
+        ((Volunteer) UserList.getInstance().getUser("fert")).setAvailible(true);
 
         UserList.getInstance().save();
 	}
@@ -253,6 +259,32 @@ public class UserListTest {
 
     @Test
     public void testVerifyCredential() {
+        Admin admin = ((Admin)(UserList.getInstance().getUser("kmcdirk"))); 
+        Volunteer volunteer = ((Volunteer)(UserList.getInstance().getUser("fert"))); 
+        Credential credential = volunteer.getCredentials().getFirst();
+        admin.verifyCredential(credential);
+        assertTrue(volunteer.getCredentials().getFirst().isVerified());
+    }
 
+    // Dispatcher tests
+    @Test
+    public void testAssignToRequest() {
+        Dispatcher dispatcher = ((Dispatcher)(UserList.getInstance().getUser("mbanker")));
+        Victim victim = ((Victim)(UserList.getInstance().getUser("treeclimber")));
+        Request request = victim.getCreatedRequests().getFirst();
+        Volunteer volunteer = ((Volunteer)(UserList.getInstance().getUser("fert")));
+        dispatcher.respondToRequest(request, volunteer);
+        assertTrue(volunteer.getAssignedRequest() == request);
+    }
+
+    @Test
+    public void testRequestMoreInfo() {
+        Dispatcher dispatcher = ((Dispatcher)(UserList.getInstance().getUser("mbanker")));
+        Victim victim = ((Victim)(UserList.getInstance().getUser("treeclimber")));
+        Request request = victim.getCreatedRequests().getFirst();
+        System.out.println(victim.getReceivedAlerts().size() > 0);
+        dispatcher.requestMoreInfo(request, "Tell me exactly what kind of help you need");
+        System.out.println(victim.getReceivedAlerts().size() > 0);
+        assertTrue(victim.getReceivedAlerts().size() > 0);
     }
 }
