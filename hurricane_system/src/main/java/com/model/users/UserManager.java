@@ -1,85 +1,61 @@
 package com.model.users;
-import java.util.Scanner;
 import com.model.location.*;
 /**
  * 
  * UserManager
  * @author LoganH627
  */
+
 public class UserManager {
-    private static Scanner scanner = new Scanner(System.in);
-    public static User editUser(User user) {
-        System.out.println("type 1 to change Username, type 2 to change Password, type 3 to change Email Address, type 4 to change Firstname, type 5 to change Lastname, type 6 to change Address.");
-        
-        int choice = scanner.nextInt();
-        switch (choice) {
-            case 1:
-                System.out.println("Enter new username:");
-                String username = scanner.next();
-                changeUsername(user, username);
+    public enum UserParameter {
+        USERNAME,
+        PASSWORD,
+        EMAIL_ADDRESS,
+        FIRST_NAME,
+        LAST_NAME,
+        ADDRESS
+    }
+    public static void editUser(User user, UserParameter parameter, Object value) {
+        switch (parameter) {
+            case USERNAME:
+                changeUsername(user, (String) value);
                 break;
-            case 2:
-                System.out.println("Enter new password:");
-                String password = scanner.next();
-                changePassword(user, password);
+            case PASSWORD:
+                changePassword(user, (String) value);
                 break;
-            case 3:
-                System.out.println("Enter new email address:");
-                String emailAddress = scanner.next();
-                changeEmailAddress(user, emailAddress);
+            case EMAIL_ADDRESS:
+                changeEmailAddress(user, (String) value);
                 break;
-            case 4:
-                System.out.println("Enter new first name:");
-                String firstName = scanner.next();
-                changeFirstName(user, firstName);
+            case FIRST_NAME:
+                changeFirstName(user, (String) value);
                 break;
-            case 5:
-                System.out.println("Enter new last name:");
-                String lastName = scanner.next();
-                changeLastName(user, lastName);
+            case LAST_NAME:
+                changeLastName(user, (String) value);
                 break;
-            case 6:
-                System.out.println("Enter new state:");
-                String state = scanner.next();
-                System.out.println("Enter new city:");
-                String city = scanner.next();
-                System.out.println("Enter new address:");
-                String address = scanner.next();
-                System.out.println("Enter new zipcode:");
-                String zipcode = scanner.next();
-                Address newAddress = new Address(state, city, address, zipcode);
-                changeAddress(user, newAddress);
+            case ADDRESS:
+                changeAddress(user, (Address) value);
                 break;
+            default:
+                throw new IllegalArgumentException("Invalid user parameter");
         }
-        return user;
     }
-    public static User changeUsername(User user, String username) {
-       
+    public static void changeUsername(User user, String username) {
         user.setUsername(username);
-        return user;
     }
-    public static User changePassword(User user, String password) {
-        
+    public static void changePassword(User user, String password) {
         user.setPassword(password);
-        return user;
     }
-    public static User changeEmailAddress(User user, String emailAddress) {
-       
+    public static void changeEmailAddress(User user, String emailAddress) {
         user.setEmailAddress(emailAddress);
-        return user;
     }
-    public static User changeFirstName(User user, String firstName) {
+    public static void changeFirstName(User user, String firstName) {
        
         user.setFirstName(firstName);
-        return user;
     }
-     public static User changeLastName(User user, String lastName) {
+     public static void changeLastName(User user, String lastName) {
         user.setLastName(lastName);
-        return user;
     }
-    public static User changeAddress(User user, Address address) {
-      
+    public static void changeAddress(User user, Address address) {
         user.setAddress(address);
-        return user;
     }
 }
