@@ -1,1 +1,67 @@
-[{"firstName":"Kirk","lastName":"McDirk","emailAddress":"mcdirk@thepecans.org","password":"findthegoodineveryday","address":{"zip":"9401","address":"1 Vendue Range","city":"Charleston","state":"SC"},"phoneNumber":"8035551234","receivedAlerts":[],"id":"67a3d595-7ba6-442c-8fcf-1de065388091","type":"ADMIN","username":"kmcdirk"},{"firstName":"Juan","lastName":"Nicolas","emailAddress":"password123","password":"lamburger@lamburgerandfert.org","address":{"zip":"9401","address":"1 Vendue Range","city":"Charleston","state":"SC"},"shelter":{"expectedArrivals":0,"accomodations":["PET_FRIENDLY"],"address":{"zip":"29405","address":"3841 Leeds Avenue","city":"North Charleston","state":"SC"},"totalCapacity":150,"usedCapacity":60,"name":"Bond Court","resources":[{"unit":"GALLONS","quantity":40,"description":"jugs of water","type":"WATER"}],"id":"11111111-0000-0000-0000-000000000003","registeredPeople":[],"registeredPets":[]},"receivedAlerts":[],"id":"ff5fc883-cad6-4fff-a657-3bc03187e806","type":"SHELTER_WORKER","username":"lamburger"},{"firstName":"Marcus","lastName":"Banker","emailAddress":"mbanker@korycrayinc.org","password":"ilovefoodandmoney","address":{"zip":null,"address":null,"city":"Columbia","state":"SC"},"phoneNumber":"8885551234","receivedAlerts":[],"id":"e05e60f4-de05-41ed-b183-f6af078baa69","type":"DISPATCHER","username":"mbanker"},{"lastName":"Climber","address":{"zip":null,"address":null,"city":"Columbia","state":"SC"},"receivedAlerts":[],"sex":" ","description":"No description","type":"VICTIM","partySize":2,"firstName":"Trey","emailAddress":"tclimber@mailmail.org","password":"iliketrees","createdRequests":[{"severity":1,"requestee":"treeclimber","medicalNote":null,"description":"Help me I've fallen and I can't get up.","location":{"zip":"9401","address":"1 Vendue Range","city":"Charleston","state":"SC"},"id":"512dfe72-a510-4036-8409-b4e87418f2af","responderType":"ASSISTANCE","status":"WAITING"}],"phoneNumber":"","id":"684756d4-30d8-4a0c-b83f-cc178deeb123","age":-1,"party":[{"name":"Peter Chimney","isPet":true,"description":"A perfectly normal hamster with no special attributes. He seems to have a habit of getting lost.","age":1},{"name":"Nick Name","isPet":false,"description":"A friend.","age":31}],"username":"treeclimber"},{"lastName":"Martinez","address":{"zip":"9401","address":"1 Vendue Range","city":"Charleston","state":"SC"},"fieldsOfExpertise":[],"credentials":[{"verified":false,"type":"Driver's license","issuer":"SCDMV","expirationDate":"Nov 1, 2026, 10:28:09\u202FPM"}],"receivedAlerts":[],"available":true,"type":"VOLUNTEER","assignedRequest":{},"firstName":"Marco","emailAddress":"fert@lamburgerandfert.org","password":"L154187!@#4168923037$%&698","id":"5e65c527-3eda-449b-9320-10a83c069044","identityVerified":false,"username":"fert"}]
+[
+  {
+    "id": "22222222-0000-0000-0000-000000000001",
+    "type": "VOLUNTEER",
+    "firstName": "Rosa",
+    "lastName": "Delgado",
+    "username": "rdelgado",
+    "emailAddress": "rosa.delgado@email.com",
+    "password": "delgado123",
+    "address": {
+      "address": "1 Vendue Range",
+      "city": "Charleston",
+      "state": "SC",
+      "zip": "29401"
+    },
+    "receivedAlerts": [],
+    "credentials": [],
+    "fieldsOfExpertise": [
+      "TRAVEL"
+    ],
+    "identityVerified": true,
+    "available": true
+  },
+  {
+    "id": "22222222-0000-0000-0000-000000000002",
+    "type": "SHELTER_WORKER",
+    "firstName": "Felix",
+    "lastName": "Moreau",
+    "username": "Felix44",
+    "emailAddress": "felix.moreau@email.com",
+    "password": "passwordpassword",
+    "address": {
+      "address": "6401 Dorchester Road",
+      "city": "North Charleston",
+      "state": "SC",
+      "zip": "29418"
+    },
+    "receivedAlerts": [],
+    "shelter": {
+      "id": "11111111-0000-0000-0000-000000000005",
+      "name": "Zucker Middle School",
+      "address": {
+        "address": "6401 Dorchester Road",
+        "city": "North Charleston",
+        "state": "SC",
+        "zip": "29418"
+      },
+      "totalCapacity": 220,
+      "usedCapacity": 100,
+      "expectedArrivals": 0,
+      "resources": [
+        {
+          "type": "WATER",
+          "description": "jugs of water",
+          "quantity": 40,
+          "unit": "GALLONS"
+        }
+      ],
+      "accomodations": [
+        "PET_FRIENDLY",
+        "MEDICAL_STAFF"
+      ],
+      "registeredPeople": [],
+      "registeredPets": []
+    }
+  }
+]

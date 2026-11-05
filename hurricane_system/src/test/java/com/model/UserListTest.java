@@ -42,21 +42,31 @@ Victim
 -testUpdatePartySizeWhenAddingMember    |(Party size should increase when adding a party member) Passed
 -testUpdatePartySizeWhenAddingPet       |(Party size shouldn't increase when adding a pet) Passed
 -testAddPartyMemberValid                |(Party members should have no problems being added if they are valid) Passed
+-testConvertToVictim                    |(Other users can become victims) Failed #97
 
 Admin
 -testSendValidAlert                     |(Admins can send alerts) Passed
 -testSendBlankIssuedByAlert             |(Admins shouldn't be able to send Alerts with no "issuedBy") --Failed #69
 -testVerifyCredential                   |(Admins should be able to verify credentials) Passed
+-TestNoPhoneNumberAdmin                 |(Admin phone num can't be blank) Failed #96
+-TestShortPhoneNumAdmin                 |(Admin phone num can't be less than 10 characters) Failed #96
+
 
 Dispatcher
 -testAssignToRequest                    |(Dispatchers should be able to assign availible volunteers to a request, which should update the volunteer's assigned request and availibility) --Failed #75
 -testRequestMoreInfo                    |(Dispatchers should send a notifications to Victims to ask for more information) Passed
 -testAssignToUnavailible                |(Unavailible volunteer shouldn't be assigned to requests) Passed
+-TestNoPhoneNumberDispatcher            |(Dispatcher phone num can't be blank) Failed #96
+-TestShortPhoneNumAdmin                 |(Dispatcher phone num can't be less than 10 characters) Failed #96
+-testConvertToDispatcher                |(Other users can become dispatchers) Failed #97
 
 Volunteer
 -testSubmitNullCredential               |(Credential can't be null) --Failed #83
 -testSubmitNullStringsCredential        |(Attributes of Credential can't be null) --Failed #85
 -testSubmitBlankStringsCredential       |(Attributes of Credential can't be blank) --Failed #87
+-testUpdateRequestValid                 |(Volunteers can update the status of requests, except for complete) Passed
+-testUpdateRequestInvalid               |(Volunteers cannot update the status of requests to complete) Passed
+-testConvertToVolunteer                 |(Other users can become volunteers) Failed #97
 
 -----------------------------------------------------------------------------------------------------
 */
@@ -237,6 +247,15 @@ public class UserListTest {
         assertTrue(victim.getPartySize() == 2);
     }
 
+    @Test
+    public void testConvertToVictim() {
+        Admin admin = ((Admin)(UserList.getInstance().getUser("kmcdirk"))); 
+        Victim victim = new Victim(admin);
+        UserList.getInstance().addUser(victim);
+        UserList.getInstance().save();
+        assertTrue(UserList.getInstance().getUser("kmcdirk").getType() == UserType.VICTIM);
+    }
+
     // Admin tests
     @Test
     public void testSendValidAlert() {
@@ -265,6 +284,20 @@ public class UserListTest {
         Credential credential = volunteer.getCredentials().getFirst();
         admin.verifyCredential(credential);
         assertTrue(volunteer.getCredentials().getFirst().isVerified());
+    }
+
+    @Test 
+    public void TestNoPhoneNumber() {
+        UserList.getInstance().addUser(new Admin("Jarrod", "Burham", "jimmyjar", "jimmyjar@thepecans.org", "jammin", new Address("Columbia", "SC"), ""));
+        UserList.getInstance().save();
+        assertFalse(UserList.getInstance().usernameTaken("jimmyjar"));
+    }
+
+    @Test 
+    public void TestShortPhoneNumberAdmin() {
+        UserList.getInstance().addUser(new Admin("Jarrod", "Burham", "jimmyjar", "jimmyjar@thepecans.org", "jammin", new Address("Columbia", "SC"), "123"));
+        UserList.getInstance().save();
+        assertFalse(UserList.getInstance().usernameTaken("jimmyjar"));
     }
 
     // Dispatcher tests
@@ -300,6 +333,29 @@ public class UserListTest {
         assertTrue(victim.getReceivedAlerts().size() > 0);
     }
 
+    @Test
+    public void testConvertToDispatcher() {
+        Admin admin = ((Admin)(UserList.getInstance().getUser("kmcdirk"))); 
+        Dispatcher dispatcher = new Dispatcher(admin, "8035551234");
+        UserList.getInstance().addUser(dispatcher);
+        UserList.getInstance().save();
+        assertTrue(UserList.getInstance().getUser("kmcdirk").getType() == UserType.DISPATCHER);
+    }
+
+    @Test 
+    public void TestNoPhoneNumberDispatcher() {
+        UserList.getInstance().addUser(new Dispatcher("Jarrod", "Burham", "jimmyjar", "jimmyjar@thepecans.org", "jammin", new Address("Columbia", "SC"), ""));
+        UserList.getInstance().save();
+        assertFalse(UserList.getInstance().usernameTaken("jimmyjar"));
+    }
+
+    @Test 
+    public void TestShortPhoneNumberDispatcher() {
+        UserList.getInstance().addUser(new Dispatcher("Jarrod", "Burham", "jimmyjar", "jimmyjar@thepecans.org", "jammin", new Address("Columbia", "SC"), "123"));
+        UserList.getInstance().save();
+        assertFalse(UserList.getInstance().usernameTaken("jimmyjar"));
+    }
+
     // Volunteer tests
     @Test 
     public void testSubmitValidCredential() {
@@ -327,5 +383,32 @@ public class UserListTest {
         Volunteer volunteer = ((Volunteer) UserList.getInstance().getUser("fert"));
         volunteer.submitCredential(new Credential("", "", Date.from(Instant.now()), false));
         assertFalse(volunteer.getCredentials().size() == 2);
+    }
+
+    @Test 
+    public void testUpdateRequestValid() {
+        Volunteer volunteer = ((Volunteer) UserList.getInstance().getUser("fert"));
+        Victim victim = ((Victim)(UserList.getInstance().getUser("treeclimber")));
+        Request request = victim.getCreatedRequests().getFirst();
+        volunteer.updateRequest(request, ResponseStatus.IN_PROGRESS);
+        assertTrue(request.getStatus() == ResponseStatus.IN_PROGRESS);
+    }
+
+    @Test 
+    public void testUpdateRequestInvalid() {
+        Volunteer volunteer = ((Volunteer) UserList.getInstance().getUser("fert"));
+        Victim victim = ((Victim)(UserList.getInstance().getUser("treeclimber")));
+        Request request = victim.getCreatedRequests().getFirst();
+        volunteer.updateRequest(request, ResponseStatus.COMPLETE);
+        assertFalse(request.getStatus() == ResponseStatus.COMPLETE);
+    }
+
+    @Test
+    public void testConvertToVolunteer() {
+        Admin admin = ((Admin)(UserList.getInstance().getUser("kmcdirk"))); 
+        Volunteer volunteer = new Volunteer(admin);
+        UserList.getInstance().addUser(volunteer);
+        UserList.getInstance().save();
+        assertTrue(UserList.getInstance().getUser("kmcdirk").getType() == UserType.VOLUNTEER);
     }
 }
