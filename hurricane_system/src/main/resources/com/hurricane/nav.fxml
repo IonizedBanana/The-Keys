@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+
+<!-- Top navigation bar shared by every screen after login -->
+<HBox styleClass="top-nav" alignment="CENTER_LEFT" spacing="40.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hurricane.NavController">
+   <children>
+      <HBox alignment="CENTER_LEFT" spacing="10.0">
+         <children>
+            <fx:include source="logo-mark.fxml" />
+            <Label text="SafeKey" styleClass="logo-text" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="24.0">
+         <children>
+            <Button fx:id="homeLink" text="Home" styleClass="nav-link, active" onAction="#goHome" />
+            <!-- TODO hook these up once the shelters and my requests screens exist -->
+            <Button text="Shelters" styleClass="nav-link" />
+            <Button text="My Requests" styleClass="nav-link" />
+         </children>
+      </HBox>
+      <Region HBox.hgrow="ALWAYS" />
+      <HBox alignment="CENTER_LEFT" spacing="16.0">
+         <children>
+            <Label fx:id="stormTag" styleClass="tag, tag-warning" />
+            <!-- TODO open the new request screen once it exists -->
+            <Button text="New Request" styleClass="small" />
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+               <children>
+                  <Label fx:id="initialsLabel" styleClass="avatar" />
+                  <Label fx:id="nameLabel" />
+               </children>
+            </HBox>
+            <Button text="Log Out" styleClass="secondary, small" onAction="#logout" />
+         </children>
+      </HBox>
+   </children>
+</HBox>

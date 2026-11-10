@@ -1,0 +1,726 @@
+/*
+ * SafeKey design system for JavaFX.
+ *
+ * Colors, type and components match the Figma prototype (dark theme, teal accent).
+ * Every screen gets this file from App, so screens only add style classes.
+ *
+ * Fonts: Archivo (headings), IBM Plex Sans (text), IBM Plex Mono (data).
+ * If they aren't installed JavaFX falls back to the system font.
+ */
+
+/* ======================================================================
+ * Colors
+ * ====================================================================== */
+
+.root {
+    /* surfaces */
+    -sk-background: #0B1220;
+    -sk-surface: #111A2E;
+    -sk-surface-raised: #18233A;
+    -sk-border: #26324A;
+    -sk-input: #0E1628;
+
+    /* text */
+    -sk-text: #F1F5F9;
+    -sk-text-secondary: #A3B1C6;
+    -sk-text-muted: #6B7A90;
+
+    /* accent and status */
+    -sk-primary: #0D9488;
+    -sk-primary-hover: #0F766E;
+    -sk-primary-pressed: #115E59;
+    -sk-success: #22C55E;
+    -sk-warning: #F59E0B;
+    -sk-info: #38BDF8;
+    -sk-danger: #EF4444;
+
+    /* tints used behind tags, alerts and selected items */
+    -sk-primary-tint: rgba(13, 148, 136, 0.18);
+    -sk-success-tint: rgba(34, 197, 94, 0.15);
+    -sk-warning-tint: rgba(245, 158, 11, 0.12);
+    -sk-info-tint: rgba(56, 189, 248, 0.15);
+    -sk-danger-tint: rgba(239, 68, 68, 0.12);
+
+    /* tell modena's built-in controls about the theme */
+    -fx-base: -sk-surface;
+    -fx-background: -sk-background;
+    -fx-control-inner-background: -sk-input;
+    -fx-accent: -sk-primary;
+    -fx-focus-color: -sk-primary;
+    -fx-faint-focus-color: transparent;
+    -fx-text-base-color: -sk-text;
+    -fx-text-background-color: -sk-text;
+    -fx-text-inner-color: -sk-text;
+    -fx-selection-bar: -sk-primary-tint;
+    -fx-selection-bar-non-focused: -sk-primary-tint;
+    -fx-selection-bar-text: -sk-text;
+
+    -fx-background-color: -sk-background;
+    -fx-font-family: "IBM Plex Sans";
+    -fx-font-size: 14px;
+}
+
+/* ======================================================================
+ * Type
+ * ====================================================================== */
+
+.label {
+    -fx-text-fill: -sk-text;
+}
+
+.display {
+    -fx-font-family: "Archivo";
+    -fx-font-size: 44px;
+    -fx-font-weight: bold;
+}
+
+.h1 {
+    -fx-font-family: "Archivo";
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+}
+
+.h2 {
+    -fx-font-family: "Archivo";
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.h3 {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.body-large {
+    -fx-font-size: 15px;
+}
+
+.field-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: -sk-text-secondary;
+}
+
+/* ids, times, distances and other data */
+.caption {
+    -fx-font-family: "IBM Plex Mono";
+    -fx-font-size: 12px;
+    -fx-text-fill: -sk-text-muted;
+}
+
+.text-secondary {
+    -fx-text-fill: -sk-text-secondary;
+}
+
+.text-muted {
+    -fx-text-fill: -sk-text-muted;
+}
+
+.text-primary {
+    -fx-text-fill: -sk-primary;
+}
+
+.text-warning {
+    -fx-text-fill: -sk-warning;
+}
+
+.text-danger {
+    -fx-text-fill: -sk-danger;
+}
+
+.error-label {
+    -fx-text-fill: -sk-danger;
+    -fx-font-size: 13px;
+}
+
+/* ======================================================================
+ * Buttons
+ * ====================================================================== */
+
+/* primary action: teal, white text */
+.button {
+    -fx-background-color: -sk-primary;
+    -fx-background-radius: 4px;
+    -fx-background-insets: 0;
+    -fx-border-color: transparent;
+    -fx-border-radius: 4px;
+    -fx-border-width: 1.5px;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 20px;
+    -fx-pref-height: 40px;
+    -fx-min-height: 40px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: -sk-primary-hover;
+}
+
+.button:pressed,
+.button:armed {
+    -fx-background-color: -sk-primary-pressed;
+}
+
+.button:focused {
+    -fx-border-color: rgba(241, 245, 249, 0.6);
+}
+
+.button:disabled {
+    -fx-opacity: 0.45;
+}
+
+/* secondary: outlined, for the less important choice */
+.button.secondary {
+    -fx-background-color: transparent;
+    -fx-border-color: -sk-border;
+    -fx-text-fill: -sk-text;
+}
+
+.button.secondary:hover {
+    -fx-background-color: -sk-surface-raised;
+}
+
+.button.secondary:pressed,
+.button.secondary:armed {
+    -fx-background-color: -sk-border;
+}
+
+/* destructive: cancel a request, delete */
+.button.danger {
+    -fx-background-color: transparent;
+    -fx-border-color: -sk-danger;
+    -fx-text-fill: -sk-danger;
+}
+
+.button.danger:hover {
+    -fx-background-color: -sk-danger-tint;
+}
+
+/* smaller button for the nav bar and tight spots */
+.button.small {
+    -fx-pref-height: 34px;
+    -fx-min-height: 34px;
+    -fx-padding: 0 16px;
+    -fx-font-size: 13px;
+}
+
+/* square icon button, e.g. the - and + on the party size stepper */
+.button.icon {
+    -fx-background-color: -sk-surface-raised;
+    -fx-text-fill: -sk-text;
+    -fx-padding: 0;
+    -fx-pref-width: 30px;
+    -fx-min-width: 30px;
+    -fx-pref-height: 30px;
+    -fx-min-height: 30px;
+}
+
+.button.icon:hover {
+    -fx-background-color: -sk-border;
+}
+
+/* text-only link, e.g. "Forgot password?" */
+.hyperlink {
+    -fx-text-fill: -sk-primary;
+    -fx-font-size: 13px;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-underline: false;
+}
+
+.hyperlink:hover {
+    -fx-underline: true;
+}
+
+.hyperlink:visited {
+    -fx-text-fill: -sk-primary;
+}
+
+.hyperlink:focused {
+    -fx-border-color: transparent;
+}
+
+/* ======================================================================
+ * Text inputs
+ * ====================================================================== */
+
+.text-field,
+.password-field,
+.text-area,
+.combo-box,
+.date-picker {
+    -fx-background-color: -sk-input;
+    -fx-background-radius: 4px;
+    -fx-background-insets: 0;
+    -fx-border-color: -sk-border;
+    -fx-border-radius: 4px;
+    -fx-border-width: 1.5px;
+    -fx-text-fill: -sk-text;
+    -fx-prompt-text-fill: -sk-text-muted;
+    -fx-highlight-fill: -sk-primary;
+    -fx-highlight-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+.text-field,
+.password-field {
+    -fx-pref-height: 40px;
+    -fx-padding: 0 14px;
+}
+
+.text-field:focused,
+.password-field:focused,
+.text-area:focused,
+.combo-box:focused,
+.combo-box:showing {
+    -fx-border-color: -sk-primary;
+    -fx-border-width: 2px;
+}
+
+/* red outline for a field that failed validation */
+.text-field.invalid,
+.password-field.invalid,
+.text-area.invalid,
+.combo-box.invalid {
+    -fx-border-color: -sk-danger;
+}
+
+.text-area {
+    -fx-padding: 6px;
+}
+
+.text-area .content {
+    -fx-background-color: -sk-input;
+    -fx-background-radius: 4px;
+    -fx-padding: 6px 8px;
+}
+
+.text-area .scroll-pane,
+.text-area .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ======================================================================
+ * Dropdowns
+ *
+ * One panel for the open list, only the selected item highlighted
+ * (prototype feedback: grey on every item looked odd).
+ * ====================================================================== */
+
+.combo-box {
+    -fx-pref-height: 40px;
+    -fx-padding: 0 4px;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: -sk-text;
+    -fx-padding: 0 10px;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 10px;
+}
+
+.combo-box .arrow {
+    -fx-background-color: -sk-text-secondary;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: -sk-surface-raised;
+    -fx-background-radius: 4px;
+    -fx-border-color: -sk-border;
+    -fx-border-radius: 4px;
+    -fx-padding: 4px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.45), 24, 0, 0, 8);
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: transparent;
+    -fx-background-radius: 3px;
+    -fx-text-fill: -sk-text-secondary;
+    -fx-padding: 9px 12px;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: -sk-border;
+    -fx-text-fill: -sk-text;
+}
+
+.combo-box-popup .list-view .list-cell:selected {
+    -fx-background-color: -sk-primary-tint;
+    -fx-text-fill: -sk-text;
+}
+
+/* ======================================================================
+ * Chips (ToggleButtons with styleClass="chip"), e.g. special needs
+ * ====================================================================== */
+
+.toggle-button.chip {
+    -fx-background-color: transparent;
+    -fx-background-radius: 3px;
+    -fx-border-color: -sk-border;
+    -fx-border-radius: 3px;
+    -fx-border-width: 1.5px;
+    -fx-text-fill: -sk-text-secondary;
+    -fx-font-size: 13px;
+    -fx-padding: 6px 12px;
+    -fx-cursor: hand;
+}
+
+.toggle-button.chip:hover {
+    -fx-border-color: -sk-text-muted;
+}
+
+.toggle-button.chip:selected {
+    -fx-background-color: -sk-primary-tint;
+    -fx-border-color: -sk-primary;
+    -fx-text-fill: -sk-text;
+}
+
+/* ======================================================================
+ * Check boxes and radio buttons
+ * ====================================================================== */
+
+.check-box,
+.radio-button {
+    -fx-text-fill: -sk-text;
+}
+
+.check-box .box,
+.radio-button .radio {
+    -fx-background-color: -sk-input;
+    -fx-border-color: -sk-border;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+}
+
+.radio-button .radio {
+    -fx-border-radius: 1em;
+    -fx-background-radius: 1em;
+}
+
+.check-box:selected .box,
+.radio-button:selected .radio {
+    -fx-background-color: -sk-primary;
+    -fx-border-color: -sk-primary;
+}
+
+.check-box:selected .mark,
+.radio-button:selected .dot {
+    -fx-background-color: white;
+}
+
+/* ======================================================================
+ * Layout pieces
+ * ====================================================================== */
+
+/* white-on-navy panel used for every content block */
+.card {
+    -fx-background-color: -sk-surface;
+    -fx-background-radius: 4px;
+    -fx-border-color: -sk-border;
+    -fx-border-radius: 4px;
+    -fx-padding: 20px;
+}
+
+/* small stat box inside a card, e.g. storm category */
+.stat {
+    -fx-background-color: -sk-surface-raised;
+    -fx-background-radius: 4px;
+    -fx-padding: 12px 14px;
+}
+
+/* one clickable row in a list, e.g. a request or shelter */
+.list-row {
+    -fx-background-color: -sk-surface;
+    -fx-background-radius: 4px;
+    -fx-border-color: -sk-border;
+    -fx-border-radius: 4px;
+    -fx-padding: 14px 18px;
+    -fx-cursor: hand;
+}
+
+.list-row:hover {
+    -fx-background-color: -sk-surface-raised;
+}
+
+/* a row inside a card, split from the one above by a hairline */
+.divided-row {
+    -fx-border-color: -sk-border transparent transparent transparent;
+    -fx-border-width: 1px 0 0 0;
+    -fx-padding: 12px 0;
+}
+
+.separator .line {
+    -fx-border-color: -sk-border;
+    -fx-border-width: 1px 0 0 0;
+}
+
+/* ======================================================================
+ * Sign in / sign up: branded panel on the left
+ * ====================================================================== */
+
+.hero {
+    -fx-background-color: -sk-surface-raised;
+    -fx-border-color: transparent -sk-border transparent transparent;
+    -fx-border-width: 0 1px 0 0;
+    -fx-padding: 0 80px;
+}
+
+.feature-check {
+    -fx-text-fill: -sk-success;
+    -fx-font-weight: bold;
+}
+
+/* hurricane mark in logo-mark.fxml */
+.logo-arm {
+    -fx-fill: transparent;
+    -fx-stroke: -sk-text;
+    -fx-stroke-width: 3.33;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-line-join: round;
+}
+
+.logo-eye {
+    -fx-fill: #2CA9BC;
+}
+
+.logo-text {
+    -fx-font-family: "Archivo";
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* ======================================================================
+ * Top navigation bar
+ * ====================================================================== */
+
+.top-nav {
+    -fx-background-color: -sk-surface;
+    -fx-border-color: transparent transparent -sk-border transparent;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 0 48px;
+    -fx-pref-height: 60px;
+    -fx-min-height: 60px;
+}
+
+/* nav links are Buttons with styleClass="nav-link"; the current page adds "active" */
+.button.nav-link {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 3px 0;
+    -fx-border-radius: 0;
+    -fx-text-fill: -sk-text-secondary;
+    -fx-font-weight: normal;
+    -fx-font-size: 13px;
+    -fx-padding: 0 2px;
+    -fx-pref-height: 60px;
+    -fx-min-height: 60px;
+}
+
+.button.nav-link:hover {
+    -fx-text-fill: -sk-text;
+}
+
+.button.nav-link.active {
+    -fx-border-color: transparent transparent -sk-primary transparent;
+    -fx-text-fill: -sk-text;
+}
+
+.avatar {
+    -fx-background-color: rgba(13, 148, 136, 0.35);
+    -fx-background-radius: 1em;
+    -fx-min-width: 32px;
+    -fx-min-height: 32px;
+    -fx-max-width: 32px;
+    -fx-max-height: 32px;
+    -fx-alignment: center;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+/* ======================================================================
+ * Status tags: Labels with styleClass="tag" plus one color class
+ * ====================================================================== */
+
+.tag {
+    -fx-font-family: "IBM Plex Mono";
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 3px;
+    -fx-padding: 3px 8px;
+}
+
+.tag-success {
+    -fx-background-color: -sk-success-tint;
+    -fx-text-fill: -sk-success;
+}
+
+.tag-warning {
+    -fx-background-color: -sk-warning-tint;
+    -fx-text-fill: -sk-warning;
+}
+
+.tag-info {
+    -fx-background-color: -sk-info-tint;
+    -fx-text-fill: -sk-info;
+}
+
+.tag-danger {
+    -fx-background-color: -sk-danger-tint;
+    -fx-text-fill: -sk-danger;
+}
+
+.tag-neutral {
+    -fx-background-color: -sk-surface-raised;
+    -fx-text-fill: -sk-text-secondary;
+}
+
+/* ======================================================================
+ * Alert banners: solid bar on the left, faint tint behind
+ * ====================================================================== */
+
+.alert-banner {
+    -fx-background-radius: 2px;
+    -fx-border-width: 0 0 0 4px;
+    -fx-padding: 14px 18px;
+}
+
+.alert-warning {
+    -fx-background-color: -sk-warning-tint;
+    -fx-border-color: -sk-warning;
+}
+
+.alert-danger {
+    -fx-background-color: -sk-danger-tint;
+    -fx-border-color: -sk-danger;
+}
+
+.alert-info {
+    -fx-background-color: -sk-info-tint;
+    -fx-border-color: -sk-info;
+}
+
+.alert-title {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.alert-warning .alert-title {
+    -fx-text-fill: -sk-warning;
+}
+
+.alert-danger .alert-title {
+    -fx-text-fill: -sk-danger;
+}
+
+.alert-info .alert-title {
+    -fx-text-fill: -sk-info;
+}
+
+/* ======================================================================
+ * Scrolling
+ * ====================================================================== */
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: -sk-border;
+    -fx-background-radius: 4px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: -sk-text-muted;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
+
+/* ======================================================================
+ * Lists and tables (for screens that use ListView / TableView)
+ * ====================================================================== */
+
+.list-view,
+.table-view {
+    -fx-background-color: -sk-surface;
+    -fx-border-color: -sk-border;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.list-cell,
+.table-row-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: -sk-text;
+    -fx-padding: 10px 12px;
+}
+
+.list-cell:filled:hover,
+.table-row-cell:filled:hover {
+    -fx-background-color: -sk-surface-raised;
+}
+
+.list-cell:filled:selected,
+.table-row-cell:filled:selected {
+    -fx-background-color: -sk-primary-tint;
+}
+
+.table-view .column-header,
+.table-view .column-header-background,
+.table-view .filler {
+    -fx-background-color: -sk-surface-raised;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: -sk-text-secondary;
+    -fx-font-weight: bold;
+}
+
+/* ======================================================================
+ * Tooltips and dialogs
+ * ====================================================================== */
+
+.tooltip {
+    -fx-background-color: -sk-surface-raised;
+    -fx-background-radius: 4px;
+    -fx-text-fill: -sk-text;
+    -fx-font-size: 12px;
+}
+
+.dialog-pane {
+    -fx-background-color: -sk-surface;
+}
+
+.dialog-pane > .content.label {
+    -fx-text-fill: -sk-text;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: -sk-surface-raised;
+}
