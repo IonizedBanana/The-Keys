@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <!-- TODO placeholder home screen; replace with the real screens for each user type -->
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hurricane.HomeController">
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controllers.HomeController">
    <children>
       <Label text="You are logged in." style="-fx-font-size: 18px;" />
       <Button text="Log Out" onAction="#logout" />
