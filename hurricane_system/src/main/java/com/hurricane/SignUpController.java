@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
+import com.model.*;
 
 /**
  * Controls the sign-up screen.
@@ -25,6 +27,18 @@ public class SignUpController {
 
     @FXML
     private TextField emailField;
+
+    @FXML 
+    private TextField streetField;
+
+    @FXML 
+    private TextField cityField;
+
+    @FXML
+    private TextField stateField;
+
+    @FXML
+    private TextField zipField;
 
     @FXML
     private PasswordField passwordField;
@@ -44,7 +58,13 @@ public class SignUpController {
         String lastName = lastNameField.getText();
         String username = usernameField.getText();
         String email = emailField.getText();
+        String street = streetField.getText();
+        String city = cityField.getText();
+        String state = stateField.getText();
+        String zip = zipField.getText();
         String password = passwordField.getText();
+
+        com.model.location.Address address = new com.model.location.Address(street, city, state, zip);
 
         if (firstName.isBlank() || lastName.isBlank() || username.isBlank()
                 || email.isBlank() || password.isBlank()) {
@@ -58,7 +78,7 @@ public class SignUpController {
             return;
         }
 
-        if (HurricaneApplication.getInstance().createAccount(firstName, lastName, username, email, password)) {
+        if (HurricaneApplication.getInstance().createAccount(firstName, lastName, username, email, password, address)) {
             App.setRoot("home");
         } else {
             // TODO give a specific reason (e.g. username taken) once createAccount can report one
