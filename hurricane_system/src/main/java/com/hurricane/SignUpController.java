@@ -72,6 +72,11 @@ public class SignUpController {
             return;
         }
 
+        if (!username.equals(username.toLowerCase())) {
+            usernameField.setStyle(Const.ERROR_STYLE);
+            return;
+        }
+
         if (!Const.isValidEmail(email)) {
             emailField.setStyle(Const.ERROR_STYLE);
             errorLabel.setText("Enter a valid email.");
