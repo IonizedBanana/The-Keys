@@ -75,6 +75,9 @@ public class Admin extends User {
     public void setPhoneNumber(String phoneNumber) {
         if (phoneNumber.isBlank())
             return;
+        // the range allows for 123-456-7890 or just 1234567890
+        if (phoneNumber.length() < 10 || phoneNumber.length() > 12)
+            return;
         this.phoneNumber = phoneNumber;
     }
 
