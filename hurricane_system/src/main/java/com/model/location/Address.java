@@ -7,6 +7,9 @@ public class Address {
   private String zip;
 
   public Address(String street, String city, String state, String zip) {
+    if (street == null || city == null || state == null || zip == null) {
+      return;
+    }
     this.street = street;
     this.city = city;
     this.state = state;
@@ -14,6 +17,9 @@ public class Address {
   }
 
   public Address(String city, String state) {
+    if (city == null || state == null) {
+      return;
+    }
     this.city = city;
     this.state = state;
     this.street = null;
