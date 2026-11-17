@@ -72,9 +72,22 @@ public class SignUpController {
             return;
         }
 
+        if (!Const.isValidEmail(email)) {
+            emailField.setStyle(Const.ERROR_STYLE);
+            errorLabel.setText("Enter a valid email.");
+            return;
+        }
+
         if (!password.equals(confirmPasswordField.getText())) {
             errorLabel.setText("Passwords do not match.");
             confirmPasswordField.clear();
+            return;
+        }
+
+            if (password.length() <= Const.MIN_PASSWORD_LENGTH) {
+            errorLabel.setText("Passwords must be greater than 4 characters.");
+            passwordField.setStyle(Const.ERROR_STYLE);
+            confirmPasswordField.setStyle(Const.ERROR_STYLE);
             return;
         }
 
