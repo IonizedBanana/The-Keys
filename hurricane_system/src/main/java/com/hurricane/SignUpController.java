@@ -66,43 +66,42 @@ public class SignUpController {
 
         com.model.location.Address address = new com.model.location.Address(street, city, state, zip);
 
-        if (firstName.isBlank() || lastName.isBlank() || username.isBlank()
-                || email.isBlank() || password.isBlank()) {
-            errorLabel.setText("Fill in every field.");
-            return;
-        }
+        if (Const.anyBlank(firstName, lastName, username, email, password)) {
+    errorLabel.setText("Fill in every field.");
+    return;
+    }
 
-        if (!username.equals(username.toLowerCase())) {
-            usernameField.setStyle(Const.ERROR_STYLE);
-            return;
-        }
+        if (Const.hasUppercase(username)) {
+    usernameField.setStyle(Const.ERROR_STYLE);
+    errorLabel.setText("Username cannot contain capital letters.");
+    return;
+    }
 
         if (!Const.isValidEmail(email)) {
-            emailField.setStyle(Const.ERROR_STYLE);
-            errorLabel.setText("Enter a valid email.");
-            return;
-        }
+    emailField.setStyle(Const.ERROR_STYLE);
+    errorLabel.setText("Enter a valid email.");
+    return;
+    }  
 
-        if (!password.equals(confirmPasswordField.getText())) {
-            errorLabel.setText("Passwords do not match.");
-            confirmPasswordField.clear();
-            return;
-        }
+        if (!Const.passwordsMatch(password, confirmPasswordField.getText())) {
+    errorLabel.setText("Passwords do not match.");
+    confirmPasswordField.clear();
+    return;
+    }
 
-            if (password.length() <= Const.MIN_PASSWORD_LENGTH) {
-            errorLabel.setText("Passwords must be greater than 4 characters.");
-            passwordField.setStyle(Const.ERROR_STYLE);
-            confirmPasswordField.setStyle(Const.ERROR_STYLE);
-            return;
-        }
+        if (!Const.isPasswordLongEnough(password)) {
+    errorLabel.setText("Passwords must be greater than " + Const.MIN_PASSWORD_LENGTH + " characters.");
+    passwordField.setStyle(Const.ERROR_STYLE);
+    confirmPasswordField.setStyle(Const.ERROR_STYLE);
+    return;
+    }
 
         if (HurricaneApplication.getInstance().createAccount(firstName, lastName, username, email, password, address)) {
-            App.setRoot("home");
-        } else {
-            // TODO give a specific reason (e.g. username taken) once createAccount can report one
-            errorLabel.setText("Could not create account. That username may already be taken.");
-        }
+    App.setRoot("home");
+    } else {
+        errorLabel.setText("Could not create account. That username may already be taken.");
     }
+}
 
     @FXML
     private void switchToLogin() throws IOException {
