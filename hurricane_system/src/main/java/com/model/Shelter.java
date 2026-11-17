@@ -89,6 +89,9 @@ public class Shelter {
   }
 
   public void addResource(Resource resource) {
+    if (resource == null) {
+      return;
+    }
     resources.add(resource);
   }
 
