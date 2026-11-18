@@ -31,6 +31,10 @@ public class HomeController {
     /** A shelter at least this full (used / total) is shown as filling up. */
     private static final double FILLING_UP = 0.8;
 
+    /** Injected from the fx:include with fx:id="nav" in home.fxml. */
+    @FXML
+    private NavController navController;
+
     @FXML
     private Label greetingLabel;
 
@@ -69,6 +73,8 @@ public class HomeController {
 
     @FXML
     private void initialize() {
+        navController.setActive(NavController.Page.HOME);
+
         HurricaneApplication app = HurricaneApplication.getInstance();
         User user = app.getCurrentUser();
 

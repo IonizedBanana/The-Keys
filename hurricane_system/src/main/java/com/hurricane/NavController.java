@@ -17,8 +17,20 @@ import javafx.scene.control.Label;
  */
 public class NavController {
 
+    /** The screens the nav bar can point at. */
+    public enum Page { HOME, SHELTERS, REQUESTS, NEW_REQUEST }
+
     @FXML
     private Button homeLink;
+
+    @FXML
+    private Button sheltersLink;
+
+    @FXML
+    private Button requestsLink;
+
+    @FXML
+    private Button newRequestButton;
 
     @FXML
     private Label stormTag;
@@ -43,6 +55,31 @@ public class NavController {
             stormTag.setManaged(false);
         } else {
             stormTag.setText(("Hurricane " + storm.getName() + " · Cat " + storm.getCategory()).toUpperCase());
+        }
+    }
+
+    /**
+     * Marks the screen the user is on. Screens that include nav.fxml with
+     * fx:id="nav" get this controller injected as navController and call this
+     * from their own initialize().
+     *
+     * @param page the current screen
+     */
+    public void setActive(Page page) {
+        setActive(homeLink, page == Page.HOME);
+        setActive(sheltersLink, page == Page.SHELTERS);
+        setActive(requestsLink, page == Page.REQUESTS);
+
+        // no point offering "New Request" while already making one
+        boolean onNewRequest = page == Page.NEW_REQUEST;
+        newRequestButton.setVisible(!onNewRequest);
+        newRequestButton.setManaged(!onNewRequest);
+    }
+
+    private static void setActive(Button link, boolean active) {
+        link.getStyleClass().remove("active");
+        if (active) {
+            link.getStyleClass().add("active");
         }
     }
 

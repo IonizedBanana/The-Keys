@@ -16,10 +16,10 @@
       </HBox>
       <HBox alignment="CENTER_LEFT" spacing="24.0">
          <children>
-            <Button fx:id="homeLink" text="Home" styleClass="nav-link, active" onAction="#goHome" />
+            <Button fx:id="homeLink" text="Home" styleClass="nav-link" onAction="#goHome" />
             <!-- TODO hook these up once the shelters and my requests screens exist -->
-            <Button text="Shelters" styleClass="nav-link" />
-            <Button text="My Requests" styleClass="nav-link" />
+            <Button fx:id="sheltersLink" text="Shelters" styleClass="nav-link" />
+            <Button fx:id="requestsLink" text="My Requests" styleClass="nav-link" />
          </children>
       </HBox>
       <Region HBox.hgrow="ALWAYS" />
@@ -27,7 +27,7 @@
          <children>
             <Label fx:id="stormTag" styleClass="tag, tag-warning" />
             <!-- TODO open the new request screen once it exists -->
-            <Button text="New Request" styleClass="small" />
+            <Button fx:id="newRequestButton" text="New Request" styleClass="small" />
             <HBox alignment="CENTER_LEFT" spacing="10.0">
                <children>
                   <Label fx:id="initialsLabel" styleClass="avatar" />
