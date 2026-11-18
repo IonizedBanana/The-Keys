@@ -19,7 +19,7 @@ import javafx.scene.control.Label;
 public class NavController {
 
     /** The screens the nav bar can point at. */
-    public enum Page { HOME, SHELTERS, REQUESTS, NEW_REQUEST }
+    public enum Page { HOME, SHELTERS, REQUESTS, NEW_REQUEST, ACCOUNT }
 
     @FXML
     private Button homeLink;
@@ -34,6 +34,9 @@ public class NavController {
     private Button newRequestButton;
 
     @FXML
+    private Button accountLink;
+
+    @FXML
     private Label stormTag;
 
     @FXML
@@ -44,11 +47,7 @@ public class NavController {
 
     @FXML
     private void initialize() {
-        User user = HurricaneApplication.getInstance().getCurrentUser();
-        if (user != null) {
-            initialsLabel.setText(initial(user.getFirstName()) + initial(user.getLastName()));
-            nameLabel.setText(user.getFirstName() + " " + user.getLastName());
-        }
+        showUser();
 
         Hurricane storm = activeStorm();
         if (storm == null) {
@@ -70,11 +69,24 @@ public class NavController {
         setActive(homeLink, page == Page.HOME);
         setActive(sheltersLink, page == Page.SHELTERS);
         setActive(requestsLink, page == Page.REQUESTS);
+        setActive(accountLink, page == Page.ACCOUNT);
 
         // no point offering "New Request" while already making one
         boolean onNewRequest = page == Page.NEW_REQUEST;
         newRequestButton.setVisible(!onNewRequest);
         newRequestButton.setManaged(!onNewRequest);
+    }
+
+    /**
+     * Shows the logged in user's initials and name. Called again after the
+     * user edits their name in Account Settings.
+     */
+    public void showUser() {
+        User user = HurricaneApplication.getInstance().getCurrentUser();
+        if (user != null) {
+            initialsLabel.setText(initials(user));
+            nameLabel.setText(user.getFirstName() + " " + user.getLastName());
+        }
     }
 
     private static void setActive(Button link, boolean active) {
@@ -100,9 +112,8 @@ public class NavController {
     }
 
     @FXML
-    private void logout() throws IOException {
-        HurricaneApplication.getInstance().logout();
-        App.setRoot("landing");
+    private void goAccount() throws IOException {
+        App.setRoot("account");
     }
 
     /**
@@ -117,6 +128,11 @@ public class NavController {
             }
         }
         return null;
+    }
+
+    /** A user's initials, e.g. "GC" for Gary Carter. */
+    static String initials(User user) {
+        return initial(user.getFirstName()) + initial(user.getLastName());
     }
 
     private static String initial(String name) {

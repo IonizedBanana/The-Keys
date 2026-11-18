@@ -27,13 +27,17 @@
          <children>
             <Label fx:id="stormTag" styleClass="tag, tag-warning" />
             <Button fx:id="newRequestButton" text="New Request" styleClass="small" onAction="#goNewRequest" />
-            <HBox alignment="CENTER_LEFT" spacing="10.0">
-               <children>
-                  <Label fx:id="initialsLabel" styleClass="avatar" />
-                  <Label fx:id="nameLabel" />
-               </children>
-            </HBox>
-            <Button text="Log Out" styleClass="secondary, small" onAction="#logout" />
+            <!-- avatar and name open Account Settings, where Log Out lives -->
+            <Button fx:id="accountLink" styleClass="nav-link" onAction="#goAccount">
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <Label fx:id="initialsLabel" styleClass="avatar" />
+                        <Label fx:id="nameLabel" />
+                     </children>
+                  </HBox>
+               </graphic>
+            </Button>
          </children>
       </HBox>
    </children>

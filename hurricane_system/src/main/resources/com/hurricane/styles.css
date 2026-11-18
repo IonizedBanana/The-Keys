@@ -546,6 +546,16 @@
     -fx-text-fill: -sk-text;
 }
 
+/* bigger avatar for the profile card in Account Settings */
+.avatar.large {
+    -fx-background-radius: 2em;
+    -fx-min-width: 64px;
+    -fx-min-height: 64px;
+    -fx-max-width: 64px;
+    -fx-max-height: 64px;
+    -fx-font-size: 20px;
+}
+
 .avatar {
     -fx-background-color: rgba(13, 148, 136, 0.35);
     -fx-background-radius: 1em;
