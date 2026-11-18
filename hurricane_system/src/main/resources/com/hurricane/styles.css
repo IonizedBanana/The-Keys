@@ -197,6 +197,20 @@
     -fx-background-color: -sk-danger-tint;
 }
 
+/* solid red: sending an emergency request */
+.button.emergency {
+    -fx-background-color: -sk-danger;
+}
+
+.button.emergency:hover {
+    -fx-background-color: derive(-sk-danger, -12%);
+}
+
+.button.emergency:pressed,
+.button.emergency:armed {
+    -fx-background-color: derive(-sk-danger, -24%);
+}
+
 /* smaller button for the nav bar and tight spots */
 .button.small {
     -fx-pref-height: 34px;

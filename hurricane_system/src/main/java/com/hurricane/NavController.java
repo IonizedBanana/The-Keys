@@ -89,6 +89,11 @@ public class NavController {
     }
 
     @FXML
+    private void goNewRequest() throws IOException {
+        App.setRoot("newrequest");
+    }
+
+    @FXML
     private void logout() throws IOException {
         HurricaneApplication.getInstance().logout();
         App.setRoot("landing");
