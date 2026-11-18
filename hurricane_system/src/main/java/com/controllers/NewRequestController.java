@@ -212,7 +212,11 @@ public class NewRequestController {
         successPane.setManaged(true);
     }
 
-    // TODO add a "View My Requests" button once that screen exists
+    @FXML
+    private void goRequests() throws IOException {
+        App.setRoot("myrequests");
+    }
+
     @FXML
     private void goHome() throws IOException {
         App.setRoot("home");

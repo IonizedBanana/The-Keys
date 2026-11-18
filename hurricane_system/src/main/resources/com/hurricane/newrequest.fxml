@@ -43,9 +43,10 @@
                                  </children>
                               </VBox>
                               <Label text="⚠  If this becomes life threatening, call 911." styleClass="text-warning" wrapText="true" />
-                              <HBox>
+                              <HBox spacing="12.0">
                                  <children>
-                                    <Button text="Back to Home" onAction="#goHome" />
+                                    <Button text="View My Requests" onAction="#goRequests" />
+                                    <Button text="Back to Home" styleClass="secondary" onAction="#goHome" />
                                  </children>
                               </HBox>
                            </children>

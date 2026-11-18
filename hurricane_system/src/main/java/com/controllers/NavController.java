@@ -90,6 +90,11 @@ public class NavController {
     }
 
     @FXML
+    private void goRequests() throws IOException {
+        App.setRoot("myrequests");
+    }
+
+    @FXML
     private void goNewRequest() throws IOException {
         App.setRoot("newrequest");
     }
