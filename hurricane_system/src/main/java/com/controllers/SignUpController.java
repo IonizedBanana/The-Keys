@@ -1,7 +1,9 @@
-package com.hurricane;
+package com.controllers;
 
+import com.hurricane.Const;
 import java.io.IOException;
 
+import com.hurricane.App;
 import com.model.HurricaneApplication;
 
 import javafx.fxml.FXML;

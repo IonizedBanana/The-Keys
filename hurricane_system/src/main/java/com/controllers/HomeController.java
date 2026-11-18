@@ -1,4 +1,4 @@
-package com.hurricane;
+package com.controllers;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

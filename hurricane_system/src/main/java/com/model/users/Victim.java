@@ -233,6 +233,9 @@ public class Victim extends User {
      * @param phoneNumber The phone number.
      */
     public void setPhoneNumber(String phoneNumber) {
+        // the range allows for 123-456-7890 or just 1234567890
+        if (phoneNumber.length() < 10 || phoneNumber.length() > 12)
+            return;
         this.phoneNumber = phoneNumber;
     }
 

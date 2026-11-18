@@ -1,5 +1,6 @@
-package com.hurricane;
+package com.controllers;
 
+import com.hurricane.App;
 import java.io.IOException;
 
 

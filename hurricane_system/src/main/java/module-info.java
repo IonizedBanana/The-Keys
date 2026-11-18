@@ -10,6 +10,7 @@ module com.hurricane {
     requires junit;
     
     opens com.hurricane to javafx.fxml;
+    opens com.controllers to javafx.fxml;
     exports com.hurricane;
 
     opens com.model to javafx.fxml;

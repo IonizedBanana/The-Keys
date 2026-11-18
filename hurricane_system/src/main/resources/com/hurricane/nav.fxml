@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Region?>
 
 <!-- Top navigation bar shared by every screen after login -->
-<HBox styleClass="top-nav" alignment="CENTER_LEFT" spacing="40.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hurricane.NavController">
+<HBox styleClass="top-nav" alignment="CENTER_LEFT" spacing="40.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controllers.NavController">
    <children>
       <HBox alignment="CENTER_LEFT" spacing="10.0">
          <children>
