@@ -13,8 +13,10 @@ import com.model.users.Victim;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -57,6 +59,29 @@ public class AccountController {
 
     @FXML
     private TextField phoneField;
+
+    @FXML
+    private VBox aboutSection;
+
+    @FXML
+    private TextField ageField;
+
+    @FXML
+    private ComboBox<String> sexBox;
+
+    @FXML
+    private TextArea notesArea;
+
+    /** Sex choices, matched by position to the chars Victim stores (' ' means not given). */
+    private static final String[] SEX_LABELS = { "Prefer not to say", "Male", "Female", "Other" };
+
+    private static final char[] SEX_CODES = { ' ', 'm', 'f', 'o' };
+
+    /** Oldest age accepted; ages are read back from the JSON as a byte. */
+    private static final int MAX_AGE = 120;
+
+    /** What Victim stores when there's no description. */
+    private static final String NO_DESCRIPTION = "No description";
 
     @FXML
     private TextField firstNameField;
@@ -107,6 +132,8 @@ public class AccountController {
         boolean hasPhone = hasPhone(user());
         show(profilePhoneBox, hasPhone);
         show(phoneRow, hasPhone);
+        show(aboutSection, user() instanceof Victim);
+        sexBox.getItems().setAll(SEX_LABELS);
         showProfile();
         fillForm();
     }
@@ -138,6 +165,13 @@ public class AccountController {
         emailField.setText(user.getEmailAddress());
         String phone = getPhone(user);
         phoneField.setText(phone == null ? "" : phone);
+        if (user instanceof Victim) {
+            Victim victim = (Victim) user;
+            ageField.setText(victim.getAge() < 0 ? "" : String.valueOf(victim.getAge()));
+            sexBox.getSelectionModel().select(sexIndex(victim.getSex()));
+            String notes = victim.getDescription();
+            notesArea.setText(notes == null || notes.equals(NO_DESCRIPTION) ? "" : notes);
+        }
         Address home = user.getAddress();
         streetField.setText(home == null ? "" : home.getStreet());
         cityField.setText(home == null ? "" : home.getCity());
@@ -197,6 +231,33 @@ public class AccountController {
             return;
         }
 
+        // victims only: age, sex and notes
+        Victim victim = (user instanceof Victim) ? (Victim) user : null;
+        int age = -1;
+        if (victim != null) {
+            String ageText = ageField.getText().trim();
+            if (ageText.isEmpty()) {
+                // setAge ignores negative numbers, so an age can't be unset once given
+                if (victim.getAge() >= 0) {
+                    ageField.setStyle(Const.ERROR_STYLE);
+                    errorLabel.setText("Your age can be changed but not removed.");
+                    return;
+                }
+            } else {
+                try {
+                    age = Integer.parseInt(ageText);
+                } catch (NumberFormatException e) {
+                    age = -2;
+                }
+                if (age < 0 || age > MAX_AGE) {
+                    ageField.setStyle(Const.ERROR_STYLE);
+                    errorLabel.setText("Enter your age as a number from 0 to " + MAX_AGE + ".");
+                    return;
+                }
+            }
+        }
+        String notes = notesArea.getText().trim();
+
         // the password only changes if they typed something in one of the password fields
         boolean changingPassword = !(current.isEmpty() && newPassword.isEmpty() && confirm.isEmpty());
         if (changingPassword) {
@@ -234,8 +295,25 @@ public class AccountController {
         if (changingPhone) {
             setPhone(user, phone);
         }
+        int oldAge = victim == null ? -1 : victim.getAge();
+        char oldSex = victim == null ? ' ' : victim.getSex();
+        String oldNotes = victim == null ? null : victim.getDescription();
+        if (victim != null) {
+            if (age >= 0) {
+                victim.setAge(age);
+            }
+            int sex = sexBox.getSelectionModel().getSelectedIndex();
+            victim.setSex(SEX_CODES[Math.max(0, sex)]);
+            victim.setDescription(notes.isEmpty() ? NO_DESCRIPTION : notes);
+        }
 
         if (!HurricaneApplication.getInstance().saveData()) {
+            if (victim != null) {
+                // note: an age can't be set back to unknown (-1), since setAge ignores negatives
+                victim.setAge(oldAge);
+                victim.setSex(oldSex);
+                victim.setDescription(oldNotes);
+            }
             user.setFirstName(oldFirst);
             user.setLastName(oldLast);
             user.setEmailAddress(oldEmail);
@@ -281,6 +359,17 @@ public class AccountController {
         else if (user instanceof Dispatcher) ((Dispatcher) user).setPhoneNumber(phone);
     }
 
+    /** Finds the choice for a stored sex char; old data has both 'm' and 'F'. */
+    private static int sexIndex(char sex) {
+        char lower = Character.toLowerCase(sex);
+        for (int i = 0; i < SEX_CODES.length; i++) {
+            if (SEX_CODES[i] == lower) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
     private static void show(Node node, boolean visible) {
         node.setVisible(visible);
         node.setManaged(visible);
@@ -290,6 +379,7 @@ public class AccountController {
         errorLabel.setText("");
         emailField.setStyle(Const.NORMAL_STYLE);
         phoneField.setStyle(Const.NORMAL_STYLE);
+        ageField.setStyle(Const.NORMAL_STYLE);
         currentPasswordField.setStyle(Const.NORMAL_STYLE);
         newPasswordField.setStyle(Const.NORMAL_STYLE);
         confirmPasswordField.setStyle(Const.NORMAL_STYLE);
