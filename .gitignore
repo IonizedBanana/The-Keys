@@ -33,10 +33,4 @@ target/
 
 # ignore testing data
 json/testing/
-
-# ignore .env
-.env
-
-# ignore local notes
-.txt
-tests.md
+/hurricane_system/test/resources/data/out/*
