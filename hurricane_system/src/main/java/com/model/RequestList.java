@@ -37,6 +37,6 @@ public class RequestList {
 
   public boolean isSaved(Request request) {
     HashMap<UUID, Request> tempReq = DataReader.getRequests();
-    return tempReq.get(request.getId()) != null;
+    return (tempReq.get(request.getId()) != null);
   }
 }
