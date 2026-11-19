@@ -137,7 +137,7 @@ public abstract class User {
     public void setUsername(String userName) {
         //Check if the username has already been taken
         if (!UserList.getInstance().usernameTaken(userName)) {
-            this.username = userName;
+            this.username = userName.toLowerCase();
         }
     }
 
@@ -254,5 +254,20 @@ public abstract class User {
      */
     public void donate(Resource donation, Shelter shelter) {
         shelter.addResource(donation);
+    }
+
+    public boolean isValid() {
+        if (this.firstName == null || this.firstName.isBlank())
+            return false;
+        if (this.lastName == null || this.lastName.isBlank())
+            return false;
+        if (this.username == null || this.username.isBlank())
+            return false;
+        //TODO update with better check later
+        if (this.emailAddress == null || this.emailAddress.isBlank())
+            return false;
+        if (this.password == null || this.password.isBlank())
+            return false;
+        return true;
     }
 }

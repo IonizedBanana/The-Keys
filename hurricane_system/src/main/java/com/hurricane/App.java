@@ -20,13 +20,13 @@ public class App extends Application {
         scene = new Scene(loadFXML("landing"), 1280, 800);
         scene.getStylesheets().add(App.class.getResource("styles.css").toExternalForm());
         stage.setTitle("SafeKey");
-        stage.setMinWidth(1024);
+        stage.setMinWidth(1420);
         stage.setMinHeight(700);
         stage.setScene(scene);
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 

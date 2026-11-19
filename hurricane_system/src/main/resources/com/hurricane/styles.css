@@ -197,6 +197,20 @@
     -fx-background-color: -sk-danger-tint;
 }
 
+/* solid red: sending an emergency request */
+.button.emergency {
+    -fx-background-color: -sk-danger;
+}
+
+.button.emergency:hover {
+    -fx-background-color: derive(-sk-danger, -12%);
+}
+
+.button.emergency:pressed,
+.button.emergency:armed {
+    -fx-background-color: derive(-sk-danger, -24%);
+}
+
 /* smaller button for the nav bar and tight spots */
 .button.small {
     -fx-pref-height: 34px;
@@ -530,6 +544,16 @@
 .button.nav-link.active {
     -fx-border-color: transparent transparent -sk-primary transparent;
     -fx-text-fill: -sk-text;
+}
+
+/* bigger avatar for the profile card in Account Settings */
+.avatar.large {
+    -fx-background-radius: 2em;
+    -fx-min-width: 64px;
+    -fx-min-height: 64px;
+    -fx-max-width: 64px;
+    -fx-max-height: 64px;
+    -fx-font-size: 20px;
 }
 
 .avatar {
