@@ -322,6 +322,12 @@ public class Victim extends User {
         + ". " + this.party.get(index).getDescription();
     }
 
+    public boolean isValid() {
+        if (!super.isValid())
+            return false;
+        return true;
+    }
+
     /**
      * A member of a victim's party that does not have an account.
      * @author jah73cse
