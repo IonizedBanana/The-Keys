@@ -92,7 +92,7 @@ public class Shelter {
     resources.add(resource);
   }
 
-  public void updateResource(Resource resource, int quantity) {
+  public void updateResource(Resource resource, double quantity) {
     for (Resource r : resources) {
       if (r.equals(resource)) {
         r.updateQuantity(quantity);
