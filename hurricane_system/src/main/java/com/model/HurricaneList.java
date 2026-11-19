@@ -2,8 +2,6 @@ package com.model;
 
 import java.util.HashMap;
 
-import com.model.users.User;
-
 public class HurricaneList {
   private static HurricaneList hurricaneList;
   private HashMap<String, Hurricane> hurricanes;

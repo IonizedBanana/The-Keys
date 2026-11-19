@@ -34,4 +34,12 @@ public class RequestList {
   public HashMap<UUID, Request> getRequestList() {
     return this.requests;
   }
+
+  public boolean isSaved(Request request) {
+    if(request == null) {
+      throw new IllegalArgumentException("cant check null request");
+    }
+    HashMap<UUID, Request> tempReq = DataReader.getRequests();
+    return tempReq.get(request.getId()) != null;
+  }
 }

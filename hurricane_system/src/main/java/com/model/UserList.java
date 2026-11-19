@@ -20,7 +20,7 @@ public class UserList {
   }
 
   public User getUser(String name) {
-    return users.get(name);
+    return users.get(name.toLowerCase());
   }
 
   public void addUser(User user) {

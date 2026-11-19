@@ -89,10 +89,13 @@ public class Shelter {
   }
 
   public void addResource(Resource resource) {
+    if (resource == null) {
+      return;
+    }
     resources.add(resource);
   }
 
-  public void updateResource(Resource resource, int quantity) {
+  public void updateResource(Resource resource, double quantity) {
     for (Resource r : resources) {
       if (r.equals(resource)) {
         r.updateQuantity(quantity);
