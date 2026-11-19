@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controllers.AccountController">
+   <top>
+      <fx:include fx:id="nav" source="nav.fxml" />
+   </top>
+   <center>
+      <ScrollPane fitToWidth="true">
+         <content>
+            <VBox spacing="24.0">
+               <padding>
+                  <Insets bottom="40.0" left="48.0" right="48.0" top="32.0" />
+               </padding>
+               <children>
+                  <VBox spacing="6.0">
+                     <children>
+                        <Label text="Account Settings" styleClass="h1" />
+                        <Label text="Update the details responders use to reach you." styleClass="text-secondary" />
+                     </children>
+                  </VBox>
+
+                  <HBox spacing="20.0" alignment="TOP_LEFT">
+                     <children>
+                        <!-- profile summary -->
+                        <VBox spacing="16.0" styleClass="card" prefWidth="300.0" minWidth="260.0" maxHeight="-Infinity">
+                           <children>
+                              <Label fx:id="avatarLabel" styleClass="avatar, large" />
+                              <VBox spacing="4.0">
+                                 <children>
+                                    <Label fx:id="profileName" styleClass="h2" wrapText="true" />
+                                    <Label fx:id="profileUsername" styleClass="caption" />
+                                 </children>
+                              </VBox>
+                              <HBox>
+                                 <children>
+                                    <Label fx:id="typeTag" styleClass="tag, tag-info" />
+                                 </children>
+                              </HBox>
+                              <Separator />
+                              <VBox spacing="2.0">
+                                 <children>
+                                    <Label text="Email" styleClass="caption" />
+                                    <Label fx:id="profileEmail" wrapText="true" />
+                                 </children>
+                              </VBox>
+                              <VBox fx:id="profilePhoneBox" spacing="2.0">
+                                 <children>
+                                    <Label text="Phone" styleClass="caption" />
+                                    <Label fx:id="profilePhone" />
+                                 </children>
+                              </VBox>
+                              <VBox spacing="2.0">
+                                 <children>
+                                    <Label text="Home" styleClass="caption" />
+                                    <Label fx:id="profileHome" wrapText="true" />
+                                 </children>
+                              </VBox>
+                              <Button text="Log Out" styleClass="secondary" maxWidth="Infinity" onAction="#logout" />
+                           </children>
+                        </VBox>
+
+                        <!-- edit form -->
+                        <VBox spacing="14.0" styleClass="card" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Account details" styleClass="h3" />
+                              <HBox spacing="12.0">
+                                 <children>
+                                    <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="First name" styleClass="field-label" />
+                                          <TextField fx:id="firstNameField" promptText="Enter first name" />
+                                       </children>
+                                    </VBox>
+                                    <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Last name" styleClass="field-label" />
+                                          <TextField fx:id="lastNameField" promptText="Enter last name" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <HBox spacing="12.0">
+                                 <children>
+                                    <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Username" styleClass="field-label" />
+                                          <!-- read-only: accounts and requests are looked up by username -->
+                                          <TextField fx:id="usernameField" editable="false" disable="true" />
+                                       </children>
+                                    </VBox>
+                                    <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Email address" styleClass="field-label" />
+                                          <TextField fx:id="emailField" promptText="you@example.com" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <!-- only victims, admins and dispatchers have a phone number -->
+                              <HBox fx:id="phoneRow" spacing="12.0">
+                                 <children>
+                                    <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Phone number" styleClass="field-label" />
+                                          <TextField fx:id="phoneField" promptText="843-555-0142" />
+                                       </children>
+                                    </VBox>
+                                    <Region HBox.hgrow="ALWAYS" />
+                                 </children>
+                              </HBox>
+                              <VBox spacing="6.0">
+                                 <children>
+                                    <Label text="Home address" styleClass="field-label" />
+                                    <TextField fx:id="streetField" promptText="123 Main St" />
+                                 </children>
+                              </VBox>
+                              <HBox spacing="12.0">
+                                 <children>
+                                    <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="City" styleClass="field-label" />
+                                          <TextField fx:id="cityField" promptText="Enter city" />
+                                       </children>
+                                    </VBox>
+                                    <VBox spacing="6.0" prefWidth="80.0">
+                                       <children>
+                                          <Label text="State" styleClass="field-label" />
+                                          <TextField fx:id="stateField" promptText="SC" />
+                                       </children>
+                                    </VBox>
+                                    <VBox spacing="6.0" prefWidth="100.0">
+                                       <children>
+                                          <Label text="ZIP" styleClass="field-label" />
+                                          <TextField fx:id="zipField" promptText="29201" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+
+                              <!-- victims only: what responders should know about you -->
+                              <VBox fx:id="aboutSection" spacing="14.0">
+                                 <children>
+                                    <Separator />
+                                    <VBox spacing="2.0">
+                                       <children>
+                                          <Label text="About you" styleClass="h3" />
+                                          <Label text="Responders see this when you ask for help." styleClass="caption" />
+                                       </children>
+                                    </VBox>
+                                    <HBox spacing="12.0">
+                                       <children>
+                                          <VBox spacing="6.0" prefWidth="100.0">
+                                             <children>
+                                                <Label text="Age" styleClass="field-label" />
+                                                <TextField fx:id="ageField" promptText="e.g. 41" />
+                                             </children>
+                                          </VBox>
+                                          <VBox spacing="6.0" prefWidth="200.0">
+                                             <children>
+                                                <Label text="Sex" styleClass="field-label" />
+                                                <ComboBox fx:id="sexBox" maxWidth="Infinity" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <VBox spacing="6.0">
+                                       <children>
+                                          <Label text="Notes for responders" styleClass="field-label" />
+                                          <TextArea fx:id="notesArea" promptText="Medical conditions, mobility needs, anything that helps responders" wrapText="true" prefRowCount="2" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+
+                              <Separator />
+
+                              <Label text="Change password" styleClass="h3" />
+                              <HBox spacing="12.0">
+                                 <children>
+                                    <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Current password" styleClass="field-label" />
+                                          <PasswordField fx:id="currentPasswordField" promptText="Enter current password" />
+                                       </children>
+                                    </VBox>
+                                    <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="New password" styleClass="field-label" />
+                                          <PasswordField fx:id="newPasswordField" promptText="Enter new password" />
+                                       </children>
+                                    </VBox>
+                                    <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Confirm new password" styleClass="field-label" />
+                                          <PasswordField fx:id="confirmPasswordField" promptText="Re-enter new password" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+
+                              <Label fx:id="errorLabel" styleClass="error-label" wrapText="true" />
+                              <HBox spacing="12.0" alignment="CENTER_RIGHT">
+                                 <children>
+                                    <Label fx:id="savedLabel" styleClass="text-primary" />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Button text="Cancel" styleClass="secondary" onAction="#cancel" />
+                                    <Button text="Save Changes" defaultButton="true" onAction="#save" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

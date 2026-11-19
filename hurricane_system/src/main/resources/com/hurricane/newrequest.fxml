@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controllers.NewRequestController">
+   <top>
+      <fx:include fx:id="nav" source="nav.fxml" />
+   </top>
+   <center>
+      <ScrollPane fitToWidth="true">
+         <content>
+            <StackPane alignment="TOP_CENTER">
+               <padding>
+                  <Insets bottom="40.0" left="48.0" right="48.0" top="32.0" />
+               </padding>
+               <children>
+                  <VBox spacing="24.0" maxWidth="560.0">
+                     <children>
+                        <!-- shown only after the request is confirmed in requests.json -->
+                        <VBox fx:id="successPane" spacing="16.0" styleClass="card" visible="false" managed="false">
+                           <children>
+                              <HBox alignment="CENTER_LEFT">
+                                 <children>
+                                    <Label text="✓  Request submitted" styleClass="h2" />
+                                 </children>
+                              </HBox>
+                              <Label text="Your request is saved and waiting for a responder. Stay where it's safe; we'll match someone to you as soon as we can." styleClass="text-secondary" wrapText="true" />
+                              <VBox spacing="4.0">
+                                 <children>
+                                    <Label fx:id="summaryType" styleClass="h3" />
+                                    <Label fx:id="summaryAddress" styleClass="caption" wrapText="true" />
+                                    <Label fx:id="summaryDetails" styleClass="caption" />
+                                 </children>
+                              </VBox>
+                              <Label text="⚠  If this becomes life threatening, call 911." styleClass="text-warning" wrapText="true" />
+                              <HBox spacing="12.0">
+                                 <children>
+                                    <Button text="View My Requests" onAction="#goRequests" />
+                                    <Button text="Back to Home" styleClass="secondary" onAction="#goHome" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+
+                        <VBox fx:id="formPane" spacing="24.0">
+                           <children>
+                        <VBox spacing="6.0">
+                           <children>
+                              <Label text="Request help" styleClass="h1" />
+                              <Label text="Tell us what you need and where. A responder will be matched to your request." styleClass="text-secondary" wrapText="true" />
+                           </children>
+                        </VBox>
+
+                        <VBox spacing="14.0" styleClass="card">
+                           <children>
+                              <HBox spacing="12.0">
+                                 <children>
+                                    <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Type of help" styleClass="field-label" />
+                                          <ComboBox fx:id="typeBox" promptText="Choose one" maxWidth="Infinity" />
+                                       </children>
+                                    </VBox>
+                                    <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Urgency" styleClass="field-label" />
+                                          <ComboBox fx:id="urgencyBox" promptText="How urgent is it?" maxWidth="Infinity" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+
+                              <VBox spacing="6.0">
+                                 <children>
+                                    <Label text="Description" styleClass="field-label" />
+                                    <TextArea fx:id="descriptionArea" promptText="What's happening and what do you need?" wrapText="true" prefRowCount="3" />
+                                 </children>
+                              </VBox>
+
+                              <VBox spacing="6.0">
+                                 <children>
+                                    <Label text="Address where help is needed" styleClass="field-label" />
+                                    <TextField fx:id="streetField" promptText="123 Main St" />
+                                 </children>
+                              </VBox>
+                              <HBox spacing="12.0">
+                                 <children>
+                                    <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="City" styleClass="field-label" />
+                                          <TextField fx:id="cityField" promptText="Enter city" />
+                                       </children>
+                                    </VBox>
+                                    <VBox spacing="6.0" prefWidth="80.0">
+                                       <children>
+                                          <Label text="State" styleClass="field-label" />
+                                          <TextField fx:id="stateField" promptText="SC" />
+                                       </children>
+                                    </VBox>
+                                    <VBox spacing="6.0" prefWidth="100.0">
+                                       <children>
+                                          <Label text="ZIP" styleClass="field-label" />
+                                          <TextField fx:id="zipField" promptText="29201" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+
+                              <VBox spacing="6.0">
+                                 <children>
+                                    <Label text="Medical info (optional)" styleClass="field-label" />
+                                    <TextArea fx:id="infoArea" promptText="Injuries, conditions or medication responders should know about" wrapText="true" prefRowCount="2" />
+                                 </children>
+                              </VBox>
+
+                              <VBox spacing="6.0">
+                                 <children>
+                                    <Label text="Party size" styleClass="field-label" />
+                                    <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                       <children>
+                                          <Button fx:id="minusButton" text="−" styleClass="icon" onAction="#decreaseParty" />
+                                          <Label fx:id="partySizeLabel" styleClass="h3" minWidth="24.0" alignment="CENTER" />
+                                          <Button text="+" styleClass="icon" onAction="#increaseParty" />
+                                          <Label text="people, not counting pets" styleClass="caption" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+
+                              <Label fx:id="errorLabel" styleClass="error-label" wrapText="true" />
+                           </children>
+                        </VBox>
+
+                        <HBox alignment="CENTER_LEFT" spacing="20.0">
+                           <children>
+                              <Button fx:id="submitButton" text="Submit Request" styleClass="emergency" defaultButton="true" onAction="#submit" />
+                              <Label text="⚠  If this is life threatening, call 911." styleClass="text-warning" wrapText="true" />
+                           </children>
+                        </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>
