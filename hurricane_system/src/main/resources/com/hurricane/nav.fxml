@@ -17,8 +17,7 @@
       <HBox alignment="CENTER_LEFT" spacing="24.0">
          <children>
             <Button fx:id="homeLink" text="Home" styleClass="nav-link" onAction="#goHome" />
-            <!-- TODO hook this up once the shelters screen exists -->
-            <Button fx:id="sheltersLink" text="Shelters" styleClass="nav-link" />
+            <Button fx:id="sheltersLink" text="Shelters" styleClass="nav-link" onAction="#goShelters" />
             <Button fx:id="requestsLink" text="My Requests" styleClass="nav-link" onAction="#goRequests" />
          </children>
       </HBox>

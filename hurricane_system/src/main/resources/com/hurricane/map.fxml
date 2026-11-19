@@ -8,7 +8,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hurricane.MapController">
    <top>
-      <fx:include source="nav.fxml" />
+      <fx:include fx:id="nav" source="nav.fxml" />
    </top>
    <center>
       <BorderPane>

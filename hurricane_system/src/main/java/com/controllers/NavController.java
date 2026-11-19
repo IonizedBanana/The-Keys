@@ -1,15 +1,23 @@
 package com.controllers;
 
 import com.hurricane.App;
+import com.hurricane.MapController;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import com.model.Hurricane;
 import com.model.HurricaneApplication;
 import com.model.HurricaneList;
 import com.model.HurricaneStatus;
+import com.model.Shelter;
+import com.model.location.Address;
+import com.model.location.MapTools;
 import com.model.users.User;
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -104,6 +112,63 @@ public class NavController {
     @FXML
     private void goRequests() throws IOException {
         App.setRoot("myrequests");
+    }
+
+    /**
+     * Opens the shelter map and routes the user from home to the closest shelter.
+     * Loads map.fxml here (not through App.setRoot) so we can reach its MapController.
+     */
+    @FXML
+    private void goShelters() throws IOException {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("map.fxml"));
+        Parent root = loader.load();
+        MapController map = loader.getController();
+        // map.fxml includes nav.fxml with fx:id="nav", so its controller is in the namespace
+        NavController nav = (NavController) loader.getNamespace().get("navController");
+        if (nav != null) {
+            nav.setActive(Page.SHELTERS);
+        }
+        homeLink.getScene().setRoot(root);
+
+        User user = HurricaneApplication.getInstance().getCurrentUser();
+        ArrayList<Shelter> shelters = HurricaneApplication.getInstance().getShelters();
+        ArrayList<Address> addresses = new ArrayList<Address>();
+        for (Shelter shelter : shelters) {
+            if (shelter.getAddress() != null) {
+                addresses.add(shelter.getAddress());
+            }
+        }
+        if (addresses.isEmpty()) {
+            return;
+        }
+        Address[] shelterAddresses = addresses.toArray(new Address[0]);
+        Address home = user == null ? null : user.getAddress();
+        if (home == null) {
+            map.showAddressesOnMap(shelterAddresses);
+            return;
+        }
+
+        // finding the closest shelter calls the map api once per shelter, so keep it off the UI thread
+        Task<Address> findClosest = new Task<Address>() {
+            @Override
+            protected Address call() throws Exception {
+                return MapTools.getInstance().findClosestAddress(home, shelterAddresses);
+            }
+        };
+        findClosest.setOnSucceeded(event -> {
+            if (findClosest.getValue() != null) {
+                map.showRouteOnMap(home, findClosest.getValue());
+            } else {
+                map.showAddressesOnMap(shelterAddresses);
+            }
+        });
+        findClosest.setOnFailed(event -> {
+            findClosest.getException().printStackTrace();
+            map.showAddressesOnMap(shelterAddresses);
+        });
+        Thread thread = new Thread(findClosest);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     @FXML
