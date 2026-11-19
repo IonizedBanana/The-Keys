@@ -145,7 +145,7 @@ public class DataReader extends DataConstants {
   private static Resource getResource(JSONObject resourceObject) {
     ResourceType type = getResourceType((String) resourceObject.get(RESOURCE_TYPE));
     String description = (String) resourceObject.get(REQUEST_DESCRIPTION);
-    int quantity = ((Long) resourceObject.get(RESOURCE_QUANTITY)).intValue();
+    double quantity = ((Number) resourceObject.get(RESOURCE_QUANTITY)).doubleValue();
     Unit unit = getUnit((String) resourceObject.get(RESOURCE_UNIT));
     Resource resource = new Resource(type, description, quantity, unit);
     return resource;
