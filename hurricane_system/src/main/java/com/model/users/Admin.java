@@ -148,4 +148,12 @@ public class Admin extends User {
     public String toString() {
         return (this.firstName + " " + this.lastName + " " + this.username);
     }
+
+    public boolean isValid() {
+        if (!super.isValid())
+            return false;
+        if (phoneNumber.length() < 10 || phoneNumber.length() > 14)
+            return false;
+        return true;
+    }
 }

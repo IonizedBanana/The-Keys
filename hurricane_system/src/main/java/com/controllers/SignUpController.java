@@ -30,10 +30,10 @@ public class SignUpController {
     @FXML
     private TextField emailField;
 
-    @FXML 
+    @FXML
     private TextField streetField;
 
-    @FXML 
+    @FXML
     private TextField cityField;
 
     @FXML
@@ -69,41 +69,65 @@ public class SignUpController {
         com.model.location.Address address = new com.model.location.Address(street, city, state, zip);
 
         if (Const.anyBlank(firstName, lastName, username, email, password)) {
-    errorLabel.setText("Fill in every field.");
-    return;
-    }
+            errorLabel.setText("Fill in every field.");
+            return;
+        }
 
         if (Const.hasUppercase(username)) {
-    usernameField.setStyle(Const.ERROR_STYLE);
-    errorLabel.setText("Username cannot contain capital letters.");
-    return;
-    }
+            usernameField.setStyle(Const.ERROR_STYLE);
+            errorLabel.setText("Username cannot contain capital letters.");
+            return;
+        }
+
+        if (!Const.isValidStreet(street)) {
+            streetField.setStyle(Const.ERROR_STYLE);
+            errorLabel.setText("Enter a valid street (e.g. 123 House St).");
+            return;
+        }
+
+        if (!Const.isValidCity(city)) {
+            cityField.setStyle(Const.ERROR_STYLE);
+            errorLabel.setText("Enter a valid city");
+            return;
+        }
+
+        if (!Const.isValidState(state)) {
+            stateField.setStyle(Const.ERROR_STYLE);
+            errorLabel.setText("Enter a valid state abbreviation.");
+            return;
+        }
+
+        if (!Const.isValidZip(zip)) {
+            zipField.setStyle(Const.ERROR_STYLE);
+            errorLabel.setText("Enter a valid ZIP code.");
+            return;
+        }
 
         if (!Const.isValidEmail(email)) {
-    emailField.setStyle(Const.ERROR_STYLE);
-    errorLabel.setText("Enter a valid email.");
-    return;
-    }  
+            emailField.setStyle(Const.ERROR_STYLE);
+            errorLabel.setText("Enter a valid email.");
+            return;
+        }
 
         if (!Const.passwordsMatch(password, confirmPasswordField.getText())) {
-    errorLabel.setText("Passwords do not match.");
-    confirmPasswordField.clear();
-    return;
-    }
+            errorLabel.setText("Passwords do not match.");
+            confirmPasswordField.clear();
+            return;
+        }
 
         if (!Const.isPasswordLongEnough(password)) {
-    errorLabel.setText("Passwords must be greater than " + Const.MIN_PASSWORD_LENGTH + " characters.");
-    passwordField.setStyle(Const.ERROR_STYLE);
-    confirmPasswordField.setStyle(Const.ERROR_STYLE);
-    return;
-    }
+            errorLabel.setText("Passwords must be greater than " + Const.MIN_PASSWORD_LENGTH + " characters.");
+            passwordField.setStyle(Const.ERROR_STYLE);
+            confirmPasswordField.setStyle(Const.ERROR_STYLE);
+            return;
+        }
 
         if (HurricaneApplication.getInstance().createAccount(firstName, lastName, username, email, password, address)) {
-    App.setRoot("home");
-    } else {
-        errorLabel.setText("Could not create account. That username may already be taken.");
+            App.setRoot("home");
+        } else {
+            errorLabel.setText("Could not create account. That username may already be taken.");
+        }
     }
-}
 
     @FXML
     private void switchToLogin() throws IOException {

@@ -266,7 +266,7 @@ public abstract class User {
         //TODO update with better check later
         if (this.emailAddress == null || this.emailAddress.isBlank())
             return false;
-        if (this.password == null || this.password.isBlank())
+        if (this.password == null || this.password.isBlank() || this.password.length() < 4)
             return false;
         return true;
     }

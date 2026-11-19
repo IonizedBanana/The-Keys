@@ -216,6 +216,30 @@ public class AccountController {
             return;
         }
 
+        if (!Const.isValidStreet(street)) {
+            streetField.setStyle(Const.ERROR_STYLE);
+            errorLabel.setText("Enter a valid street (e.g. 123 House St).");
+            return;
+        }
+
+        if (!Const.isValidCity(city)) {
+            cityField.setStyle(Const.ERROR_STYLE);
+            errorLabel.setText("Enter a valid city");
+            return;
+        }
+
+        if (!Const.isValidState(state)) {
+            stateField.setStyle(Const.ERROR_STYLE);
+            errorLabel.setText("Enter a valid state abbreviation.");
+            return;
+        }
+
+        if (!Const.isValidZip(zip)) {
+            zipField.setStyle(Const.ERROR_STYLE);
+            errorLabel.setText("Enter a valid ZIP code.");
+            return;
+        }
+
         // setPhoneNumber quietly ignores anything it doesn't accept (including blank), so check first
         String phone = phoneField.getText().trim();
         String oldPhone = getPhone(user);
@@ -379,6 +403,10 @@ public class AccountController {
         errorLabel.setText("");
         emailField.setStyle(Const.NORMAL_STYLE);
         phoneField.setStyle(Const.NORMAL_STYLE);
+        streetField.setStyle(Const.NORMAL_STYLE);
+        cityField.setStyle(Const.NORMAL_STYLE);
+        stateField.setStyle(Const.NORMAL_STYLE);
+        zipField.setStyle(Const.NORMAL_STYLE);
         ageField.setStyle(Const.NORMAL_STYLE);
         currentPasswordField.setStyle(Const.NORMAL_STYLE);
         newPasswordField.setStyle(Const.NORMAL_STYLE);

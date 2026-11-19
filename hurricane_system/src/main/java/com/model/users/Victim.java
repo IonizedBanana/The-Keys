@@ -234,7 +234,7 @@ public class Victim extends User {
      */
     public void setPhoneNumber(String phoneNumber) {
         // the range allows for 123-456-7890 or just 1234567890
-        if (phoneNumber.length() < 10 || phoneNumber.length() > 12)
+        if (!phoneNumber.isBlank() && (phoneNumber.length() < 10 || phoneNumber.length() > 14))
             return;
         this.phoneNumber = phoneNumber;
     }
@@ -320,6 +320,12 @@ public class Victim extends User {
         return this.party.get(index).getName()
         + ", age: " + this.party.get(index).getAge()
         + ". " + this.party.get(index).getDescription();
+    }
+
+    public boolean isValid() {
+        if (!super.isValid())
+            return false;
+        return true;
     }
 
     /**
